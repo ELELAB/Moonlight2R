@@ -1,0 +1,90 @@
+Package: MoonlightR
+Type: Package
+Title: Identify oncogenes and tumor suppressor genes from omics data
+Version: 1.21.4
+Date: 07-08-2020
+Authors@R:
+  c(person("Antonio", "Colaprico",
+           role="aut"),
+    person("Catharina", "Olsen",
+           role="aut"),
+    person("Matthew H.", "Bailey",
+           role="aut"),
+    person("Gabriel J.", "Odom",
+           role="aut"),
+    person("Thilde", "Terkelsen",
+           role="aut"),
+    person("Mona", "Nourbakhsh",
+           role="aut"),
+    person("Astrid", "Saksager",
+           role="aut"),
+    person("Tiago C.", "Silva",
+           role="aut"),
+    person("André V.", "Olsen",
+           role="aut"),
+    person("Laura", "Cantini",
+           role="aut"),
+    person("Andrei", "Zinovyev",
+           role="aut"),
+    person("Emmanuel", "Barillot",
+           role="aut"),
+    person("Houtan", "Noushmehr",
+           role="aut"),
+    person("Gloria", "Bertoli",
+           role="aut"),
+    person("Isabella", "Castiglioni",
+           role="aut"),
+    person("Claudia","Cava",
+           role="aut"),
+    person("Gianluca", "Bontempi",
+           role="aut"),
+    person("Xi Steven", "Chen",
+           role="aut"),
+    person("Elena", "Papaleo",
+           role="aut"),
+    person("Matteo", "Tiberti",
+           role=c("cre", "aut"),
+           email="tiberti@cancer.dk",
+           ))
+Depends: R (>= 3.5), doParallel, foreach
+Imports: parmigene, randomForest, SummarizedExperiment, gplots,
+        circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
+        limma, grDevices, graphics, TCGAbiolinks, GEOquery, stats,
+        RISmed, grid, utils
+Description: Motivation: The understanding of cancer mechanism requires
+        the identification of genes playing a role in the development
+        of the pathology and the characterization of their role
+        (notably oncogenes and tumor suppressors). Results: We present
+        an R/bioconductor package called MoonlightR which returns a
+        list of candidate driver genes for specific cancer types on the
+        basis of TCGA expression data. The method first infers gene
+        regulatory networks and then carries out a functional
+        enrichment analysis (FEA) (implementing an upstream regulator
+        analysis, URA) to score the importance of well-known biological
+        processes with respect to the studied cancer type. Eventually,
+        by means of random forests, MoonlightR predicts two specific
+        roles for the candidate driver genes: i) tumor suppressor genes
+        (TSGs) and ii) oncogenes (OCGs). As a consequence, this
+        methodology does not only identify genes playing a dual role
+        (e.g. TSG in one cancer type and OCG in another) but also helps
+        in elucidating the biological processes underlying their
+        specific roles. In particular, MoonlightR can be used to
+        discover OCGs and TSGs in the same cancer type. This may help
+        in answering the question whether some genes change role
+        between early stages (I, II) and late stages (III, IV) in
+        breast cancer. In the future, this analysis could be useful to
+        determine the causes of different resistances to
+        chemotherapeutic treatments.
+License: GPL (>= 3)
+biocViews: DNAMethylation, DifferentialMethylation, GeneRegulation,
+        GeneExpression, MethylationArray, DifferentialExpression,
+        Pathways, Network, Survival, GeneSetEnrichment,
+        NetworkEnrichment
+Suggests: BiocStyle, knitr, rmarkdown, testthat, devtools, roxygen2,
+        png
+VignetteBuilder: knitr
+LazyData: true
+URL: https://github.com/ELELAB/MoonlightR
+BugReports: https://github.com/ELELAB/MoonlightR/issues
+RoxygenNote: 7.1.2
+Encoding: UTF-8
