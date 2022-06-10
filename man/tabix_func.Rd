@@ -9,13 +9,13 @@ tabix_func(Ranges, Reference_Allele, Mutant, file_coding, file_noncoding)
 \arguments{
 \item{Ranges}{The position}
 
+\item{Reference_Allele}{The reference nucleotide}
+
 \item{Mutant}{The mutant nucleotide}
 
 \item{file_coding}{cscape_table with coding scores}
 
 \item{file_noncoding}{cscape_table with noncoding scores}
-
-\item{Referene_Allele}{The reference nucleotide}
 }
 \value{
 returns the score
