@@ -7,9 +7,9 @@
 LiftMAF(Infile, Current_Build)
 }
 \arguments{
-\item{Current_Build}{A charcter string, either \code{GRCh38} or \code{GRCh37}.}
+\item{Infile}{A tibble of MAF.}
 
-\item{infile}{A tibble of MAF.}
+\item{Current_Build}{A charcter string, either \code{GRCh38} or \code{GRCh37}.}
 }
 \value{
 MAF tibble with positions lifted to another build
