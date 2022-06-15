@@ -82,7 +82,7 @@
 #'@return A 18x7 table
 #'
 #'@format A 18x7 table
-#'@reference paper
+#'@references paper
 #'
 "LOC_transcription"
 
