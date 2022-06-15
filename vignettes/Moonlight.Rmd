@@ -606,10 +606,22 @@ The user can retrieve TSG/OCG candidates using either selected biological proces
 
 ```{r, eval = TRUE}
 data(dataURA)
-dataDual <- PRA(dataURA = dataURA,
+dataPRA <- PRA(dataURA = dataURA,
                           BPname = c("apoptosis","proliferation of cells"),
                           thres.role = 0)
 ```
+
+## `DMA`: Driver Mutation Analysis
+The user can identify driver mutations with `DMA` in the oncogenic mediators established by `PRA`.  The passenger or driver status is estimated with Cscape-somatic.  
+
+```{r, eval = TRUE}
+data(dataPRA)
+dataPRA <- DMA(MafFile = 
+               Drivers = dataPRA,
+               coding_file = "path/css_coding.vcf.gz",
+               noncoding_file = "path/css_noncoding.vcf.gz")
+```
+
 
 
 ## `plotNetworkHive`: GRN hive visualization taking into account Cosmic cancer genes
@@ -620,6 +632,33 @@ In the following plot the nodes are separated into three groups: known tumor sup
 data(knownDriverGenes)
 data(dataGRN)
 plotNetworkHive(dataGRN, knownDriverGenes, 0.55)
+```
+
+
+## `plotDMA`: Heatmap of the Driver/Passenger status of mutations in TSGs/OCGs
+
+In the following plot all the oncogenic mediators and their mutations are shown.
+
+```{r, eval = TRUE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
+data()
+data()
+plotDMA(DEG_Mutations_Annotions, Oncogenic_mediators_mutation_summary, 
+        type = "complete",
+        additionalFilename = "_exampleVignette")
+```
+
+## `plotMoonlight`: Heatmap of Moonlight gene z-score for the TSGs/OCGs
+
+In the following plot the top 50 genes with the most driver mutations are visualised.
+The values are the moonlight gene z-score for the two biological processes
+
+```{r, eval = TRUE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
+data()
+data()
+plotDMA(DEG_Mutations_Annotations,
+        Oncogenic_mediators_mutation_summary, 
+        dataURA, gene_type = "drivers", n = 50,
+        additionalFilename = "_exampleVignette")
 ```
 
 

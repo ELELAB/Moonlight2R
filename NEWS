@@ -1,4 +1,27 @@
-  MoonlightR 
+  MoonlightR2
+  
+----------------------------------------------------------------
+  Changes in version 2.0.0
+General: 
+* Github repository is changed to: https://github.com/ELELAB/MoonlightR2
+
+New features: 
+* DMA()
+* plotDMA()
+* plotMoonlight()
+
+Enhancements:
+* Biological Processes
+* knownCancerDrivers 
+
+Minor improvements and fixes: 
+
+  
+----------------------------------------------------------------
+  MoonlightR2 is live 
+  
+  
+  
 ----------------------------------------------------------------
   FIRST VERSION - FEATURES
 
