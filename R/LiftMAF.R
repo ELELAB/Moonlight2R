@@ -5,8 +5,8 @@
 #' @param Current_Build A charcter string, either \code{GRCh38} or \code{GRCh37}.
 #' @import dplyr  
 #' @importFrom magrittr "%>%"
-#' @import GenomicRanges
-#' @import liftOver
+#' @importFrom GenomicRanges makeGRangesFromDataFrame
+#' @importFrom rtracklayer import.chain liftOver
 #' @return MAF tibble with positions lifted to another build 
 #' @export
 #' @examples
@@ -26,7 +26,7 @@ LiftMAF <- function(Infile, Current_Build){
   } else if(Current_Build == "GRCh37"){
     chainBuild <- "hg19ToHg38.over.chain"
     path <- system.file("data", "hg19ToHg38.over.chain", 
-                        package = "MoonlightR2", mustWork = TRUE)
+                        package = "MoonlightR", mustWork = TRUE)
     flag <- TRUE
   } else {
     print("Error: Build must be either GRCh38 or GRCh37")
