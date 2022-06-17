@@ -239,7 +239,7 @@ DMA <- function(MafFile, DEGs, dataPRA,
   Summary_per_gene <- full_join(Summary_per_gene_1, Summary_per_gene_2,
                                 by = c("Hugo_Symbol", "Moonlight_Oncogenic_Mediator")) %>%
     filter(!is.na(Moonlight_Oncogenic_Mediator)) %>%
-    arrange(dplyr::desc(CScape_Driver, Total_Mutations)) %>%
+    arrange(dplyr::desc(CScape_Driver)) %>%
     dplyr::select(!CScape_No_mutations) %>%
     left_join(NCG, by = c("Hugo_Symbol" = "symbol"))
 
