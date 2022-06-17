@@ -4,7 +4,7 @@
 #' @param MafFile A .csv MAF-file containing mutations
 #' The MAF file must at least contain the following columns
 #' \itemize{
-#' \item X1 rownumbers
+#' \item Empty column-name, containing row numbers
 #' \item Hugo_Symbol eg. BRCA1
 #' \item Chromosome eg. chr1
 #' \item Start_Position eg. 54402
@@ -55,7 +55,7 @@ DMA <- function(MafFile, DEGs, dataPRA, coding_file, noncoding_file,
   # Load Data --------------------------------
   # read maf and add ID number to each mutation
   mutations <- read_csv(MafFile, guess_max = min(4000, Inf), show_col_types = FALSE) %>%
-    dplyr::rename(ID = X1)
+    dplyr::rename(ID = `...1`)
 
   drivers_moonlight <- PRAtoTibble(dataPRA)
   DEGs <- DEGs %>% rownames_to_column(var = 'Hugo_Symbol')
