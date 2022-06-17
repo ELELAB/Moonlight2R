@@ -1,7 +1,7 @@
 #' DMA
 #'
 #' This function carries out the driver mutation analysis
-#' @param MafFile A .csv MAF-file containing mutations
+#' @param MafFile Path to MAF.csv. 
 #' The MAF file must at least contain the following columns
 #' \itemize{
 #' \item Empty column-name, containing row numbers
@@ -18,6 +18,8 @@
 #' }
 #' @param DEGs DEGsmatrix output from DEA such as dataDEGs.
 #' @param dataPRA Output PRA function.
+#' @param runCscape Bolean. If \code{FALSE} will load CScape output file from results-folder
+#' Default = \code{TRUE}.
 #' @param coding_file A character string. Path to and name of CScape-somatic coding file.
 #' Can be downloaded at \url{http://cscape-somatic.biocompute.org.uk/#download}. The .tbi file must be placed in the same folder.
 #' @param noncoding_file A charcter string. Path to and name of CScape-somatic noncoding file.
@@ -41,7 +43,9 @@
 #'     noncoding_file = "path/css_noncoding.vcf.gz",
 #'     results_folder = "path/results")
 
-DMA <- function(MafFile, DEGs, dataPRA, coding_file, noncoding_file,
+DMA <- function(MafFile, DEGs, dataPRA, 
+                runCscape = TRUE,
+                coding_file, noncoding_file,
                 results_folder = "./DMAresults"){
 
   # Create Output folder
@@ -51,9 +55,12 @@ DMA <- function(MafFile, DEGs, dataPRA, coding_file, noncoding_file,
   else {
     dir.create(path = results_folder, showWarnings = TRUE, recursive = TRUE)
   }
-
+  
   # Load Data --------------------------------
   # read maf and add ID number to each mutation
+  if(file.exists(MafFile) == FALSE){
+   stop('Maf file cannot be found. Please provided correct path.') 
+  }
   mutations <- read_csv(MafFile, guess_max = min(4000, Inf), show_col_types = FALSE) %>%
     dplyr::rename(ID = `...1`)
 
@@ -88,23 +95,44 @@ DMA <- function(MafFile, DEGs, dataPRA, coding_file, noncoding_file,
   DEGs_mut <- DEGs %>% left_join(mutations, by = 'Hugo_Symbol')
 
 
-  # Run Cscape ---------------------
+  # Cscape-somatic -------------------------
   #Lifting from one build to another
   mut_only <- DEGs_mut %>% filter(!is.na(ID))
   DEGs_mut_hg19 <- LiftMAF(Infile = mut_only, Current_Build = 'GRCh38')
 
-  cscape_in <- MAFtoCscape(DEGs_mut_hg19)
+  
+  if(runCscape == TRUE) {
+    cscape_in <- MAFtoCscape(DEGs_mut_hg19)
 
-  print("Cscape-somatic will now run. It takes some time")
-  cscape_out <- RunCscape_somatic(input = cscape_in,
-                                  coding_file = coding_file,
-                                  noncoding_file = noncoding_file)
+    #check coding and noncoding files exits
+    if(file.exists(coding_file) == FALSE | file.exists(noncoding_file) == FALSE){
+      stop("CScape-somatic vcf files not found at provided path.")
+    }
+    #run cscape-somatic 
+    else{
+      print("Cscape-somatic will now run. It takes some time")
+      cscape_out <- RunCscape_somatic(input = cscape_in,
+                                      coding_file = coding_file,
+                                      noncoding_file = noncoding_file)
 
-  write_csv(cscape_out,
-            file = paste(results_folder,"cscape-somatic_output.csv", sep ='/'),
-            col_names = TRUE)
-  print('Cscape-somatic is finished. Output file is saved in result folder.')
-
+      write_csv(cscape_out,
+                file = paste(results_folder,"cscape-somatic_output.csv", sep ='/'),
+                col_names = TRUE)
+      print('Cscape-somatic is finished. Output file is saved in result folder.')
+    }
+  }
+  
+  else if(runCscape == FALSE){
+    cs_flag <- file.exists(paste(results_folder, "cscape-somatic_output.csv", sep = "/"))
+    if(cs_flag == TRUE){
+    print('Cscape-somatic files have been found in results-folder.')
+    }
+    else{
+      stop("Cscape-somatic_output.csv file is not found in results-folder.
+           Please provide correct path, or set runCScape = TRUE.")
+    }
+  }
+  
   #Reload Cscape output and add cscape_columns in case one type is not found
   cscape_cols <- c(Coding_score = NA, Noncoding_score = NA, Remark = NA)
   cscape_out <- read_csv(paste(results_folder, "cscape-somatic_output.csv", sep = '/'), show_col_types = FALSE) %>%
