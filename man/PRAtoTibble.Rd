@@ -4,10 +4,10 @@
 \alias{PRAtoTibble}
 \title{PRAtoTibble}
 \usage{
-PRAtoTibble(pra_file)
+PRAtoTibble(dataPRA)
 }
 \arguments{
-\item{pra_file}{RDS object (list of two) from PRA}
+\item{dataPRA}{RDA object (list of two) from PRA}
 }
 \value{
 tibble with drivers
@@ -17,5 +17,5 @@ This function changes the PRA output to tibble format
 }
 \examples{
 
-PRAtoTibble(pra_file)
+PRAtoTibble(dataPRA)
 }
