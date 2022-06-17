@@ -7,17 +7,18 @@
 DMA(
   MafFile,
   DEGs,
-  Drivers,
+  dataPRA,
+  runCscape = TRUE,
   coding_file,
   noncoding_file,
   results_folder = "./DMAresults"
 )
 }
 \arguments{
-\item{MafFile}{A .tsv MAF-file containing mutations
+\item{MafFile}{Path to MAF.csv. 
 The MAF file must at least contain the following columns
 \itemize{
-\item X1 rownumbers
+\item Empty column-name, containing row numbers
 \item Hugo_Symbol eg. BRCA1
 \item Chromosome eg. chr1
 \item Start_Position eg. 54402
@@ -30,9 +31,12 @@ The MAF file must at least contain the following columns
 \item Tumor_Seq_Allele2
 }}
 
-\item{DEGs}{DEGsmatrix output from DEA such as dataDEGs}
+\item{DEGs}{DEGsmatrix output from DEA such as dataDEGs.}
 
-\item{Drivers}{Output PRA function.}
+\item{dataPRA}{Output PRA function.}
+
+\item{runCscape}{Bolean. If \code{FALSE} will load CScape output file from results-folder
+Default = \code{TRUE}.}
 
 \item{coding_file}{A character string. Path to and name of CScape-somatic coding file.
 Can be downloaded at \url{http://cscape-somatic.biocompute.org.uk/#download}. The .tbi file must be placed in the same folder.}
@@ -52,7 +56,7 @@ This function carries out the driver mutation analysis
 
 DMA(MafFile = "path/myMAF.tsv",
     DEGs = DEGmatrix,
-    Drivers = dataPRA,
+    dataPRA = dataPRA,
     coding_file = "path/css_coding.vcf.gz",
     noncoding_file = "path/css_noncoding.vcf.gz",
     results_folder = "path/results")
