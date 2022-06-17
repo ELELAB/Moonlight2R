@@ -1,7 +1,7 @@
 #' DMA
 #'
 #' This function carries out the driver mutation analysis
-#' @param MafFile A .tsv MAF-file containing mutations
+#' @param MafFile A .csv MAF-file containing mutations
 #' The MAF file must at least contain the following columns
 #' \itemize{
 #' \item X1 rownumbers
@@ -16,8 +16,8 @@
 #' \item Tumor_Seq_Allele1
 #' \item Tumor_Seq_Allele2
 #' }
-#' @param DEGs DEGsmatrix output from DEA such as dataDEGs
-#' @param Drivers Output PRA function.
+#' @param DEGs DEGsmatrix output from DEA such as dataDEGs.
+#' @param dataPRA Output PRA function.
 #' @param coding_file A character string. Path to and name of CScape-somatic coding file.
 #' Can be downloaded at \url{http://cscape-somatic.biocompute.org.uk/#download}. The .tbi file must be placed in the same folder.
 #' @param noncoding_file A charcter string. Path to and name of CScape-somatic noncoding file.
@@ -36,12 +36,12 @@
 #'
 #' DMA(MafFile = "path/myMAF.tsv",
 #'     DEGs = DEGmatrix,
-#'     Drivers = dataPRA,
+#'     dataPRA = dataPRA,
 #'     coding_file = "path/css_coding.vcf.gz",
 #'     noncoding_file = "path/css_noncoding.vcf.gz",
 #'     results_folder = "path/results")
 
-DMA <- function(MafFile, DEGs, Drivers, coding_file, noncoding_file,
+DMA <- function(MafFile, DEGs, dataPRA, coding_file, noncoding_file,
                 results_folder = "./DMAresults"){
 
   # Create Output folder
@@ -54,10 +54,10 @@ DMA <- function(MafFile, DEGs, Drivers, coding_file, noncoding_file,
 
   # Load Data --------------------------------
   # read maf and add ID number to each mutation
-  mutations <- read_tsv(MafFile, guess_max = min(4000, Inf), show_col_types = FALSE) %>%
+  mutations <- read_csv(MafFile, guess_max = min(4000, Inf), show_col_types = FALSE) %>%
     dplyr::rename(ID = X1)
 
-  drivers_moonlight <- PRAtoTibble(Drivers)
+  drivers_moonlight <- PRAtoTibble(dataPRA)
   DEGs <- DEGs %>% rownames_to_column(var = 'Hugo_Symbol')
 
   # Load homemade mutations effect on transcription table
