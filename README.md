@@ -9,5 +9,5 @@ BiocManager::install("MoonlightR")
 
 ### Installation from GitHub ###
 ```R
-devtools::install_github(repo = "ibsquare/MoonlightR")
+devtools::install_github(repo = "ELELAB/MoonlightR2")
 ```
