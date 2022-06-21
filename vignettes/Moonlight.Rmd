@@ -458,6 +458,27 @@ dataFilt <- getDataTCGA(cancerType = "BRCA",
                           directory = "data",nSample = 4)
 ```
 
+## `getDataTCGA`: Get MAF data [Mutation]
+A direct download with getDataTCGA is not yet available. Suggested download directly with TCGABiolinks.
+Samples 100 mutation to reduce size of file.  
+
+```{r, eval = FALSE}
+library(TCGAbiolinks)
+query <- GDCquery(
+  project = "TCGA-LUAD", 
+  data.category = "Simple Nucleotide Variation",
+  data.type = "Masked Somatic Mutation",
+  access = "open", 
+  legacy = F,
+  workflow.type = "Aliquot Ensemble Somatic Variant Merging and Masking")
+
+GDCdownload(query, directory = "data")
+dataMAF <- GDCprepare(query, 
+                        directory = "data")
+
+dataMAF <- dataMAF %>% sample_n(size = 100, replace = FALSE)
+```
+
 
 # `Download`: Get GEO data
 
@@ -607,8 +628,8 @@ The user can retrieve TSG/OCG candidates using either selected biological proces
 ```{r, eval = TRUE}
 data(dataURA)
 dataPRA <- PRA(dataURA = dataURA,
-                          BPname = c("apoptosis","proliferation of cells"),
-                          thres.role = 0)
+               BPname = c("apoptosis","proliferation of cells"),
+               thres.role = 0)
 ```
 
 ## `DMA`: Driver Mutation Analysis
@@ -616,8 +637,10 @@ The user can identify driver mutations with `DMA` in the oncogenic mediators est
 
 ```{r, eval = TRUE}
 data(dataPRA)
-dataPRA <- DMA(MafFile = 
-               Drivers = dataPRA,
+data(dataMAF)
+dataDMA <- DMA(MafFile = dataMAF,
+               DEGs = DEGsmatrix, 
+               dataPRA = dataPRA,
                coding_file = "path/css_coding.vcf.gz",
                noncoding_file = "path/css_noncoding.vcf.gz")
 ```
