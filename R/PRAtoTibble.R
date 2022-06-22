@@ -4,6 +4,7 @@
 #' @param dataPRA RDA object (list of two) from PRA
 #' @import dplyr  
 #' @importFrom magrittr "%>%"
+#' @importFrom stringr str_trim
 #'
 #' @return tibble with drivers
 #' @export
