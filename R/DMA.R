@@ -37,7 +37,7 @@
 #' @export
 #' @examples
 #'
-#' DMA(MafFile = "path/myMAF.tsv",
+#' DMA(MafFile = "path/myMAF.csv",
 #'     DEGs = DEGmatrix,
 #'     dataPRA = dataPRA,
 #'     coding_file = "path/css_coding.vcf.gz",
@@ -66,7 +66,7 @@ DMA <- function(MafFile, DEGs, dataPRA,
     dplyr::rename(ID = `...1`)
 
   drivers_moonlight <- PRAtoTibble(dataPRA)
-  DEGs <- DEGs %>% rownames_to_column(var = 'Hugo_Symbol')
+  DEGs <- DEGs %>% tibble::rownames_to_column(var = 'Hugo_Symbol')
 
   # Load homemade mutations effect on transcription table
   transcription_binary <- get("LOC_transcription") %>%
