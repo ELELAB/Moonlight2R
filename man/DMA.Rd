@@ -54,7 +54,7 @@ This function carries out the driver mutation analysis
 }
 \examples{
 
-DMA(MafFile = "path/myMAF.tsv",
+DMA(MafFile = "path/myMAF.csv",
     DEGs = DEGmatrix,
     dataPRA = dataPRA,
     coding_file = "path/css_coding.vcf.gz",
