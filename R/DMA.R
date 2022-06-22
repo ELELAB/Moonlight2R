@@ -252,10 +252,12 @@ DMA <- function(MafFile, DEGs, dataPRA,
 
   # Make Mutation Table  including all annotations from this analysis--------
   # NCG is joined and the table order is restructured
+  DEGs_lastCol <- colnames(DEGs)[ncol(DEGs)]
+  
   DEGs_mut_Raw_out <- DEGs_mut_annotated %>%
     left_join(NCG, by = c("Hugo_Symbol" = "symbol")) %>%
     relocate(ID) %>%
-    relocate(starts_with("NCG"), .after = "B") %>%
+    relocate(starts_with("NCG"), .after = DEGs_lastCol) %>%
     relocate(any_of(c("Moonlight_gene_z_score",
                       "Moonlight_Oncogenic_Mediator",
                       "CScape_Coding_score", "CScape_Noncoding_score",
@@ -263,7 +265,7 @@ DMA <- function(MafFile, DEGs, dataPRA,
                       "Potential_Effect_on_Transcription",
                       "Potential_Effect_on_Translation",
                       "Potential_Effect_on_Protein",
-                      "Annotation","Annotation_Start", "Annotation_End")), .after = "B") %>%
+                      "Annotation","Annotation_Start", "Annotation_End")), .after = DEGs_lastCol) %>%
     dplyr::select(!(Chr))
 
   write_csv(x = DEGs_mut_Raw_out,
