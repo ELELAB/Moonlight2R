@@ -31,7 +31,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom readr read_tsv read_csv write_csv
 #' @importFrom maftools read.maf plotmafSummary
-#' @importFrom tibble rowname_to_column
+#' @importFrom tibble rownames_to_column
 #'
 #' @return List of two, containing TSGs and OCGs with at least one driver mutation. Additionally files and plots are saved in \code{results_folder}.
 #' @export
