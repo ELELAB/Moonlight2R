@@ -136,7 +136,8 @@ DMA <- function(dataMAF, DEGs, dataPRA,
   
   #Reload Cscape output and add cscape_columns in case one type is not found
   cscape_cols <- c(Coding_score = NA, Noncoding_score = NA, Remark = NA)
-  load(paste(results_folder, "cscape-somatic_output.rda", sep = '/')) %>%
+  load(paste(results_folder, "cscape-somatic_output.rda", sep = '/')) 
+  cscape-somatic_output <- cscape-somatic_output %>%
     add_column(., !!!cscape_cols[setdiff(names(cscape_cols), names(.))]) %>%
     rename_with(.cols = c("Coding_score","Noncoding_score","Remark"),
                 .fn = ~ paste("CScape_", ., sep = "")) %>%
