@@ -113,31 +113,31 @@ DMA <- function(dataMAF, DEGs, dataPRA,
     #run cscape-somatic 
     else{
       print("Cscape-somatic will now run. It takes some time")
-      cscape-somatic_output <- RunCscape_somatic(input = cscape_in,
+      cscape_somatic_output <- RunCscape_somatic(input = cscape_in,
                                                  coding_file = coding_file,
                                                  noncoding_file = noncoding_file)
       
-      save(cscape-somatic_output,
-           file = paste(results_folder,"cscape-somatic_output.rda", sep ='/'))
-      print('Cscape-somatic is finished. Output file is saved in result folder.')
+      save(cscape_somatic_output,
+           file = paste(results_folder,"cscape_somatic_output.rda", sep ='/'))
+      print('cscape_somatic is finished. Output file is saved in result folder.')
     }
   }
   
   else if(runCscape == FALSE){
-    cs_flag <- file.exists(paste(results_folder, "cscape-somatic_output.rda", sep = "/"))
+    cs_flag <- file.exists(paste(results_folder, "cscape_somatic_output.rda", sep = "/"))
     if(cs_flag == TRUE){
-      print('Cscape-somatic files have been found in results-folder.')
+      print('cscape_somatic files have been found in results-folder.')
     }
     else{
-      stop("Cscape-somatic_output.rda file is not found in results-folder.
+      stop("cscape_somatic_output.rda file is not found in results-folder.
            Please provide correct path, or set runCScape = TRUE.")
     }
   }
   
   #Reload Cscape output and add cscape_columns in case one type is not found
   cscape_cols <- c(Coding_score = NA, Noncoding_score = NA, Remark = NA)
-  load(paste(results_folder, "cscape-somatic_output.rda", sep = '/')) 
-  cscape-somatic_output <- cscape-somatic_output %>%
+  load(paste(results_folder, "cscape_somatic_output.rda", sep = '/')) 
+  cscape_somatic_output <- cscape_somatic_output %>%
     add_column(., !!!cscape_cols[setdiff(names(cscape_cols), names(.))]) %>%
     rename_with(.cols = c("Coding_score","Noncoding_score","Remark"),
                 .fn = ~ paste("CScape_", ., sep = "")) %>%
@@ -148,7 +148,7 @@ DMA <- function(dataMAF, DEGs, dataPRA,
     separate(Chromosome, into = c(NA, "Chr"), sep = 3, remove = FALSE, convert = TRUE)%>%
     mutate(Mutant = case_when(Reference_Allele == Tumor_Seq_Allele1 ~ Tumor_Seq_Allele2,
                               Reference_Allele == Tumor_Seq_Allele2 ~ Tumor_Seq_Allele1)) %>%
-    left_join(cscape-somatic_output,
+    left_join(cscape_somatic_output,
               by = c("Start_Position" = "Position",
                      "Variant_Type",
                      "Chr",
