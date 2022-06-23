@@ -29,10 +29,9 @@
 #' @import tidyr
 #' @import tibble
 #' @importFrom fuzzyjoin genome_left_join
-#' @importFrom magrittr "%>%" "%in%"
-#' @importFrom maftools read.maf plotmafSummary
+#' @importFrom magrittr "%>%"
 #'
-#' @return List of two, containing TSGs and OCGs with at least one driver mutation. Additionally files and plots are saved in \code{results_folder}.
+#' @return List of two, containing TSGs and OCGs with at least one driver mutation. Additionally files are saved in \code{results_folder}.
 #' @export
 #' @examples
 #'
@@ -270,12 +269,6 @@ DMA <- function(dataMAF, DEGs, dataPRA,
   save(DEGs_mut_Raw_out,
        file = paste(results_folder,"DEG_Mutations_Annotations.rda", sep = '/'))
   
-  
-  # Maftools Plots --------------------
-  MafFile <- read.maf(MafFile)
-  png(filename = paste(results_folder, "/PlotSumMAF.png", sep = ""))
-  plotmafSummary(MafFile)
-  dev.off()
   
   # Return final list of Drivers ------
   TSG <-  DEGs_mut_annotated %>%

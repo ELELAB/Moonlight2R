@@ -46,7 +46,7 @@ The MAF file must at least contain the following columns
 }}
 }
 \value{
-List of two, containing TSGs and OCGs with at least one driver mutation. Additionally files and plots are saved in \code{results_folder}.
+List of two, containing TSGs and OCGs with at least one driver mutation. Additionally files are saved in \code{results_folder}.
 }
 \description{
 This function carries out the driver mutation analysis
