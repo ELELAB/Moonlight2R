@@ -41,6 +41,16 @@
 #'     coding_file = "path/css_coding.vcf.gz",
 #'     noncoding_file = "path/css_noncoding.vcf.gz",
 #'     results_folder = "path/results")
+#'
+#' #If the cscape-somatic file have already been created
+#' cscape_somatic_output <- read.csv("./results/Cscape_somatic_output.csv")
+#' save(cscape_somatic_output, file = "./results/Cscape_somatic_output.rda")
+#'     
+#' DMA(dataMAF = dataMAF,
+#'     DEGs = DEGmatrix,
+#'     dataPRA = dataPRA,
+#'     runCscape = FALSE,
+#'     results_folder = "./results")     
 
 DMA <- function(dataMAF, DEGs, dataPRA, 
                 runCscape = TRUE,
