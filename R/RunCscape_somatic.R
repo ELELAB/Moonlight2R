@@ -35,7 +35,8 @@ RunCscape_somatic <- function(input, coding_file, noncoding_file){
     separate(col = Ranges, into = c('Chr', 'Position', NA)) %>% 
     dplyr::rename(Reference = Reference_Allele) %>% 
     dplyr::select(-c(file_coding, file_noncoding)) %>% 
-    relocate(Remark, .after = last_col())
+    relocate(Remark, .after = last_col()) %>% 
+    mutate(across(.fns = ~guess_parser)) 
   
   return(cscape_out)
 }
