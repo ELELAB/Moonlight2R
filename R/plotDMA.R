@@ -57,7 +57,7 @@ plotDMA <- function(DEG_Mutations_Annotations,
                  names_to = "Mutation_type",
                  values_to = "Count") %>% 
     replace_na(list(Count = 0)) %>% 
-    filter(Total_Mutations > 0) %>% 
+    #filter(Total_Mutations > 0) %>% 
     left_join(DEGs)
   
   
@@ -65,7 +65,7 @@ plotDMA <- function(DEG_Mutations_Annotations,
     
     Summary_wrangled <-  Summary_wrangled %>% 
       filter(Hugo_Symbol %in% genelist) %>% 
-      group_by(Moonlight_Oncogenic_Mediator)# %>% 
+      group_by(Moonlight_Oncogenic_Mediator) 
     
     #Check that there are both OCGs and TGS
     n <- Summary_wrangled %>% summarise() %>% count() %>% pull()
@@ -125,23 +125,25 @@ plotDMA <- function(DEG_Mutations_Annotations,
       print("A temporary heatmaps folder is created. It will be removed before finalising.")
       dir.create(path = "./heatmaps", showWarnings = TRUE, recursive = TRUE)
     }
-    print("")
     
     #Make vector with groups (40 genes in each plot x 3 (driver, pas, unclas) per gene) = 120
     split_vector <- rep(seq(1,ceiling(nrow(Summary_wrangled)/120), by = 1),each=120)
     split_vector <- split_vector[1:nrow(Summary_wrangled)] 
     
     grouped_data <- Summary_wrangled %>% arrange(Hugo_Symbol) %>% 
+      ungroup() %>%
       mutate(gr = split_vector) %>% 
       group_by(gr) %>%
-      tidyr::nest(data = -gr) %>% head(10)
+      tidyr::nest(data = -gr)
     
+    print("Start creating indivual heatmaps, this can take a while")
     test<- grouped_data %>% ungroup %>%  
       mutate(First_gene = map(grouped_data$data, ~plotHeatmap(.))) %>% 
       mutate(heatmaps = "heatmaps/heatmap_",
              pdf = ".pdf") %>% 
       unite(heatmaps, c(heatmaps, First_gene, pdf), sep ="")
-    
+    print("Indivial heatmaps finished, start combining") 
+
     # Stable pdf into one pdf
     pdfs <- test %>% pull(heatmaps)
     pdf_combine(input = pdfs, 
