@@ -1,7 +1,7 @@
 #' DMA
 #'
 #' This function carries out the driver mutation analysis
-#' @param MafFile A MAF file object.  
+#' @param dataMaf A MAF file rda object.  
 #' The MAF file must at least contain the following columns
 #' \itemize{
 #' \item Hugo_Symbol eg. BRCA1
@@ -15,7 +15,7 @@
 #' \item Tumor_Seq_Allele1
 #' \item Tumor_Seq_Allele2
 #' }
-#' @param DEGs DEGsmatrix output from DEA such as dataDEGs.
+#' @param dataDEGs Output DEA function.
 #' @param dataPRA Output PRA function.
 #' @param runCscape Bolean. If \code{FALSE} will load CScape output file from results-folder
 #' Default = \code{TRUE}.
@@ -36,7 +36,7 @@
 #' @examples
 #'
 #' DMA(dataMAF = dataMAF,
-#'     DEGs = DEGmatrix,
+#'     dataDEGs = DEGmatrix,
 #'     dataPRA = dataPRA,
 #'     coding_file = "path/css_coding.vcf.gz",
 #'     noncoding_file = "path/css_noncoding.vcf.gz",
@@ -52,7 +52,7 @@
 #'     runCscape = FALSE,
 #'     results_folder = "./results")     
 
-DMA <- function(dataMAF, DEGs, dataPRA, 
+DMA <- function(dataMAF, dataDEGs, dataPRA, 
                 runCscape = TRUE,
                 coding_file, noncoding_file,
                 results_folder = "./DMAresults"){
