@@ -8,6 +8,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr unite nest unnest
 #' @importFrom purrr pmap
+#' @importFrom readr guess_parser
 #'
 #' @return returns a tibble with a score and remark for each SNP
 #' @export
@@ -36,7 +37,7 @@ RunCscape_somatic <- function(input, coding_file, noncoding_file){
     dplyr::rename(Reference = Reference_Allele) %>% 
     dplyr::select(-c(file_coding, file_noncoding)) %>% 
     relocate(Remark, .after = last_col()) %>% 
-    mutate(across(.fns = ~guess_parser)) 
+    mutate(across(.fns = parse_guess)) 
   
   return(cscape_out)
 }
