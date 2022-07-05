@@ -30,6 +30,7 @@
 #' @import tibble
 #' @importFrom fuzzyjoin genome_left_join
 #' @importFrom magrittr "%>%"
+#' @importFrom purrr pmap
 #'
 #' @return List of two, containing TSGs and OCGs with at least one driver mutation. Additionally files are saved in \code{results_folder}.
 #' @export
