@@ -9,7 +9,7 @@
 #' @import dplyr  
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr unite nest unnest
-#' @importFrom stringr str_split
+#' @importFrom stringr str_split str_replace_all
 #' @importFrom seqminer tabix.read.table
 #' @importFrom tibble tibble
 #'
