@@ -7,7 +7,7 @@
 #' @import dplyr  
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr unite nest unnest
-#'
+#' @importFrom purrr pmap
 #'
 #' @return returns a tibble with a score and remark for each SNP
 #' @export
