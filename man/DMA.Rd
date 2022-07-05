@@ -65,7 +65,7 @@ cscape_somatic_output <- read.csv("./results/Cscape_somatic_output.csv")
 save(cscape_somatic_output, file = "./results/Cscape_somatic_output.rda")
     
 DMA(dataMAF = dataMAF,
-    DEGs = DEGmatrix,
+    dataDEGs = DEGmatrix,
     dataPRA = dataPRA,
     runCscape = FALSE,
     results_folder = "./results")     
