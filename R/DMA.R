@@ -47,7 +47,7 @@
 #' save(cscape_somatic_output, file = "./results/Cscape_somatic_output.rda")
 #'     
 #' DMA(dataMAF = dataMAF,
-#'     DEGs = DEGmatrix,
+#'     dataDEGs = DEGmatrix,
 #'     dataPRA = dataPRA,
 #'     runCscape = FALSE,
 #'     results_folder = "./results")     
@@ -77,7 +77,7 @@ DMA <- function(dataMAF, dataDEGs, dataPRA,
   
   dataMAF <- dataMAF %>% tibble::rowid_to_column("ID")
   drivers_moonlight <- PRAtoTibble(dataPRA)
-  DEGs <- DEGs %>% tibble::rownames_to_column(var = 'Hugo_Symbol')
+  dataDEGs <- dataDEGs %>% tibble::rownames_to_column(var = 'Hugo_Symbol')
   
   # Load homemade mutations effect on transcription table
   transcription_binary <- get("LOC_transcription") %>%
@@ -104,7 +104,7 @@ DMA <- function(dataMAF, dataDEGs, dataPRA,
   
   # Wrangle Data -----------------------------
   # Keep only mutations in DEGs
-  DEGs_mut <- DEGs %>% left_join(dataMAF, by = 'Hugo_Symbol')
+  DEGs_mut <- dataDEGs %>% left_join(dataMAF, by = 'Hugo_Symbol')
   
   
   # Cscape-somatic -------------------------
