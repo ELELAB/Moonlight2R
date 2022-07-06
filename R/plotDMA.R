@@ -22,6 +22,7 @@
 #' @param additionalFilename A character string. Adds prefix or filepath to the filename of the pdf.
 #' 
 #' @import dplyr  
+#' @import tidyr 
 #' @importFrom magrittr "%>%"
 #' @import ComplexHeatmap
 #' @import tidyHeatmap
