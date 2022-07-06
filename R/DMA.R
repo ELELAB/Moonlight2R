@@ -262,14 +262,14 @@ DMA <- function(dataMAF, dataDEGs, dataPRA,
               Total_Mutations = sum(!is.na(ID)))
   
   #Join summarises and add NCG data
-  Summary_per_gene <- full_join(Summary_per_gene_1, Summary_per_gene_2,
+  Oncogenic_mediators_mutation_summary <- full_join(Summary_per_gene_1, Summary_per_gene_2,
                                 by = c("Hugo_Symbol", "Moonlight_Oncogenic_Mediator")) %>%
     filter(!is.na(Moonlight_Oncogenic_Mediator)) %>%
     arrange(dplyr::desc(CScape_Driver)) %>%
     dplyr::select(!CScape_No_mutations) %>%
     left_join(NCG, by = c("Hugo_Symbol" = "symbol"))
   
-  save(Summary_per_gene,
+  save(Oncogenic_mediators_mutation_summary,
        file = paste(results_folder,"Oncogenic_mediators_mutation_summary.rda", sep ='/'))
   
   
@@ -277,7 +277,7 @@ DMA <- function(dataMAF, dataDEGs, dataPRA,
   # NCG is joined and the table order is restructured
   DEGs_lastCol <- colnames(dataDEGs)[ncol(dataDEGs)]
   
-  DEGs_mut_Raw_out <- DEGs_mut_annotated %>%
+  DEG_Mutations_Annotations <- DEGs_mut_annotated %>%
     left_join(NCG, by = c("Hugo_Symbol" = "symbol")) %>%
     relocate(ID) %>%
     relocate(starts_with("NCG"), .after = DEGs_lastCol) %>%
@@ -291,7 +291,7 @@ DMA <- function(dataMAF, dataDEGs, dataPRA,
                       "Annotation","Annotation_Start", "Annotation_End")), .after = DEGs_lastCol) %>%
     dplyr::select(!(Chr))
   
-  save(DEGs_mut_Raw_out,
+  save(DEG_Mutations_Annotations,
        file = paste(results_folder,"DEG_Mutations_Annotations.rda", sep = '/'))
   
   
