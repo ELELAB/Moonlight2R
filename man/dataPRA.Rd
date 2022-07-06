@@ -3,7 +3,7 @@
 \docType{data}
 \name{dataPRA}
 \alias{dataPRA}
-\title{Output example from function Pattern Recognition Analysis}
+\title{Output example from function the Pattern Recognition Analysis}
 \format{
 A list of two.
 }
@@ -15,5 +15,6 @@ A list of two.
 }
 \description{
 The predicted TSGs and OCGs and their moonlight gene z-score.
+The PRA() were run with expert-based approach with apoptosis and proliferation of cells.
 }
 \keyword{datasets}
