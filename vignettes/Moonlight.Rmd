@@ -460,7 +460,7 @@ dataFilt <- getDataTCGA(cancerType = "BRCA",
 
 ## `getDataTCGA`: Get MAF data [Mutation]
 A direct download with getDataTCGA is not yet available. Suggested download directly with TCGABiolinks.
-Samples 100 mutation to reduce size of file.  
+Samples 3000 mutation to reduce size of file.  
 
 ```{r, eval = FALSE}
 library(TCGAbiolinks)
@@ -476,7 +476,7 @@ GDCdownload(query, directory = "data")
 dataMAF <- GDCprepare(query, 
                         directory = "data")
 
-dataMAF <- dataMAF %>% sample_n(size = 100, replace = FALSE)
+dataMAF <- dataMAF %>% sample_n(size = 3000, replace = FALSE)
 ```
 
 
@@ -634,6 +634,8 @@ dataPRA <- PRA(dataURA = dataURA,
 
 ## `DMA`: Driver Mutation Analysis
 The user can identify driver mutations with `DMA` in the oncogenic mediators established by `PRA`.  The passenger or driver status is estimated with Cscape-somatic.  
+This function will further generate three files: DEG_Mutations_Annotation.rda, Oncogenic_mediators_mutation_summary.rda and cscape_somatic_output.rda. These will be placed in the specified results-folder. 
+
 
 ```{r, eval = TRUE}
 data(dataPRA)
@@ -641,6 +643,7 @@ data(dataMAF)
 dataDMA <- DMA(MafFile = dataMAF,
                DEGs = DEGsmatrix, 
                dataPRA = dataPRA,
+               results_folder = "DMAresults",
                coding_file = "path/css_coding.vcf.gz",
                noncoding_file = "path/css_noncoding.vcf.gz")
 ```
@@ -660,13 +663,16 @@ plotNetworkHive(dataGRN, knownDriverGenes, 0.55)
 
 ## `plotDMA`: Heatmap of the Driver/Passenger status of mutations in TSGs/OCGs
 
-In the following plot all the oncogenic mediators and their mutations are shown.
+In the following plot the driver genes with driver mutations are shown.
 
 ```{r, eval = TRUE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
-data()
-data()
-plotDMA(DEG_Mutations_Annotions, Oncogenic_mediators_mutation_summary, 
-        type = "complete",
+data(dataDMA)
+data(DEG_Mutations_Annotation)
+data(Oncogenic_mediators_mutation_summary)
+genes <- append(dataDMA$TSG, dataDMA$OCG)
+plotDMA(DEG_Mutations_Annotions, 
+        Oncogenic_mediators_mutation_summary, 
+        genelist = genes,
         additionalFilename = "_exampleVignette")
 ```
 
