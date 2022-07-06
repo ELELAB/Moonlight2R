@@ -8,7 +8,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr unite nest unnest
 #' @importFrom purrr pmap
-#' @importFrom readr guess_parser
+#' @importFrom readr parse_guess
 #'
 #' @return returns a tibble with a score and remark for each SNP
 #' @export
