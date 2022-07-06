@@ -1,8 +1,8 @@
 #' DMA
 #'
-#' This function carries out the driver mutation analysis
+#' This function carries out the driver mutation analysis.
 #' @param dataMaf A MAF file rda object.  
-#' The MAF file must at least contain the following columns
+#' The MAF file must at least contain the following columns:
 #' \itemize{
 #' \item Hugo_Symbol eg. BRCA1
 #' \item Chromosome eg. chr1
@@ -33,6 +33,19 @@
 #' @importFrom purrr pmap
 #'
 #' @return List of two, containing TSGs and OCGs with at least one driver mutation. Additionally files are saved in \code{results_folder}.
+#' All output files are in compressed .rda format. 
+#' \describe{
+#' \item{DEG_mutations_annotations.rda}{All differentially expressed genes’ mutations and their annotations. These annotations include e.g. Cscape-somatic assessment, Level of Consequence, overlab with promoter sites and information from Network of Cancer Genes (NCG 7.0). All information from MAF and DEA is contained.} 
+#' \item{Oncogenic_mediators_annotation_summary.rda}{All oncogenic mediators and an summarisation of their mutation based on CScape-somatic assessment, Level of Consequences and total number of mutations. If a gene as previously been assessed as a driver in Network of Cancer Genes (7.0), it is annotated in a separate column. }
+#' \item{Cscape_somatic_output.rda}{The file contain the cscape-somatic assessment for every mutation found in the differentially expressed genes. It is formatted exactly as the output of cscape-somatic, as if it was run in the terminal, except it is saved as .rda instead of csv. }
+#' }
+#' 
+#' @details 
+#' For more information about the different annotations added to the mutations please see the documentation as followes: 
+#' \code{data(NCG)}, \code{data(EncodePromoters)}, \code{data(LOC_protein)}
+#' \code{data(LOC_transcription)} and \code{data(LOC_translation)}.
+#' 
+#' 
 #' @export
 #' @examples
 #'
@@ -262,7 +275,7 @@ DMA <- function(dataMAF, dataDEGs, dataPRA,
   
   # Make Mutation Table  including all annotations from this analysis--------
   # NCG is joined and the table order is restructured
-  DEGs_lastCol <- colnames(DEGs)[ncol(DEGs)]
+  DEGs_lastCol <- colnames(dataDEGs)[ncol(dataDEGs)]
   
   DEGs_mut_Raw_out <- DEGs_mut_annotated %>%
     left_join(NCG, by = c("Hugo_Symbol" = "symbol")) %>%
