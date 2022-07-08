@@ -3,7 +3,7 @@
 \docType{data}
 \name{dataPRA}
 \alias{dataPRA}
-\title{Output example from function the Pattern Recognition Analysis}
+\title{Output example from function Pattern Recognition Analysis}
 \format{
 A list of two.
 }
