@@ -50,7 +50,9 @@ Depends: R (>= 3.5), doParallel, foreach
 Imports: parmigene, randomForest, SummarizedExperiment, gplots,
         circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
         limma, grDevices, graphics, TCGAbiolinks, GEOquery, stats,
-        RISmed, grid, utils
+        RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
+        liftOver, maftools, magrittr, qpdf, readr, seqminer, stringr,
+        tibble, tidyHeatmap, tidyr
 Description: Motivation: The understanding of cancer mechanism requires
         the identification of genes playing a role in the development
         of the pathology and the characterization of their role
@@ -86,5 +88,5 @@ VignetteBuilder: knitr
 LazyData: true
 URL: https://github.com/ELELAB/MoonlightR
 BugReports: https://github.com/ELELAB/MoonlightR/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Encoding: UTF-8
