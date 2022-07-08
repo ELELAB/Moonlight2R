@@ -458,6 +458,27 @@ dataFilt <- getDataTCGA(cancerType = "BRCA",
                           directory = "data",nSample = 4)
 ```
 
+## `getDataTCGA`: Get MAF data [Mutation]
+A direct download with getDataTCGA is not yet available. Suggested download directly with TCGABiolinks.
+Samples 3000 mutation to reduce size of file.  
+
+```{r, eval = FALSE}
+library(TCGAbiolinks)
+query <- GDCquery(
+  project = "TCGA-LUAD", 
+  data.category = "Simple Nucleotide Variation",
+  data.type = "Masked Somatic Mutation",
+  access = "open", 
+  legacy = F,
+  workflow.type = "Aliquot Ensemble Somatic Variant Merging and Masking")
+
+GDCdownload(query, directory = "data")
+dataMAF <- GDCprepare(query, 
+                        directory = "data")
+
+dataMAF <- dataMAF %>% sample_n(size = 3000, replace = FALSE)
+```
+
 
 # `Download`: Get GEO data
 
@@ -579,7 +600,7 @@ grid.raster(img)
 ## `GRN`: Gene Regulatory Network
 The user can perform a gene regulatory network analysis using the function `GRN` which infers the network using the parmigene package.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 dataGRN <- GRN(TFs = rownames(DEGsmatrix)[1:100], normCounts = dataFilt,
 	               nGenesPerm = 10,kNearest = 3,nBoot = 10)
 ```
@@ -604,12 +625,29 @@ dataURA <- URA(dataGRN = dataGRN,
 ## `PRA`: Pattern Regognition Analysis
 The user can retrieve TSG/OCG candidates using either selected biological processes or a random forest classifier trained on known COSMIC OCGs/TSGs.  
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 data(dataURA)
-dataDual <- PRA(dataURA = dataURA,
-                          BPname = c("apoptosis","proliferation of cells"),
-                          thres.role = 0)
+dataPRA <- PRA(dataURA = dataURA,
+               BPname = c("apoptosis","proliferation of cells"),
+               thres.role = 0)
 ```
+
+## `DMA`: Driver Mutation Analysis
+The user can identify driver mutations with `DMA` in the oncogenic mediators established by `PRA`.  The passenger or driver status is estimated with Cscape-somatic.  
+This function will further generate three files: DEG_Mutations_Annotation.rda, Oncogenic_mediators_mutation_summary.rda and cscape_somatic_output.rda. These will be placed in the specified results-folder. 
+
+
+```{r, eval = FALSE}
+data(dataPRA)
+data(dataMAF)
+dataDMA <- DMA(dataMAF = dataMAF,
+               dataDEGs = DEGsmatrix, 
+               dataPRA = dataPRA,
+               results_folder = "DMAresults",
+               coding_file = "/data/databases/CScape/CScape-20210624/css_coding.vcf.gz",
+               noncoding_file = "/data/databases/CScape/CScape-20210624/css_noncoding.vcf.gz")
+```
+
 
 
 ## `plotNetworkHive`: GRN hive visualization taking into account Cosmic cancer genes
@@ -620,6 +658,42 @@ In the following plot the nodes are separated into three groups: known tumor sup
 data(knownDriverGenes)
 data(dataGRN)
 plotNetworkHive(dataGRN, knownDriverGenes, 0.55)
+```
+
+
+## `plotDMA`: Heatmap of the Driver/Passenger status of mutations in TSGs/OCGs
+
+In the following plot the driver genes with driver mutations are shown.
+
+```{r, eval = FALSE,  warning = FALSE, message = FALSE, include=FALSE}
+data(dataDMA)
+data(DEG_Mutations_Annotations)
+data(Oncogenic_mediators_mutation_summary)
+genes <- append(dataDMA$TSG, dataDMA$OCG)
+plotDMA(DEG_Mutations_Annotations, 
+        Oncogenic_mediators_mutation_summary, 
+        genelist = genes, additionalFilename = "./DMAresults/")
+```
+
+
+```{r, out.width="0.3\\linewidth", include=TRUE, fig.align="center", fig.cap=c("your caption"), echo=TRUE}
+getwd()
+#knitr::include_graphics(path = "./vignettes/heatmap_genelist.pdf", error = TRUE)
+```
+
+
+
+## `plotMoonlight`: Heatmap of Moonlight gene z-score for the TSGs/OCGs
+## OBS! This function is not yet inclueded. 
+In the following plot the top 50 genes with the most driver mutations are visualised.
+The values are the moonlight gene z-score for the two biological processes
+
+```{r, eval = FALSE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
+data(DEG_Mutations_Annotations)
+data(Oncogenic_mediators_mutation_summary)
+plotMoonlight(DEG_Mutations_Annotations,
+        Oncogenic_mediators_mutation_summary, 
+        dataURA, gene_type = "drivers", n = 50)
 ```
 
 
@@ -664,7 +738,7 @@ CancerGenes <- list("TSG"=names(dataDual$TSG), "OCG"=names(dataDual$OCG))
 ## `plotURA`: Upstream regulatory analysis plot
 The user can plot the result of the upstream regulatory analysis using the function `plotURA`.
 
-```{r, eval = TRUE,message=FALSE,warning=FALSE, results='hide'}
+```{r, eval = FALSE,message=FALSE,warning=FALSE, results='hide'}
  plotURA(dataURA = dataURA[c(names(dataDual$TSG), names(dataDual$OCG)),, drop = FALSE], additionalFilename = "_exampleVignette")
 ```
 
