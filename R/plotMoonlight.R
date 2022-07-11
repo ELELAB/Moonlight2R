@@ -45,8 +45,7 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
   
   # The differentially expressed genes, that are annotated as TSG/OCG
   DEGs <- DEG_Mutations_Annotations %>% 
-    select(Hugo_Symbol, Moonlight_gene_z_score, logFC, AveExpr, 
-           t, P.Value, adj.P.Val, B) %>% 
+    select(Hugo_Symbol, Moonlight_gene_z_score, logFC) %>%
     unique() %>% 
     drop_na(Moonlight_gene_z_score)
   
@@ -64,7 +63,7 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
     replace_na(list(CScape_Driver = 0, 
                     CScape_Passenger = 0, 
                     CScape_Unclassified = 0)) #%>% 
-  
+
   # Type of plot:
   if (length(genelist) > 0 ){
     ura_wrangled <- ura_wrangled %>% 
@@ -87,7 +86,7 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
   # Variable for color scaling in legend
   max_driver <- ura_wrangled %>% arrange(desc(CScape_Driver)) %>% 
     select(CScape_Driver) %>%  head(1) %>% pull
-  
+
   # Plot Heatmap
   bp_heatmap <- heatmap(ura_wrangled,
                         .row = Biological_Process,
@@ -99,8 +98,6 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
                         cluster_rows = FALSE) %>%
     add_tile(Moonlight_Oncogenic_Mediator, palette = c("goldenrod2", "dodgerblue3")) %>%
     add_tile(logFC, palette = c("chartreuse4","firebrick3")) %>%
-    #add_tile(CScape_Driver, palette = c(lower_col, "steelblue4")) %>% 
-    #Use below when tidyHeatmap is updated
     add_tile(CScape_Driver, palette = colorRamp2(c(0,max_driver), c("white", "dodgerblue3"))) %>%
     add_bar(Total_Mutations) 
   
