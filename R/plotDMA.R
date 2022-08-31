@@ -27,6 +27,7 @@
 #' @import ComplexHeatmap
 #' @import tidyHeatmap
 #' @importFrom qpdf pdf_combine
+#' @importFrom purrr map
 #' 
 #' @return No return value. DMA results are plotted. 
 #' @export
