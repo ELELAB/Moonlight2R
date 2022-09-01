@@ -5,13 +5,13 @@
 \alias{Oncogenic_mediators_mutation_summary}
 \title{Oncogenic Mediators Mutation Summary}
 \format{
-A 1105x15 matrix.
+A 12x15 matrix.
 }
 \usage{
 data(Oncogenic_mediators_mutation_summary)
 }
 \value{
-A 1105x15 matrix.
+A 12x15 matrix.
 }
 \description{
 Output from DMA. 

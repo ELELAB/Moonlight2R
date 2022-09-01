@@ -3,26 +3,17 @@
 \docType{data}
 \name{dataMAF}
 \alias{dataMAF}
-\alias{dataDMA}
 \title{Mutation data from TCGA LUAD}
 \format{
-A 100x141 matrix.
-
-A list of two.
+A 3000x141 matrix.
 }
 \usage{
 data(dataMAF)
-
-data(dataMAF)
 }
 \value{
-A 100x141 matrix.
-
-A list of two, containing 23 tumor-suppressors and 39 oncogenes.
+A 3000x141 matrix.
 }
 \description{
 An examplary MAF file from TCGA on lung cancer LUAD. It contains 3000 randomly selected mutations.
-
-The predicted driver genes, which have at least one driver mutation.
 }
 \keyword{datasets}
