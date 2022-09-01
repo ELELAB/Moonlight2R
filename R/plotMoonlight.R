@@ -45,8 +45,7 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
   
   # The differentially expressed genes, that are annotated as TSG/OCG
   DEGs <- DEG_Mutations_Annotations %>% 
-    select(Hugo_Symbol, Moonlight_gene_z_score, logFC, AveExpr, 
-           t, P.Value, adj.P.Val, B) %>% 
+    select(Hugo_Symbol, Moonlight_gene_z_score, logFC) %>% 
     unique() %>% 
     drop_na(Moonlight_gene_z_score)
   
