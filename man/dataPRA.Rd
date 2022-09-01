@@ -14,7 +14,7 @@ data(dataPRA)
 A list of two.
 }
 \description{
-The predicted TSGs and OCGs and their moonlight gene z-score.
+The predicted TSGs and OCGs and their moonlight gene z-score based on the small sample TCGA-LUAD data.
 The PRA() were run with expert-based approach with apoptosis and proliferation of cells.
 }
 \keyword{datasets}
