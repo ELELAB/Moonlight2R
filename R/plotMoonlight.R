@@ -21,6 +21,8 @@
 #' @import ComplexHeatmap
 #' @import tidyHeatmap
 #' @importFrom circlize colorRamp2
+#' @importFrom tidyr drop_na pivot_longer replace_na
+#' @importFrom tibble rownames_to_column
 #'
 #' @return No return value. Moonlight scores are plotted for selected genes.
 #' @export

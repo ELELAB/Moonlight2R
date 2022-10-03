@@ -51,7 +51,7 @@ Imports: parmigene, randomForest, SummarizedExperiment, gplots,
         circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
         limma, grDevices, graphics, TCGAbiolinks, GEOquery, stats,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
-        liftOver, maftools, magrittr, qpdf, readr, seqminer, stringr,
+        rtracklayer, maftools, magrittr, qpdf, readr, seqminer, stringr,
         tibble, tidyHeatmap, tidyr
 Description: Motivation: The understanding of cancer mechanism requires
         the identification of genes playing a role in the development
