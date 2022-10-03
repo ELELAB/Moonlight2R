@@ -70,7 +70,8 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
   if (length(genelist) > 0 ){
     ura_wrangled <- ura_wrangled %>% 
       filter(Genes %in% genelist)
-    n <- Summary_wrangled %>% summarise() %>% count() %>% pull()
+    n <- Summary_wrangled %>% group_by(Moonlight_Oncogenic_Mediators) %>% 
+      summarise() %>% count() %>% pull()
     if (n <= 1){
       stop("The genelist must contain at least one OCG and one TSG.")
     }
