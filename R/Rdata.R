@@ -114,7 +114,7 @@
 
 #' Output example from function Pattern Recognition Analysis
 #'
-#'@description The predicted TSGs and OCGs and their moonlight gene z-score.
+#'@description The predicted TSGs and OCGs and their moonlight gene z-score based on the small sample TCGA-LUAD data.
 #'The PRA() were run with expert-based approach with apoptosis and proliferation of cells. 
 #'
 #'@docType data
@@ -136,8 +136,8 @@
 #'@usage data(dataMAF)
 #'@name dataMAF
 #'@aliases dataMAF
-#'@return A 100x141 matrix.
-#'@format A 100x141 matrix. 
+#'@return A 3000x141 matrix.
+#'@format A 3000x141 matrix. 
 #'
 #'
 "dataMAF"
@@ -147,10 +147,10 @@
 #'@description The predicted driver genes, which have at least one driver mutation. 
 #'
 #'@docType data
-#'@usage data(dataMAF)
-#'@name dataMAF
-#'@aliases dataMAF
-#'@return A list of two, containing 23 tumor-suppressors and 39 oncogenes.
+#'@usage data(dataDMA)
+#'@name dataDMA
+#'@aliases dataDMA
+#'@return A list of two, containing 0 tumor-suppressor and 1 oncogene.
 #'@format A list of two. 
 #'
 #'
@@ -194,8 +194,8 @@
 #'@usage data(Oncogenic_mediators_mutation_summary)
 #'@name Oncogenic_mediators_mutation_summary
 #'@aliases Oncogenic_mediators_mutation_summary
-#'@return A 1105x15 matrix.
-#'@format A 1105x15 matrix. 
+#'@return A 12x15 matrix.
+#'@format A 12x15 matrix. 
 #'
 #'
 "Oncogenic_mediators_mutation_summary"
