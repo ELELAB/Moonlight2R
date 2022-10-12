@@ -11,6 +11,7 @@ plotMoonlight(
   gene_type = "drivers",
   n = 50,
   genelist = c(),
+  BPlist = c(),
   additionalFilename = ""
 )
 }
@@ -32,6 +33,9 @@ plotMoonlight(
 
 \item{genelist}{A vector of strings containing Hugo Symbols of genes. 
 Overwrites \code{gene_type} argument.}
+
+\item{BPlist}{A vector of strings. Selection of the biological processes to visualise.
+If left empty defaults to every BP provided in the URA file.}
 
 \item{additionalFilename}{A character string. Adds prefix or filepath to the filename of the pdf.}
 }

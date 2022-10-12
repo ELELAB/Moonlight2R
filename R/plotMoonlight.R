@@ -14,6 +14,8 @@
 #' @param n Numeric. The top number of genes to be plotted. If \code{NULL} defaults to 50.
 #' @param genelist A vector of strings containing Hugo Symbols of genes. 
 #' Overwrites \code{gene_type} argument.
+#' @param BPlist A vector of strings. Selection of the biological processes to visualise.
+#'  If left empty defaults to every BP provided in the URA file. 
 #' @param additionalFilename A character string. Adds prefix or filepath to the filename of the pdf.
 #'
 #' @import dplyr  
@@ -43,6 +45,7 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
                           gene_type = "drivers",
                           n = 50, 
                           genelist = c(),
+                          BPlist = c(),
                           additionalFilename = ""){
   
   # The differentially expressed genes, that are annotated as TSG/OCG
@@ -64,18 +67,24 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
     right_join(DEGs, by = c("Genes" = "Hugo_Symbol")) %>%
     replace_na(list(CScape_Driver = 0, 
                     CScape_Passenger = 0, 
-                    CScape_Unclassified = 0)) #%>% 
+                    CScape_Unclassified = 0)) 
+  
+  # Biological Processes
+  n_BP <- ura_wrangled %>% group_by(Biological_Process) %>% 
+    summarise() %>% count() %>% pull()
+  
+  if (length(BPlist) > 0){
+    ura_wrangled <- ura_wrangled %>% 
+      filter(Biological_Process %in% BPlist)
+    n_BP <- length(BPlist)
+  }
+  n <- n * n_BP
   
   # Type of plot:
   if (length(genelist) > 0 ){
     ura_wrangled <- ura_wrangled %>% 
       filter(Genes %in% genelist)
-    n <- Summary_wrangled %>% group_by(Moonlight_Oncogenic_Mediators) %>% 
-      summarise() %>% count() %>% pull()
-    if (n <= 1){
-      stop("The genelist must contain at least one OCG and one TSG.")
-    }
-    
+   
     } else if (gene_type == "mediators"){
       ura_wrangled <- ura_wrangled %>% 
         slice_max(Total_Mutations, n = n, with_ties = FALSE)
@@ -85,6 +94,11 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
       slice_max(CScape_Driver, n = n, with_ties = FALSE)
       
     }
+  n_types <- ura_wrangled %>% group_by(Moonlight_Oncogenic_Mediator) %>% 
+    summarise() %>% count() %>% pull()
+  if (n_types <= 1){
+    stop("Must contain at least one OCG and one TSG. Increase n or add gene to genelist")
+  }
   
   # Variable for color scaling in legend
   max_driver <- ura_wrangled %>% arrange(desc(CScape_Driver)) %>% 
