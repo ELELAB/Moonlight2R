@@ -1,11 +1,4 @@
-# Identify oncogenes and tumor suppressor genes from genomic (gene expression) data.
-
-### Installation from Bioconductor ###
-```R
-if (!requireNamespace("BiocManager", quietly=TRUE))
-    install.packages("BiocManager")
-BiocManager::install("MoonlightR")
-```
+# Identify oncogenes and tumor suppressor genes from genomic data.
 
 ### Installation from GitHub ###
 ```R
