@@ -1,8 +1,8 @@
-Package: MoonlightR
+Package: MoonlightR2
 Type: Package
 Title: Identify oncogenes and tumor suppressor genes from omics data
-Version: 1.21.4
-Date: 07-08-2020
+Version: 2.0.0
+Date:
 Authors@R:
   c(person("Antonio", "Colaprico",
            role="aut"),
@@ -18,6 +18,8 @@ Authors@R:
            role="aut"),
     person("Astrid", "Saksager",
            role="aut"),
+    person("Nikola", "Tom",
+	   role="aut"), 	
     person("Tiago C.", "Silva",
            role="aut"),
     person("André V.", "Olsen",
@@ -86,7 +88,7 @@ Suggests: BiocStyle, knitr, rmarkdown, testthat, devtools, roxygen2,
         png
 VignetteBuilder: knitr
 LazyData: true
-URL: https://github.com/ELELAB/MoonlightR
-BugReports: https://github.com/ELELAB/MoonlightR/issues
+URL: https://github.com/ELELAB/MoonlightR2
+BugReports: https://github.com/ELELAB/MoonlightR2/issues
 RoxygenNote: 7.2.0
 Encoding: UTF-8
