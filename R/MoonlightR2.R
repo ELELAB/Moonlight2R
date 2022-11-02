@@ -1,6 +1,6 @@
 #' MoonlightR2
 #'
-#' @description MoonlightR is a package designed for the identification of cancer driver genes. Please see the
+#' @description MoonlightR2 is a package designed for the identification of cancer driver genes. Please see the
 #' documentation on our Bioconductor page for more details: https://www.bioconductor.org/packages/release/bioc/html/MoonlightR.html
 #'
 #' If you experience issues with the package, please open an Issue on our GitHub repository: https://github.com/ELELAB/MoonlightR2
