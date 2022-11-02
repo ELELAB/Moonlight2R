@@ -1,4 +1,4 @@
-citHeader("To cite MoonlightR in publications use:")
+citHeader("To cite MoonlightR2 in publications use:")
 
 citEntry(entry = "article",
          title = "Interpreting pathways to discover cancer driver genes with Moonlight",
