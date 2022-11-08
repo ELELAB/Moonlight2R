@@ -384,7 +384,7 @@ We then use these scores to predict two specific roles: genes that act as tumor 
 # Introduction 
 
 Cancer development is influenced by mutations in two distinctly different categories of genes, known as  tumor suppressor genes (TSG) and oncogenes (OCG). The occurrence of mutations in genes of the first category leads to faster cell proliferation while mutations in genes of second category increases or changes their function.
-We propose `MoonlightR` a new approach to define TSGs and OCGs based on functional enrichment analysis, infer gene regulatory networks and upstream regulator analysis to score the importance of well-known biological processes with respect to the studied cancer.
+We propose `MoonlightR2` a new approach to define TSGs and OCGs based on functional enrichment analysis, infer gene regulatory networks and upstream regulator analysis to score the importance of well-known biological processes with respect to the studied cancer.
 
 # Moonlight's pipeline
 
@@ -409,16 +409,14 @@ The proposed pipeline consists of following eight steps:
 7. We applied the above procedure to multiple cancer types to obtain cancer-specific lists of TCGs and OCGs. We compared the lists for each cancer: if a sDEG was TSG in a cancer and OCG in another we defined it as dual-role TSG-OCG. Otherwise if we found a sDEG defined as OCG or TSG only in one tissue we defined it tissue specific biomarker.
 8. We use the COSMIC database to define a list of gold standard TSG and OCGs to assess the accuracy of the proposed method.
 
-<sup>1</sup> For the devel version of MoonlightR we use a short extract of ten biological functions from QIAGEN'S Ingenuity Pathway Analysis (IPA). We are still working to integrate the\Biocpkg{ReactomePA} package.
+<sup>1</sup> For the devel version of MoonlightR2 we use a short extract of ten biological functions from QIAGEN'S Ingenuity Pathway Analysis (IPA). We are still working to integrate the\Biocpkg{ReactomePA} package.
 
 # Installation
 
 To install use the code below.
 
 ```{r, eval = FALSE}
-if (!requireNamespace("BiocManager", quietly=TRUE))
-    install.packages("BiocManager")
-BiocManager::install("MoonlightR")
+devtools::install_github(repo = "ELELAB/MoonlightR2")
 ```
 
 ## Citation
@@ -703,7 +701,7 @@ grid.raster(img)
 # TCGA Downstream Analysis: Case Studies
 
 ### Introduction 
-This vignette shows a complete workflow of the 'MoonlightR' package except for the data download.
+This vignette shows a complete workflow of the 'MoonlightR2' package except for the data download.
 The code is divided into three case study:
 
 * 1. Downstream analysis LUAD using RNA expression data
