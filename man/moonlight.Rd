@@ -24,7 +24,10 @@ moonlight(
   thres.role = 0,
   stage = NULL,
   subtype = 0,
-  samples = NULL
+  samples = NULL,
+  dataMAF,
+  path_cscape_coding,
+  path_cscape_noncoding
 )
 }
 \arguments{
@@ -68,6 +71,12 @@ for all available cancer types in TCGA. Defaults to panCancer}
 \item{subtype}{subtype}
 
 \item{samples}{samples}
+
+\item{dataMAF}{A MAF file rda object for DMA}
+
+\item{path_cscape_coding}{A character string to path of CScape-somatic coding file}
+
+\item{path_cscape_noncoding}{A character string to path of CScape-somatic non-coding file}
 }
 \value{
 table with cancer driver genes TSG and OCG.
