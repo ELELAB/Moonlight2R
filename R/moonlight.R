@@ -28,6 +28,9 @@
 #' @param stage stage
 #' @param subtype subtype
 #' @param samples samples
+#' @param dataMAF A MAF file rda object for DMA
+#' @param path_cscape_coding A character string to path of CScape-somatic coding file
+#' @param path_cscape_noncoding A character string to path of CScape-somatic non-coding file
 #' @export
 #' @return table with cancer driver genes TSG and OCG.
 #' @examples
@@ -39,7 +42,8 @@ moonlight <- function(cancerType="panCancer", dataType="Gene expression",
                       qnt.cut = 0.25, Genelist= NULL, fdr.cut = 0.01, logFC.cut = 1,
                       corThreshold = 0.6, kNearest = 3, nGenesPerm = 10, DiffGenes = FALSE,
                       nBoot = 100, nTF = NULL, nSample=NULL,thres.role = 0, 
-                      stage = NULL,subtype = 0, samples = NULL){
+                      stage = NULL,subtype = 0, samples = NULL, dataMAF, 
+                      path_cscape_coding, path_cscape_noncoding){
 
   GDCprojects <- get("GDCprojects")
   
@@ -101,15 +105,25 @@ moonlight <- function(cancerType="panCancer", dataType="Gene expression",
 
         dataURA <- URA(dataGRN = dataGRN, DEGsmatrix = dataDEGs, BPname = BPname)
 
-        ### get TSG/OCG candidates using random forest
+        ### get TSG/OCG candidates using PRA
         print("-----------------------------------------")
         print("Get candidates")
         print("-----------------------------------------")
         listCandidates <- PRA(dataURA = dataURA, BPname = BPname, thres.role = thres.role)
+        
+        ### get TSG/OCG driver genes using DMA
+        print("-----------------------------------------")
+        print("Get driver genes")
+        print("-----------------------------------------")
+        driverGenes <- DMA(dataMAF = dataMAF, dataDEGs = dataDEGs, dataPRA = listCandidates, 
+                           runCscape = TRUE, coding_file = path_cscape_coding, noncoding_file = path_cscape_noncoding, 
+                           results_folder = "./DMAresults")
+        
 
         res.i <- list(dataDEGs = dataDEGs,
                 dataURA = dataURA, 
-                listCandidates = listCandidates)
+                listCandidates = listCandidates,
+                driverGenes = driverGenes)
         res <- c(res, list(res.i))
     }
     names(res) <- cancerType
