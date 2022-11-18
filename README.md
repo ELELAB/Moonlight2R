@@ -18,5 +18,5 @@ contacts for repository: Elena Papaleo, elpap-at-dtu.dk, elenap-at-cancer.dk; Ma
 
 ### Installation from GitHub ###
 ```R
-devtools::install_github(repo = "ELELAB/MoonlightR2")
+devtools::install_github(repo = "ELELAB/Moonlight2R")
 ```
