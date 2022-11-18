@@ -26,7 +26,7 @@ LiftMAF <- function(Infile, Current_Build){
   } else if(Current_Build == "GRCh37"){
     chainBuild <- "hg19ToHg38.over.chain"
     path <- system.file("data", "hg19ToHg38.over.chain", 
-                        package = "MoonlightR2", mustWork = TRUE)
+                        package = "Moonlight2R", mustWork = TRUE)
     flag <- TRUE
   } else {
     print("Error: Build must be either GRCh38 or GRCh37")
