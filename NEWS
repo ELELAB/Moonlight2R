@@ -1,9 +1,9 @@
-  MoonlightR2
+  Moonlight2R
   
 ----------------------------------------------------------------
   Changes in version 2.0.0
 General: 
-* Github repository is changed to: https://github.com/ELELAB/MoonlightR2
+* Github repository is changed to: https://github.com/ELELAB/Moonlight2R
 
 New features: 
 * DMA()			Driver mutation analysis
@@ -20,10 +20,10 @@ New features:
 * cscape_somatic_output	Cscape-somatic annotations of TCGA-LUAD 
 * DEG_Mutations_Annotations	Differentially expressed genes's Mutations 
 * Oncogenic_mediators_mutation_summary	Oncogenic Mediators Mutation Summary  
-* moonlightR2		Function to run moonlight pipeline (renamed from first version of MoonlightR)
+* moonlight2R		Function to run moonlight pipeline (renamed from first version of MoonlightR)
   
 ----------------------------------------------------------------
-  MoonlightR2 is live 
+  Moonlight2R is live 
   
   
   
