@@ -419,6 +419,12 @@ To install use the code below.
 devtools::install_github(repo = "ELELAB/Moonlight2R")
 ```
 
+# Load libraries
+```{r, eval = FALSE}
+library(Moonlight2R)
+library(tidyverse)
+```
+
 ## Citation
 
 Please cite TCGAbiolinks package: 
@@ -452,7 +458,7 @@ The user can also query and download methylation data using the function `getDat
 
 
 ```{r, eval = FALSE}
-dataFilt <- getDataTCGA(cancerType = "BRCA", 
+dataFilt_met <- getDataTCGA(cancerType = "BRCA", 
                           dataType = "Methylation", 
                           directory = "data",nSample = 4)
 ```
@@ -498,11 +504,11 @@ knitr::kable(GEO_TCGAtab, digits = 2,
 The user can query and download the cancer types supported by GEO, using the function `getDataGEO`:
 
 ```{r, eval = FALSE , echo = TRUE, results='hide', warning = FALSE, message = FALSE}
-dataFilt <- getDataGEO(GEOobject = "GSE20347",platform = "GPL571")
+dataFilt_GEO <- getDataGEO(GEOobject = "GSE20347",platform = "GPL571")
 ```
 
 ```{r, eval = FALSE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
-dataFilt <- getDataGEO(TCGAtumor = "ESCA")
+dataFilt_GEO <- getDataGEO(TCGAtumor = "ESCA")
 ```
 
 # `Analysis`: To analyze TCGA data
@@ -534,10 +540,10 @@ cancerGEO <- GEO_TCGAtab$Dataset[i]
 cancerPLT <-GEO_TCGAtab$Platform[i]
 fileCancerGEO <- paste0(cancer,"_GEO_",cancerGEO,"_",cancerPLT, ".RData")
 
-dataFilt <- getDataGEO(TCGAtumor = cancer)
+dataFilt_GEO <- getDataGEO(TCGAtumor = cancer)
 xContrast <- c("G1-G0")
 GEOdegs <- DPA(dataConsortium = "GEO",
-               gset = dataFilt ,
+               gset = dataFilt_GEO ,
                colDescription = "title",
                samplesType  = c(GEO_TCGAtab$GEO_Normal[i],
                                 GEO_TCGAtab$GEO_Tumor[i]),
@@ -670,7 +676,7 @@ data(DEG_Mutations_Annotations)
 data(Oncogenic_mediators_mutation_summary)
 plotDMA(DEG_Mutations_Annotations, 
         Oncogenic_mediators_mutation_summary, 
-        gene_type = 'complete', n = 50, additionalFilename = "./DMAresults/")
+        type = 'complete', additionalFilename = "./DMAresults/")
 ```
 
 
