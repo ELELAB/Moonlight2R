@@ -20,3 +20,25 @@ contacts for repository: Elena Papaleo, elpap-at-dtu.dk, elenap-at-cancer.dk; Ma
 ```R
 devtools::install_github(repo = "ELELAB/Moonlight2R")
 ```
+
+#### Installation from GitHub with accompanying vignette ####
+
+You need the BiocStyle Bioconductor package to install Moonlight2R with the vignette. This package can be installed like:  
+```R
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("BiocStyle")
+```
+
+To install Moonlight2R with its vignette:
+```R
+devtools::install_github(repo = "ELELAB/Moonlight2R", build_vignettes = TRUE)
+```
+
+To view the vignette:
+```R
+vignette( "Moonlight2R", package="Moonlight2R")
+```
+
+
