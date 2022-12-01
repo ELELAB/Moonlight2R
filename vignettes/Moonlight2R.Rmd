@@ -1,17 +1,13 @@
 ---
-title: "Moonlight: an approach to identify multiple role of biomarkers as oncogene or tumorsuppressor in different tumor types and stages."
-author: "Antonio Colaprico^+^ ,
-        Catharina Olsen^+^,
-        Claudia Cava, 
-        Thilde Terkelsen,
-        Laura Cantini,
-        Gloria Bertoli,
-        Andre Olsen,
-        Andrei Zinovyev,
-        Emmanuel Barillot,
-        Isabella Castiglioni,
-        Elena Papaleo,
-        Gianluca Bontempi"
+title: "Moonlight2: An automatized workflow to study mechanistic indicators for driver gene prediction"
+author: "Astrid Saksager^+^ ,
+        Mona Nourbakhsh^+^,
+        Nikola Tom, 
+        Xi Steven Chen,
+        Antonio Colaprico,
+        Catharina Olsen,
+        Matteo Tiberti,
+        Elena Papaleo"
 subtitle: ^+^ These authors contributed equally to the paper as first authors.
 
 date: "`r Sys.Date()`"
@@ -358,6 +354,29 @@ references:
   issued:
    year: 2016 
 
+- id: ref26
+  title: "Interpreting pathways to discover cancer driver genes with Moonlight"
+  author: 
+  - family:  Colaprico, Antonio and Olsen, Catharina and Bailey, Matthew H. and Odom, Gabriel J. and Terkelsen, Thilde and Silva, Tiago C. and Olsen, André V. and Cantini, Laura and Zinovyev, Andrei and Barillot, Emmanuel and Noushmehr, Houtan and Bertoli, Gloria and Castiglioni, Isabella and Cava, Claudia and Bontempi, Gianluca and Chen, Xi Steven and Papaleo, Elena
+  given:
+  journal: Nature Communications
+  URL: "https://doi.org/10.1038/s41467-019-13803-0"
+  DOI: "10.1038/s41467-019-13803-0"
+  volume: 11
+  number: 69
+  issued:
+   year: 2020
+
+- id: ref27
+  title: "An Automatized Workflow to Study Mechanistic Indicators for Driver Gene Prediction with Moonlight"
+  author: 
+  - family:  Saksager, Astrid and Nourbakhsh, Mona and Tom, Nikola and Chen, Xi Steven and Colaprico, Antonio and Olsen, Catharina and Tiberti, Matteo and Papaleo, Elena
+  given:
+  journal: bioRxiv
+  URL: "https://www.biorxiv.org/content/10.1101/2022.11.18.517066v1"
+  DOI: "10.1101/2022.11.18.517066"
+  issued:
+   year: 2022
 
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -378,13 +397,12 @@ devtools::load_all(".")
 # Abstract
 
 In order to make light of cancer development, it is crucial to understand which genes play a role in the mechanisms linked to this disease and moreover which role that is. Commonly biological processes such as proliferation and apoptosis have been linked to cancer progression. 
-Based on expression data we perform functional enrichment analysis, infer gene regulatory networks and upstream regulator analysis to score the importance of well-known biological processes with respect to the studied cancer.
-We then use these scores to predict two specific roles: genes that act as tumor suppressor genes (TSGs) and genes that act as oncogenes (OCGs). This methodology not only allows us to identify genes with dual role (TSG in one cancer type and OCG in another) but also to elucidate the underlying biological processes. 
+We have developed the Moonlight framework that allows for prediction of cancer driver genes through multi-omics data integration. Based on expression data we perform functional enrichment analysis, infer gene regulatory networks and upstream regulator analysis to score the importance of well-known biological processes with respect to the studied cancer. We then use these scores to predict oncogenic mediators with two specific roles: genes that potentially act as tumor suppressor genes (TSGs) and genes that potentially act as oncogenes (OCGs). This constitutes Moonlight's primary layer. As gene expression data alone does not explain the cancer phenotypes, a second layer of evidence is needed. We have automated the integration of a secondary mutational layer that predicts driver mutations in the oncogenic mediators and thereby allows for the prediction of cancer driver genes using the driver mutation prediction tool CScape-somatic. These new functionalities are provided in the updated version of Moonlight, namely Moonlight2. Overall, this methodology not only allows us to identify genes with dual role (TSG in one cancer type and OCG in another) but also to elucidate the underlying biological processes. 
 
 # Introduction 
 
 Cancer development is influenced by mutations in two distinctly different categories of genes, known as  tumor suppressor genes (TSG) and oncogenes (OCG). The occurrence of mutations in genes of the first category leads to faster cell proliferation while mutations in genes of second category increases or changes their function.
-We propose `Moonlight2R` a new approach to define TSGs and OCGs based on functional enrichment analysis, infer gene regulatory networks and upstream regulator analysis to score the importance of well-known biological processes with respect to the studied cancer.
+In 2020, we developed the Moonlight framework that allows for prediction of cancer driver genes (Colaprico and Olsen et al., 2020). Here, gene expression data are integrated together with biological processes and gene regulatory networks to score the importance of well-known biological processes with respect to the studied cancer. These scores are used to predict  oncogenic mediators: putative TSGs and putative OCGs. As gene expression data alone is not enough to explain the deregulation of the genes, a second layer of evidence is needed. For this reason, we automated the integration of a secondary mutational layer which predicts driver mutations and passenger mutations in the oncogenic mediators. These new functionalities are released in the updated version of Moonlight to produce Moonlight2R. The prediction of the driver mutations are carried out using the CScape-somatic driver mutation prediction tool. Moreover, the new functionalities estimate the potential effect of a mutation on the transcriptional, translational, or protein structure/function level. Those oncogenic mediators with at least one driver mutation are retained as the final set of driver genes (Saksager and Nourbakhsh et al., 2022). 
 
 # Moonlight's pipeline
 
@@ -392,32 +410,55 @@ Moonlight's pipeline is shown below:
 ```{r, fig.width=6, fig.height=4, echo = FALSE, fig.align="center",hide=TRUE, message=FALSE,warning=FALSE}
 library(png)
 library(grid)
-img <- readPNG("Moonlight_Pipeline.png")
+img <- readPNG("Moonlight2_pipeline.png")
 grid.raster(img)
 ```
 
 # Moonlight's proposed workflow
 
-The proposed pipeline consists of following eight steps:
+The proposed pipeline consists of following nine steps:
 
 1. **getDataTCGA** \& **getDataGEO** for Data collection: expression levels of genes in all samples obtained with IlluminaHiSeq RNASeqV2 in 18 normal tissues (NT) and 18 cancer tissues (CT) according to TCGA criteria, and GEO data set matched to one of the 18 given TCGA cancer types as described in following Table TCGA / GEO.
 2. **DPA** Differential Phenotype Analysis (DEA) to identify genes or probes that are different significantly with two phenotypes such as normal and tumor, or normal and stageI, normal and molecular subtype.
-3. **FEA** Functional Enrichment Analysis (EA), using Fisher's test, to identify gene sets (with biological functions linked to cancer<sup>1</sup>) significantly enriched by RG.
+3. **FEA** Functional Enrichment Analysis (EA), using Fisher's test, to identify gene sets (with biological functions linked to cancer) significantly enriched by RG.
 4. **GRN** Gene regulatory network inferred between each single DEG (sDEG) and all genes by means of mutual information, obtaining for each DEG a list of regulated genes (RG).
 5. **URA** Upstream Regulator Analysis for DEGs in each enriched gene set, we applied z-score being the ratio between the sum of all predicted effects for all the gene involved in the specific function and the square-root of the number of all genes.
-6. **PRA** Pattern recognition analysis identifies candidate TCGs (down) and OCGs (up). We either use user defined biological processes or random forests.
-7. We applied the above procedure to multiple cancer types to obtain cancer-specific lists of TCGs and OCGs. We compared the lists for each cancer: if a sDEG was TSG in a cancer and OCG in another we defined it as dual-role TSG-OCG. Otherwise if we found a sDEG defined as OCG or TSG only in one tissue we defined it tissue specific biomarker.
-8. We use the COSMIC database to define a list of gold standard TSG and OCGs to assess the accuracy of the proposed method.
+6. **PRA** Pattern recognition analysis identifies putative TSGs (down) and OCGs (up). We either use user defined biological processes or random forests.
+7. **DMA** Driver Mutation Analysis identifies driver mutations in the putative TSGs and OCGs through the driver mutation prediction tool, CScape-somatic.
+8. We applied the above procedure to multiple cancer types to obtain cancer-specific lists of TSGs and OCGs. We compared the lists for each cancer: if a sDEG was TSG in a cancer and OCG in another we defined it as dual-role TSG-OCG. Otherwise if we found a sDEG defined as OCG or TSG only in one tissue we defined it tissue specific biomarker.
+9. We use the COSMIC database to define a list of gold standard TSG and OCGs to assess the accuracy of the proposed method.
 
-<sup>1</sup> For the devel version of Moonlight2R we use a short extract of ten biological functions from QIAGEN'S Ingenuity Pathway Analysis (IPA). We are still working to integrate the\Biocpkg{ReactomePA} package.
 
 # Installation
 
-To install use the code below.
+To install Moonlight2R use the code below.
 
 ```{r, eval = FALSE}
 devtools::install_github(repo = "ELELAB/Moonlight2R")
 ```
+
+To install Moonlight2R with its accompanying vignette use the code below.  
+
+First, install the BiocStyle Bioconductor package.
+
+```{r, eval = FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("BiocStyle")
+```
+Then install Moonlight2R with its accompanying vignette.  
+
+```{r, eval = FALSE}
+devtools::install_github(repo = "ELELAB/Moonlight2R", build_vignettes = TRUE)
+```
+
+You can view the vignette in the following way.  
+
+```{r, eval = FALSE}
+vignette( "Moonlight2R", package="Moonlight2R")
+```
+
 
 # Load libraries
 ```{r, eval = FALSE}
@@ -427,11 +468,15 @@ library(tidyverse)
 
 ## Citation
 
-Please cite TCGAbiolinks package: 
+Please cite the MoonlightR and Moonlight2R packages:
+
+* "Interpreting pathways to discover cancer driver genes with Moonlight." Nature Communications (2020): [10.1038/s41467-019-13803-0](https://doi.org/10.1038/s41467-019-13803-0). [@ref26]
+
+* "An Automatized Workflow to Study Mechanistic Indicators for Driver Gene Prediction with Moonlight." bioRxiv (2022): [10.1101/2022.11.18.517066](https://doi.org/10.1101/2022.11.18.517066). [@ref27]
+ 
+Related publications to this vignette:
 
 * "TCGAbiolinks: an R/Bioconductor package for integrative analysis of TCGA data." Nucleic acids research (2015): [gkv1507](http://dx.doi.org/doi:10.1093/nar/gkv1507). [@ref25]
-
-Related publications to this package:
 
 * "TCGA Workflow: Analyze cancer genomics and epigenomics data using Bioconductor packages". F1000Research [10.12688/f1000research.8923.1](http://dx.doi.org/doi:10.12688/f1000research.8923.1) [@ref24]
 
@@ -638,8 +683,8 @@ dataPRA <- PRA(dataURA = dataURA,
 ```
 
 ## `DMA`: Driver Mutation Analysis
-The user can identify driver mutations with `DMA` in the oncogenic mediators established by `PRA`.  The passenger or driver status is estimated with Cscape-somatic.  
-This function will further generate three files: DEG_Mutations_Annotation.rda, Oncogenic_mediators_mutation_summary.rda and cscape_somatic_output.rda. These will be placed in the specified results-folder. 
+The user can identify driver mutations with `DMA` in the oncogenic mediators established by `PRA`.  The passenger or driver status is estimated with CScape-somatic.  
+This function will further generate three files: DEG_Mutations_Annotations.rda, Oncogenic_mediators_mutation_summary.rda and cscape_somatic_output.rda. These will be placed in the specified results-folder. 
 
 
 ```{r, eval = FALSE}
@@ -649,10 +694,27 @@ dataDMA <- DMA(dataMAF = dataMAF,
                dataDEGs = DEGsmatrix, 
                dataPRA = dataPRA,
                results_folder = "DMAresults",
-               coding_file = "/data/databases/CScape/CScape-20210624/css_coding.vcf.gz",
-               noncoding_file = "/data/databases/CScape/CScape-20210624/css_noncoding.vcf.gz")
+               coding_file = "css_coding.vcf.gz",
+               noncoding_file = "css_noncoding.vcf.gz")
 ```
 
+## `Level of consequence`: Effect of mutations on three different levels
+The user can investigate the predicted effect of different mutation types on the transcriptional level through the table LOC_transcription:
+
+```{r}
+knitr::kable(LOC_transcription)
+```
+
+The user can investigate the predicted effect of different mutation types on the translational level through the table LOC_translation:
+
+```{r}
+knitr::kable(LOC_translation)
+```
+
+The user can investigate the predicted effect of different mutation types on the protein level through the table LOC_protein:
+```{r}
+knitr::kable(LOC_protein)
+```
 
 
 ## `plotNetworkHive`: GRN hive visualization taking into account Cosmic cancer genes
@@ -708,11 +770,12 @@ grid.raster(img)
 
 ### Introduction 
 This vignette shows a complete workflow of the 'Moonlight2R' package except for the data download.
-The code is divided into three case study:
+The code is divided into four case studies:
 
 * 1. Downstream analysis LUAD using RNA expression data
 * 2. Expression pipeline Pan Cancer with five cancer types
 * 3. Expression pipeline with stages I II III IV (BRCA)
+* 4. Moonlight with driver mutation analysis
 
 ## Case study n. 1: Downstream analysis LUAD
 
@@ -858,6 +921,101 @@ The figure generated by the code above is shown below:
 img <- readPNG("circos_ocg_tsg_stages.png")
 grid.raster(img)
 ```
+
+
+## Case study n. 4: Moonlight with driver mutation analysis  
+
+```{r,eval = FALSE,echo=TRUE,message=FALSE,warning=FALSE}
+
+# Load libraries
+library(Moonlight2R)
+library(TCGAbiolinks)
+library(tidyverse)
+
+# Download TCGA-LUAD gene expression data
+dataFilt <- getDataTCGA(cancerType = "LUAD", 
+                          dataType = "Gene expression",
+                          directory = "data",
+                          nSample = 4)
+
+# Download TCGA-LUAD mutation data
+query <- GDCquery(project = "TCGA-LUAD", 
+                  data.category = "Simple Nucleotide Variation",
+                  data.type = "Masked Somatic Mutation",
+                  access = "open", 
+                  legacy = F,
+                  workflow.type = "Aliquot Ensemble Somatic Variant Merging and Masking")
+GDCdownload(query, 
+            directory = "data")
+dataMAF <- GDCprepare(query, 
+                      directory = "data")
+dataMAF <- dataMAF %>% 
+  sample_n(size = 3000, 
+           replace = FALSE)
+
+# Find differentially expressed genes between TCGA-LUAD and normal samples
+dataDEGs <- DPA(dataFilt = dataFilt,
+                dataType = "Gene expression")
+
+# Perform gene regulatory network analysis
+dataGRN <- GRN(TFs = rownames(DEGsmatrix)[1:100], 
+               normCounts = dataFilt,
+               nGenesPerm = 10, 
+               kNearest = 3, 
+               nBoot = 10)
+
+# Perform upstream regulatory analysis
+# As example, we use apoptosis and proliferation of cells as the biological processes
+dataURA <- URA(dataGRN = dataGRN,
+               DEGsmatrix = DEGsmatrix,
+               BPname = c("apoptosis", 
+                          "proliferation of cells"), 
+               nCores = 1)
+
+# Perform pattern recognition analysis
+dataPRA <- PRA(dataURA = dataURA,
+               BPname = c("apoptosis", 
+                          "proliferation of cells"),
+               thres.role = 0)
+
+# Perform driver mutation analysis
+dataDMA <- DMA(dataMAF = dataMAF,
+               dataDEGs = DEGsmatrix, 
+               dataPRA = dataPRA,
+               results_folder = "DMAresults",
+               coding_file = "css_coding.vcf.gz",
+               noncoding_file = "css_noncoding.vcf.gz")
+
+```
+
+Next, we analyze the predicted driver genes and their mutations. 
+
+```{r}
+# Extract oncogenic mediators that contain at least one driver mutation
+# These are the driver genes
+knitr::kable(Oncogenic_mediators_mutation_summary %>%
+  filter(!is.na(CScape_Driver)))
+
+# Extract mutation annotations of the predicted driver genes
+driver_mut <- DEG_Mutations_Annotations %>% 
+  filter(!is.na(Moonlight_Oncogenic_Mediator), 
+         CScape_Mut_Class == "Driver")
+
+# Extract driver genes with a predicted effect on the transcriptional level
+transcription_mut <- Oncogenic_mediators_mutation_summary %>%
+  filter(!is.na(CScape_Driver)) %>%
+  filter(Transcription_mut_sum > 0)
+
+# Extract mutation annotations of predicted driver genes that have a driver mutation
+# in its promoter region with a potential effect on the transcriptional level 
+promoters <- DEG_Mutations_Annotations %>% 
+  filter(!is.na(Moonlight_Oncogenic_Mediator), 
+         CScape_Mut_Class == "Driver",
+         Potential_Effect_on_Transcription == 1,
+         Annotation == 'Promoter')
+```
+
+
 
 ******
 
