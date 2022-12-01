@@ -4,54 +4,28 @@ Title: Identify oncogenes and tumor suppressor genes from omics data
 Version: 2.0.0
 Date:
 Authors@R:
-  c(person("Antonio", "Colaprico",
-           role="aut"),
-    person("Catharina", "Olsen",
-           role="aut"),
-    person("Matthew H.", "Bailey",
-           role="aut"),
-    person("Gabriel J.", "Odom",
-           role="aut"),
-    person("Thilde", "Terkelsen",
+  c(person("Astrid", "Saksager",
            role="aut"),
     person("Mona", "Nourbakhsh",
            role="aut"),
-    person("Astrid", "Saksager",
-           role="aut"),
     person("Nikola", "Tom",
-	   role="aut"), 	
-    person("Tiago C.", "Silva",
-           role="aut"),
-    person("André V.", "Olsen",
-           role="aut"),
-    person("Laura", "Cantini",
-           role="aut"),
-    person("Andrei", "Zinovyev",
-           role="aut"),
-    person("Emmanuel", "Barillot",
-           role="aut"),
-    person("Houtan", "Noushmehr",
-           role="aut"),
-    person("Gloria", "Bertoli",
-           role="aut"),
-    person("Isabella", "Castiglioni",
-           role="aut"),
-    person("Claudia","Cava",
-           role="aut"),
-    person("Gianluca", "Bontempi",
            role="aut"),
     person("Xi Steven", "Chen",
            role="aut"),
-    person("Elena", "Papaleo",
+    person("Antonio", "Colaprico",
+           role="aut"),
+    person("Catharina", "Olsen",
            role="aut"),
     person("Matteo", "Tiberti",
            role=c("cre", "aut"),
-           email="tiberti@cancer.dk",
-           ))
-Depends: R (>= 3.5), doParallel, foreach
+	   email="tiberti@cancer.dk"),
+    person("Elena", "Papaleo",
+	   role="aut"),
+    	   ))
+Depends: R (>= 4.2), doParallel, foreach
 Imports: parmigene, randomForest, SummarizedExperiment, gplots,
         circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
-        limma, grDevices, graphics, TCGAbiolinks, GEOquery, stats,
+        limma, grDevices, graphics, TCGAbiolinks (>= 2.25.3), GEOquery, stats,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
         tibble, tidyHeatmap, tidyr
@@ -59,26 +33,36 @@ Description: Motivation: The understanding of cancer mechanism requires
         the identification of genes playing a role in the development
         of the pathology and the characterization of their role
         (notably oncogenes and tumor suppressors). Results: We present
-        an R/bioconductor package called Moonlight2R which returns a
-        list of candidate driver genes for specific cancer types on the
-        basis of TCGA expression data. The method first infers gene
-        regulatory networks and then carries out a functional
-        enrichment analysis (FEA) (implementing an upstream regulator
-        analysis, URA) to score the importance of well-known biological
-        processes with respect to the studied cancer type. Eventually,
-        by means of random forests, Moonlight2R predicts two specific
-        roles for the candidate driver genes: i) tumor suppressor genes
-        (TSGs) and ii) oncogenes (OCGs). As a consequence, this
-        methodology does not only identify genes playing a dual role
+        an updated version of the R/bioconductor package called MoonlightR,
+	namely Moonlight2R, which returns a list of candidate driver genes 
+	for specific cancer types on the basis of omics data integration. 
+	The Moonlight framework contains a primary layer where gene expression 
+	data and information about biological processes are integrated to 
+	predict genes called oncogenic mediators, divided into putative tumor 
+	suppressors and putative oncogenes. This is done through functional enrichment
+	analyses, gene regulatory networks and upstream regulator
+        analyses to score the importance of well-known biological
+        processes with respect to the studied cancer type. By evaluating the effect
+	of the oncogenic mediators on biological processes or through
+        random forests, the primary layer predicts two putative
+        roles for the oncogenic mediators: i) tumor suppressor genes
+        (TSGs) and ii) oncogenes (OCGs). As gene expression data alone is not
+	enough to explain the deregulation of the genes, a second layer of 
+	evidence is needed. We have automated the integration of a 
+	secondary mutational layer through new functionalities in Moonlight2R.
+	These functionalities analyze mutations in the cancer cohort and classifies
+	these into driver and passenger mutations using the driver mutation 
+	prediction tool, CScape-somatic. Those oncogenic mediators with at
+	least one driver mutation are retained as the driver genes.
+	As a consequence, this methodology does not only identify genes playing a dual role
         (e.g. TSG in one cancer type and OCG in another) but also helps
         in elucidating the biological processes underlying their
         specific roles. In particular, Moonlight2R can be used to
-        discover OCGs and TSGs in the same cancer type. This may help
+        discover OCGs and TSGs in the same cancer type. This may for instance help
         in answering the question whether some genes change role
-        between early stages (I, II) and late stages (III, IV) in
-        breast cancer. In the future, this analysis could be useful to
-        determine the causes of different resistances to
-        chemotherapeutic treatments.
+        between early stages (I, II) and late stages (III, IV). In the future, 
+	this analysis could be useful to determine the causes of different 
+	resistances to chemotherapeutic treatments.
 License: GPL (>= 3)
 biocViews: DNAMethylation, DifferentialMethylation, GeneRegulation,
         GeneExpression, MethylationArray, DifferentialExpression,
