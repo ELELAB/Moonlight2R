@@ -5,7 +5,7 @@ Repository associated to the publications:
 
 Interpreting pathways to discover cancer driver genes with Moonlight. Colaprico A, Olsen C, Bailey MH, Odom GJ, Terkelsen T, Silva TC, Olsen AV, Cantini L, Zinovyev A, Barillot E, Noushmehr H, Bertoli G, Castiglioni I, Cava C, Bontempi G, Chen XS, Papaleo E. Nat Commun. 2020 Jan 3;11(1):69. doi: 10.1038/s41467-019-13803-0., PMID: 31900418
 
-An Automatized Workflow to Study Mechanistic Indicators for Driver Gene Prediction with Moonlight2 Astrid Saksager, Mona Nourbakhsh, Nikola Tom, Xi Steven Chen, Antonio Colaprico, Catharina Olsen, Matteo Tiberti, Elena Papaleo*, submitted to biorxiv
+An Automatized Workflow to Study Mechanistic Indicators for Driver Gene Prediction with Moonlight2 Astrid Saksager, Mona Nourbakhsh, Nikola Tom, Xi Steven Chen, Antonio Colaprico, Catharina Olsen, Matteo Tiberti, Elena Papaleo*, bioRxiv 2022. doi: 10.1101/2022.11.18.517066 
 
 
 
