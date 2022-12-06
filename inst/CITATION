@@ -30,3 +30,24 @@ citEntry(entry = "article",
                    "DOI: 10.1038/s41467-019-13803-0")
 )
 
+
+
+citEntry(entry = "article",
+         title = "An Automatized Workflow to Study Mechanistic Indicators for Driver Gene Prediction with Moonlight",
+         author = personList(as.person("Astrid Saksager"),
+                             as.person("Mona Nourbakhsh"),
+                             as.person("Nikola Tom"),
+                             as.person("Xi Steven Chen"),
+                             as.person("Antonio Colaprico"),
+                             as.person("Catharina Olsen"),
+                             as.person("Matteo Tiberti"),
+                             as.person("Elena Papaleo")
+         ),
+         journal = "bioRxiv",
+         year = "2022",
+         textVersion =
+             paste("Saksager, A., Nourbakhsh, M., et al.",
+                   "An Automatized Workflow to Study Mechanistic Indicators for Driver Gene Prediction with Moonlight.",
+                   "bioRxiv, 2022 November 20.",
+                   "DOI: 10.1101/2022.11.18.517066")
+)
