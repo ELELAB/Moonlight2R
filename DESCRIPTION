@@ -29,10 +29,10 @@ Imports: parmigene, randomForest, SummarizedExperiment, gplots,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
         tibble, tidyHeatmap, tidyr
-Description: Motivation: The understanding of cancer mechanism requires
+Description: The understanding of cancer mechanism requires
         the identification of genes playing a role in the development
         of the pathology and the characterization of their role
-        (notably oncogenes and tumor suppressors). Results: We present
+        (notably oncogenes and tumor suppressors). We present
         an updated version of the R/bioconductor package called MoonlightR,
 	namely Moonlight2R, which returns a list of candidate driver genes 
 	for specific cancer types on the basis of omics data integration. 
