@@ -906,14 +906,15 @@ grid.raster(img)
 
 ```{r,eval = FALSE,echo=TRUE,message=FALSE,warning=FALSE}
 cancerList <- c("BLCA","COAD","ESCA","HNSC","STAD")
-
+data(dataMAF)
 listMoonlight <- moonlight(cancerType = cancerList, 
                       dataType = "Gene expression",
                       directory = "data",
                       nSample = 10,
                       nTF = 100,
                       DiffGenes = TRUE,
-                      BPname = c("apoptosis","proliferation of cells"))
+                      BPname = c("apoptosis","proliferation of cells"),
+		      dataMAF = dataMAF)
 save(listMoonlight, file = paste0("listMoonlight_ncancer4.Rdata"))
 
 ```
@@ -937,6 +938,21 @@ grid.raster(img)
 ## Case study n. 3: Downstream analysis BRCA with stages
 
 ```{r,eval = FALSE,echo=TRUE,message=FALSE,warning=FALSE}
+query <- GDCquery(project = "TCGA-BRCA", 
+                  data.category = "Simple Nucleotide Variation",
+                  data.type = "Masked Somatic Mutation",
+                  access = "open", 
+                  legacy = F,
+                  workflow.type = "Aliquot Ensemble Somatic Variant Merging and Masking")
+GDCdownload(query, 
+            directory = "data")
+dataMAF <- GDCprepare(query, 
+                      directory = "data")
+dataMAF <- dataMAF %>% 
+  sample_n(size = 3000, 
+           replace = FALSE)
+
+dataClin <- GDCquery_clinic(project = "TCGA-BRCA", type="clinical")
 
 listMoonlight <- NULL
 for (i in 1:4){
@@ -947,6 +963,7 @@ for (i in 1:4){
                       nTF = 5,
                       DiffGenes = TRUE,
                       BPname = c("apoptosis","proliferation of cells"),
+		      dataMAF = dataMAF,
                       stage = i)
     listMoonlight <- c(listMoonlight, list(dataDual))
     save(dataDual, file = paste0("dataDual_stage",as.roman(i), ".Rdata"))
@@ -954,8 +971,6 @@ for (i in 1:4){
 names(listMoonlight) <- c("stage1", "stage2", "stage3", "stage4")
 
 # Prepare mutation data for stages
-
-mutation <- GDCquery_Maf(tumor = "BRCA")
 
 res.mutation <- NULL
 for(stage in 1:4){
@@ -987,9 +1002,7 @@ tmp <- c(tmp, list(listMoonlight[[1]][[1]]))
 tmp <- c(tmp, list(listMoonlight[[2]][[1]]))
 tmp <- c(tmp, list(listMoonlight[[3]][[1]]))
 tmp <- c(tmp, list(listMoonlight[[4]][[1]]))
-names(tmp) <- names(listMoonlight)
-
- mutation <- GDCquery_Maf(tumor = "BRCA")    
+names(tmp) <- names(listMoonlight)    
 
  plotCircos(listMoonlight=listMoonlight,listMutation=res.mutation, additionalFilename="proc2_wmutation", intensityColDual=0.2,fontSize = 2)
 ```
