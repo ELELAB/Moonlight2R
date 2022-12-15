@@ -16,6 +16,8 @@ contacts for repository: Elena Papaleo, elpap-at-dtu.dk, elenap-at-cancer.dk; Ma
 
 # Identify oncogenes and tumor suppressor genes from genomic data.
 
+Verify the requirements before starting in the DESCRIPTION file 
+
 ### Installation from GitHub ###
 ```R
 devtools::install_github(repo = "ELELAB/Moonlight2R")
