@@ -28,7 +28,7 @@ Imports: parmigene, randomForest, SummarizedExperiment, gplots,
         limma, grDevices, graphics, TCGAbiolinks (>= 2.25.3), GEOquery, stats,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
-        tibble, tidyHeatmap, tidyr
+        tibble, tidyHeatmap, tidyr, liftOver
 Description: The understanding of cancer mechanism requires
         the identification of genes playing a role in the development
         of the pathology and the characterization of their role
@@ -74,5 +74,5 @@ VignetteBuilder: knitr
 LazyData: true
 URL: https://github.com/ELELAB/Moonlight2R
 BugReports: https://github.com/ELELAB/Moonlight2R/issues
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Encoding: UTF-8
