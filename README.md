@@ -40,6 +40,10 @@ devtools::install_github(repo = "ELELAB/Moonlight2R", build_vignettes = TRUE)
 
 To view the vignette:
 ```R
+library(Moonlight2R)
+```
+
+```R
 vignette( "Moonlight2R", package="Moonlight2R")
 ```
 
