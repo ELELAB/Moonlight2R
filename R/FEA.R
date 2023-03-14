@@ -7,9 +7,7 @@
 #' @return matrix from FEA
 #' @export
 #' @examples
-#' dataDEGs <- DPA(dataFilt = dataFilt,
-#' dataType = "Gene expression")
-#' dataFEA <- FEA(DEGsmatrix = dataDEGs)
+#' dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 FEA <- function (BPname = NULL, DEGsmatrix){
 
     DiseaseList <- get("DiseaseList")
