@@ -1,78 +1,33 @@
 #' @title moonlight pipeline
 #' @description moonlight is a tool for identification of cancer driver genes. 
 #' This function wraps the different steps of the complete analysis workflow.
-#' Providing different solutions:
-#' \enumerate{
-#' \item MoonlighR::FEA
-#' \item MoonlighR::URA
-#' \item MoonlighR::PIA
-#' }
-#' @param cancerType select cancer type for which analysis should be run. panCancer
-#' 		for all available cancer types in TCGA. Defaults to panCancer
-#' @param dataType dataType
-#' @param directory directory 
 #' @param BPname biological processes to use, if NULL: all processes will be used in analysis, RF for candidate; if not NULL the candidates for these processes will be determined (no learning)
-#' @param cor.cut cor.cut Threshold
-#' @param qnt.cut qnt.cut Threshold
+#' @param dataDEGs table of differentially expressed genes
+#' @param dataFilt matrix of gene expression data with genes in rows and samples in columns
 #' @param Genelist Genelist
-#' @param fdr.cut fdr.cut Threshold
-#' @param logFC.cut logFC.cut Threshold
 #' @param kNearest kNearest
 #' @param nTF nTF
-#' @param corThreshold corThreshold
 #' @param nGenesPerm nGenesPerm
 #' @param nBoot nBoot
 #' @param DiffGenes DiffGenes
-#' @param nSample nSample
 #' @param thres.role thres.role
-#' @param stage stage
-#' @param subtype subtype
-#' @param samples samples
 #' @param dataMAF A MAF file rda object for DMA
 #' @param path_cscape_coding A character string to path of CScape-somatic coding file
 #' @param path_cscape_noncoding A character string to path of CScape-somatic non-coding file
 #' @export
 #' @return table with cancer driver genes TSG and OCG.
 #' @examples
-#' dataDEGs <- DPA(dataFilt = dataFilt, dataType = "Gene expression")
-#' # to change with moonlight
-
-moonlight <- function(cancerType="panCancer", dataType="Gene expression", 
-                      directory =  "GDCdata", BPname = NULL,cor.cut = 0.6, 
-                      qnt.cut = 0.25, Genelist= NULL, fdr.cut = 0.01, logFC.cut = 1,
-                      corThreshold = 0.6, kNearest = 3, nGenesPerm = 10, DiffGenes = FALSE,
-                      nBoot = 100, nTF = NULL, nSample=NULL,thres.role = 0, 
-                      stage = NULL,subtype = 0, samples = NULL, dataMAF, 
+#' drivers <- moonlight(dataDEGs = DEGsmatrix, dataFilt = dataFilt, BPname = c("apoptosis", "proliferation of cells"),
+#' dataMAF = dataMAF, path_cscape_coding = "css_coding.vcf.gz", path_cscape_noncoding = "css_noncoding.vcf.gz")
+moonlight <- function(dataDEGs, dataFilt, 
+                      BPname = NULL, 
+                      Genelist= NULL,
+                      kNearest = 3, nGenesPerm = 10, DiffGenes = FALSE,
+                      nBoot = 100, nTF = NULL,thres.role = 0, 
+                      dataMAF, 
                       path_cscape_coding, path_cscape_noncoding){
-
-  GDCprojects <- get("GDCprojects")
   
-    if(length(cancerType) == 1 && cancerType == "panCancer"){
-        cancerType <- sort(sapply(strsplit(grep("TCGA",GDCprojects,value=TRUE),"TCGA-"),"[",2))
-    }
-
-    res <- NULL
-
-    for(cancer.i in cancerType){
-        ### get TCGA data
-        print("-----------------------------------------")
-        print("Get TCGA data")
-        print("-----------------------------------------")
-        print(paste("cancer type:", cancer.i))
-
-        dataFilt <- getDataTCGA(cancerType = cancer.i, dataType = dataType, 
-                                  directory = directory, cor.cut = cor.cut, qnt.cut = qnt.cut, 
-                                  nSample = nSample,stage = stage, 
-                                  subtype = subtype, samples = samples)
-
-        ### differential phenotype analysis
-        print("-----------------------------------------")
-        print("Differential phenotype analysis")
-        print("-----------------------------------------")
-        	
-        dataDEGs <- DPA(dataType = dataType, dataFilt = dataFilt, fdr.cut = fdr.cut, 
-        	                logFC.cut = logFC.cut)
-
+    	res <- NULL
 
         ### functional enrichment analysis -> carried out in URA, not necessary hear
         # print("-----------------------------------------")
@@ -120,12 +75,10 @@ moonlight <- function(cancerType="panCancer", dataType="Gene expression",
                            results_folder = "./DMAresults")
         
 
-        res.i <- list(dataDEGs = dataDEGs,
+        res <- list(dataDEGs = dataDEGs,
                 dataURA = dataURA, 
                 listCandidates = listCandidates,
                 driverGenes = driverGenes)
-        res <- c(res, list(res.i))
-    }
-    names(res) <- cancerType
+
     return(res)
 }
