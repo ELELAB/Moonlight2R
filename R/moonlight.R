@@ -22,8 +22,8 @@
 moonlight <- function(dataDEGs, dataFilt, 
                       BPname = NULL, 
                       Genelist= NULL,
-                      kNearest = 3, nGenesPerm = 10, DiffGenes = FALSE,
-                      nBoot = 100, nTF = NULL,thres.role = 0, 
+                      kNearest = 3, nGenesPerm = 2000, DiffGenes = FALSE,
+                      nBoot = 400, nTF = NULL,thres.role = 0, 
                       dataMAF, 
                       path_cscape_coding, path_cscape_noncoding){
   
