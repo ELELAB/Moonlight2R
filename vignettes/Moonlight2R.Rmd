@@ -445,30 +445,27 @@ grid.raster(img)
 
 # Moonlight's proposed workflow
 
-The proposed pipeline consists of following nine steps:
+The proposed pipeline consists of following eight steps:
 
-1. **getDataTCGA** \& **getDataGEO** for data collection: expression levels of genes in all samples 
-obtained with IlluminaHiSeq RNASeqV2 in 18 normal tissues (NT) and 18 cancer tissues (CT) according 
-to TCGA criteria, and GEO data set matched to one of the 18 given TCGA cancer types as described in 
-the following Table TCGA / GEO.
-2. **DPA** Differential Phenotype Analysis to identify genes or probes that are significantly different 
-with two phenotypes such as normal and tumor, or normal and stageI, normal and molecular subtype.
-3. **FEA** Functional Enrichment Analysis, using Fisher's test, to identify gene sets (with biological 
+1. The input to Moonlight is a set of differentially expressed genes between two biological conditions 
+such as cancer and healthy samples or two cancer subtyoes. Besides differentially expressed genes,
+gene expression and mutation data are also needed. 
+2. **FEA** Functional Enrichment Analysis, using Fisher's test, to identify gene sets (with biological 
 functions linked to cancer) significantly enriched by regulated genes (RG).
-4. **GRN** Gene Regulatory Network inferred between each single DEG (sDEG) and all genes by means of 
+3. **GRN** Gene Regulatory Network inferred between each single DEG (sDEG) and all genes by means of 
 mutual information, obtaining for each DEG a list of RG.
-5. **URA** Upstream Regulator Analysis for DEGs in each enriched gene set, we applied z-score being 
+4. **URA** Upstream Regulator Analysis for DEGs in each enriched gene set, we applied z-score being 
 the ratio between the sum of all predicted effects for all the gene involved in the specific function 
 and the square-root of the number of all genes.
-6. **PRA** Pattern Recognition Analysis identifies putative TSGs (down) and OCGs (up). We either use 
+5. **PRA** Pattern Recognition Analysis identifies putative TSGs (down) and OCGs (up). We either use 
 user defined biological processes or random forests.
-7. **DMA** Driver Mutation Analysis identifies driver mutations in the putative TSGs and OCGs through 
+6. **DMA** Driver Mutation Analysis identifies driver mutations in the putative TSGs and OCGs through 
 the driver mutation prediction tool, CScape-somatic.
-8. We applied the above procedure to multiple cancer types to obtain cancer-specific lists of TSGs 
+7. We applied the above procedure to multiple cancer types to obtain cancer-specific lists of TSGs 
 and OCGs. We compared the lists for each cancer: if a sDEG was TSG in a cancer and OCG in another we 
 defined it as dual-role TSG-OCG. Otherwise if we found a sDEG defined as OCG or TSG only in one tissue 
 we defined it as tissue specific biomarker.
-9. We use the COSMIC database to define a list of gold standard TSG and OCGs to assess the accuracy 
+8. We use the COSMIC database to define a list of gold standard TSG and OCGs to assess the accuracy 
 of the proposed method.
 
 
@@ -542,36 +539,52 @@ library(TCGAbiolinks)
 ```
 
 
-# `Download`: Get TCGA data
+# `Obtain Input`
+
+The input to Moonlight is a set of differentially expressed genes and gene 
+expression and mutation data are also needed. Gene expression data, mutation 
+data and differentially expressed genes can for example be obtained from TCGA 
+using the R package TCGAbiolinks. Below is an example of downloading gene 
+expression data, mutation data and obtaining differentially expressed genes 
+from the TCGA-LUAD project using TCGAbiolinks.
 
 
-You can search TCGA data using the `getDataTCGA` function.
+## `Obtain gene expression data`: Get gene expression data matrix  [Gene Expression]
 
-
-## `getDataTCGA`: Search by cancer type and data type [Gene Expression]
-The user can query and download the cancer types supported by TCGA, using the function `getDataTCGA`:
-In this example we used LUAD gene expression data with only 4 samples to reduce time downloading.
-
-```{r, eval = FALSE}
-dataFilt <- getDataTCGA(cancerType = "LUAD", 
-                          dataType = "Gene expression",
-                          directory = "data",
-                          nSample = 4)
-```
-
-## `getDataTCGA`: Search by cancer type and data type [Methylation]
-The user can also query and download methylation data using the function `getDataTCGA`:
-
+Below is an example of how to download and process gene expression data from 
+the TCGA-LUAD project using TCGAbiolinks.
 
 ```{r, eval = FALSE}
-dataFilt_met <- getDataTCGA(cancerType = "BRCA", 
-                          dataType = "Methylation", 
-                          directory = "data",nSample = 4)
+## Query, download and prepare data
+query_exp <- GDCquery(project = "TCGA-LUAD",
+                      data.category = "Transcriptome Profiling",
+                      data.type = "Gene Expression Quantification",
+                      workflow.type = "STAR - Counts",
+                      legacy = FALSE)
+GDCdownload(query_exp)
+query_prepare <- GDCprepare(query = query_exp,
+                            save = TRUE,
+                            directory =  "GDCdata",
+                            save.filename = "exp_data.rda")
+
+## Process data
+dataPrep <- TCGAanalyze_Preprocessing(object = query_prepare,
+                                      cor.cut = 0.6)
+
+dataNorm <- TCGAanalyze_Normalization(tabDF = dataPrep,
+                                      geneInfo = geneInfoHT,
+                                      method = "gcContent")
+
+dataFilt <- TCGAanalyze_Filtering(tabDF = dataNorm,
+                                  method = "quantile",
+                                  qnt.cut =  0.25)
 ```
 
-## `getDataTCGA`: Get MAF data [Mutation]
-A direct download with getDataTCGA is not yet available. Suggested download directly with TCGABiolinks.
-Samples 3000 mutation to reduce size of file.  
+## `Obtain mutation data`: Get MAF data [Mutation]
+
+Below is an example of how to download mutation data in the form of a MAF file 
+of the TCGA-LUAD project using TCGAbiolinks. 3000 mutations are sampled to 
+reduce size of the file.
 
 ```{r, eval = FALSE}
 library(TCGAbiolinks)
@@ -619,52 +632,39 @@ dataFilt_GEO <- getDataGEO(TCGAtumor = "ESCA")
 
 # `Analysis`: To analyze TCGA data
 
-## `DPA`: Differential Phenotype Analysis
+## Differential Expression Analysis
 
-Differential phenotype analysis is able to identify genes or probes that are significantly different 
+Differential expression analysis is able to identify genes or probes that are significantly different 
 between two phenotypes such as normal vs. tumor, or normal vs. stageI, normal vs. molecular subtype.
-
-For gene expression data, DPA is running a differential expression analysis (DEA) to identify 
-differentially expressed genes (DEGs) using the `TCGAanalyze_DEA` function from `TCGAbiolinks`.
-
-For methylation data, DPA is running a differentially methylated regions analysis (DMR) to identify 
-differentially methylated CpG sites using the `TCGAanalyze_DMR` function from `TCGAbiolinks`.
+Below is an example of how to obtain differentially expressed genes between LUAD cancer samples and normal 
+samples from the TCGA-LUAD project using TCGAbiolinks.
 
 
 ```{r, eval = FALSE, message=FALSE, results='hide', warning=FALSE}
-dataDEGs <- DPA(dataFilt = dataFilt,
-                dataType = "Gene expression")
+
+# Get tumor samples
+dataSmTP <- TCGAquery_SampleTypes(barcode = colnames(dataFilt), typesample = "TP")
+
+# Get normal samples
+dataSmNT <- TCGAquery_SampleTypes(barcode = colnames(dataFilt), typesample = "NT")
+
+# Get differentially expressed genes
+DEGsmatrix <- TCGAanalyze_DEA(mat1 = dataFilt[,dataSmNT],
+                              mat2 = dataFilt[,dataSmTP],
+                              Cond1type = "Normal",
+                              Cond2type = "Tumor",
+                              fdr.cut = 0.05 ,
+                              logFC.cut = 1,
+                              pipeline = "limma",
+                              voom = TRUE)
 ```
 
-For gene expression data, DPA dealing with GEO data is running a DEA to identify DEGs using the 
-`eBayes` and `topTable` functions from `limma`.
-
-```{r, eval = FALSE, echo = TRUE, hide=TRUE, results='hide', warning = FALSE, message = FALSE}
-data(GEO_TCGAtab)
-DataAnalysisGEO<- "../GEO_dataset/"
-i<-5
-
-cancer <- GEO_TCGAtab$Cancer[i]
-cancerGEO <- GEO_TCGAtab$Dataset[i]
-cancerPLT <-GEO_TCGAtab$Platform[i]
-fileCancerGEO <- paste0(cancer,"_GEO_",cancerGEO,"_",cancerPLT, ".RData")
-
-dataFilt_GEO <- getDataGEO(TCGAtumor = cancer)
-xContrast <- c("G1-G0")
-GEOdegs <- DPA(dataConsortium = "GEO",
-               gset = dataFilt_GEO ,
-               colDescription = "title",
-               samplesType  = c(GEO_TCGAtab$GEO_Normal[i],
-                                GEO_TCGAtab$GEO_Tumor[i]),
-               fdr.cut = 0.01,
-               logFC.cut = 1,
-               gsetFile = paste0(DataAnalysisGEO,fileCancerGEO))
-```
 
 We can visualize those DEGs with a volcano plot using the `TCGAVisualize_volcano` function from `TCGAbiolinks`.
 
 ```{r, eval = TRUE, echo = TRUE}
 library(TCGAbiolinks)
+data(DEGsmatrix)
 TCGAVisualize_volcano(DEGsmatrix$logFC, DEGsmatrix$FDR,
                       filename = "DEGs_volcano.png",
                       x.cut = 1,
@@ -719,8 +719,10 @@ The user can perform a gene regulatory network analysis using the function `GRN`
 the network using the parmigene package.
 
 ```{r, eval = FALSE}
+data(DEGsmatrix)
+data(dataFilt)
 dataGRN <- GRN(TFs = rownames(DEGsmatrix)[1:100], normCounts = dataFilt,
-	               nGenesPerm = 10,kNearest = 3,nBoot = 10)
+	               nGenesPerm = 2000,kNearest = 3,nBoot = 400)
 ```
 
 
@@ -767,6 +769,7 @@ and css_noncoding.vcf.gz.tbi) must also be downloaded and be placed in the same 
 ```{r, eval = FALSE}
 data(dataPRA)
 data(dataMAF)
+data(DEGsmatrix)
 dataDMA <- DMA(dataMAF = dataMAF,
                dataDEGs = DEGsmatrix, 
                dataPRA = dataPRA,
@@ -853,26 +856,25 @@ grid.raster(img)
 This vignette shows a complete workflow of the 'Moonlight2R' package except for the data download.
 The code is divided into four case studies:
 
-* 1. Downstream analysis LUAD using RNA expression data
-* 2. Expression pipeline Pan Cancer with five cancer types
+* 1. Downstream analysis LUAD 
+* 2. Expression pipeline with Moonlight function
 * 3. Expression pipeline with stages I II III IV (BRCA)
 * 4. Moonlight with driver mutation analysis
 
 ## Case study n. 1: Downstream analysis LUAD
 
 ```{r,eval = FALSE,echo=TRUE,message=FALSE,warning=FALSE, results='hide'}
-dataDEGs <- DPA(dataFilt = dataFilt,
-                dataType = "Gene expression")
+dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 
-dataFEA <- FEA(DEGsmatrix = dataDEGs)
-
-dataGRN <- GRN(TFs = rownames(dataDEGs)[1:100], 
-               DEGsmatrix = dataDEGs,
+dataGRN <- GRN(TFs = rownames(DEGsmatrix)[1:100], 
+               DEGsmatrix = DEGsmatrix,
                DiffGenes = TRUE,
-               normCounts = dataFilt)
+               normCounts = dataFilt,
+	       nGenesPerm = 2000,
+	       nBoot = 400)
 
 dataURA <- URA(dataGRN = dataGRN, 
-              DEGsmatrix = dataDEGs, 
+              DEGsmatrix = DEGsmatrix, 
               BPname = c("apoptosis",
                          "proliferation of cells"))
 
@@ -902,19 +904,20 @@ grid.raster(img)
 
 
 
-## Case study n. 2: Expression pipeline Pan Cancer 5 cancer types
+## Case study n. 2: Expression pipeline with Moonlight function 
 
 ```{r,eval = FALSE,echo=TRUE,message=FALSE,warning=FALSE}
-cancerList <- c("BLCA","COAD","ESCA","HNSC","STAD")
+data(dataFilt)
+data(DEGsmatrix)
 data(dataMAF)
-listMoonlight <- moonlight(cancerType = cancerList, 
-                      dataType = "Gene expression",
-                      directory = "data",
-                      nSample = 10,
-                      nTF = 100,
-                      DiffGenes = TRUE,
-                      BPname = c("apoptosis","proliferation of cells"),
-		      dataMAF = dataMAF)
+listMoonlight <- moonlight(dataDEGs = DEGsmatrix,
+                           dataFilt = dataFilt,
+                           nTF = 100,
+                           DiffGenes = TRUE,
+                           BPname = c("apoptosis","proliferation of cells"),
+                           dataMAF = dataMAF,
+                           path_cscape_coding = "css_coding.vcf.gz", 
+                           path_cscape_noncoding = "css_noncoding.vcf.gz")
 save(listMoonlight, file = paste0("listMoonlight_ncancer4.Rdata"))
 
 ```
@@ -925,6 +928,7 @@ Outer ring: color by cancer type, Inner ring: OCGs and TSGs,
 Inner connections:  green: common OCGs yellow: common TSGs red: possible dual role
 
 ```{r, eval = TRUE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
+data(listMoonlight)
 plotCircos(listMoonlight = listMoonlight, additionalFilename = "_ncancer5")
 ```
 
@@ -938,6 +942,8 @@ grid.raster(img)
 ## Case study n. 3: Downstream analysis BRCA with stages
 
 ```{r,eval = FALSE,echo=TRUE,message=FALSE,warning=FALSE}
+
+# Download TCGA-BRCA mutation data
 query <- GDCquery(project = "TCGA-BRCA", 
                   data.category = "Simple Nucleotide Variation",
                   data.type = "Masked Somatic Mutation",
@@ -952,19 +958,86 @@ dataMAF <- dataMAF %>%
   sample_n(size = 3000, 
            replace = FALSE)
 
+# Download TCGA-BRCA gene expression data
+query_exp <- GDCquery(project = "TCGA-BRCA",
+                      data.category = "Transcriptome Profiling",
+                      data.type = "Gene Expression Quantification",
+                      workflow.type = "STAR - Counts",
+                      legacy = FALSE)
+GDCdownload(query_exp)
+query_prepare <- GDCprepare(query = query_exp,
+                            save = TRUE,
+                            directory =  "GDCdata",
+                            save.filename = "exp_data.rda")
+
+# Process TCGA-BRCA gene expression data
+dataPrep <- TCGAanalyze_Preprocessing(object = query_prepare,
+                                      cor.cut = 0.6)
+
+dataNorm <- TCGAanalyze_Normalization(tabDF = dataPrep,
+                                      geneInfo = geneInfoHT,
+                                      method = "gcContent")
+
+dataFilt <- TCGAanalyze_Filtering(tabDF = dataNorm,
+                                  method = "quantile",
+                                  qnt.cut =  0.25)
+
+# Get normal and tumor samples
+dataSmTP <- TCGAquery_SampleTypes(barcode = colnames(dataFilt), typesample = "TP")
+dataSmNT <- TCGAquery_SampleTypes(barcode = colnames(dataFilt), typesample = "NT")
+
+# Get clinical data
 dataClin <- GDCquery_clinic(project = "TCGA-BRCA", type="clinical")
 
+# Get tumor stage information of samples
+stage <- 1:4
+curStage <- paste0("Stage ", as.roman(stage))
+dataClin$tumor_stage <- toupper(dataClin$ajcc_pathologic_stage)
+dataClin$tumor_stage <- gsub("[ABCDEFGH]","",dataClin$tumor_stage)
+dataClin$tumor_stage <- gsub("ST","Stage",dataClin$tumor_stage)
+
+# subset dataClin to only contain samples with stage I,II,III,IV info
+dataStg <- dataClin[dataClin$tumor_stage %in% curStage,]
+
+# get samples of stage I
+dataStg_I <- dataStg[dataStg$tumor_stage == "Stage I",]
+dataSmTP_I <- dataSmTP[substr(dataSmTP,1,12) %in% dataStg_I$bcr_patient_barcode]
+
+# get samples of stage II
+dataStg_II <- dataStg[dataStg$tumor_stage == "Stage II",]
+dataSmTP_II <- dataSmTP[substr(dataSmTP,1,12) %in% dataStg_II$bcr_patient_barcode]
+
+# get samples of stage III
+dataStg_III <- dataStg[dataStg$tumor_stage == "Stage III",]
+dataSmTP_III <- dataSmTP[substr(dataSmTP,1,12) %in% dataStg_III$bcr_patient_barcode]
+
+# get samples of stage IV
+dataStg_IV <- dataStg[dataStg$tumor_stage == "Stage IV",]
+dataSmTP_IV <- dataSmTP[substr(dataSmTP,1,12) %in% dataStg_IV$bcr_patient_barcode]
+
+listSmTP_stages <- list(dataSmTP_I, dataSmTP_II, dataSmTP_III, dataSmTP_IV)
+
+# Find DEGs between each stage and normal samples and run Moonlight on each 
+# set of DEGs
 listMoonlight <- NULL
 for (i in 1:4){
-    dataDual <- moonlight(cancerType = "BRCA", 
-                      dataType = "Gene expression",
-                      directory = "data",
-                      nSample = 10,
-                      nTF = 5,
-                      DiffGenes = TRUE,
-                      BPname = c("apoptosis","proliferation of cells"),
-		      dataMAF = dataMAF,
-                      stage = i)
+    DEGsmatrix <- TCGAanalyze_DEA(mat1 = dataFilt[,dataSmNT],
+                                mat2 = dataFilt[,listSmTP_stages[[i]]],
+                                Cond1type = "Normal",
+                                Cond2type = "Tumor",
+                                fdr.cut = 0.05,
+                                logFC.cut = 1,
+                                pipeline = "limma",
+                                voom = TRUE)
+    dataDual <- moonlight(dataDEGs = DEGsmatrix,
+                        dataFilt = dataFilt[,listSmTP_stages[[i]]],
+                        nTF = 5,
+                        DiffGenes = TRUE,
+                        BPname = c("apoptosis","proliferation of cells"),
+                        dataMAF = dataMAF,
+                        path_cscape_coding = "css_coding.vcf.gz", 
+                        path_cscape_noncoding = "css_noncoding.vcf.gz")
+
     listMoonlight <- c(listMoonlight, list(dataDual))
     save(dataDual, file = paste0("dataDual_stage",as.roman(i), ".Rdata"))
 }
@@ -982,12 +1055,12 @@ for(stage in 1:4){
 
                 dataStg <- dataClin[dataClin$tumor_stage %in% curStage,]
                 message(paste(curStage, "with", nrow(dataStg), "samples"))
-dataSmTP <- mutation$Tumor_Sample_Barcode
+dataSmTP <- dataMAF$Tumor_Sample_Barcode
                 
                 dataStgC <- dataSmTP[substr(dataSmTP,1,12) %in% dataStg$bcr_patient_barcode]
                 dataSmTP <- dataStgC
   
-                info.mutation <- mutation[mutation$Tumor_Sample_Barcode %in% dataSmTP,]
+                info.mutation <- dataMAF[dataMAF$Tumor_Sample_Barcode %in% dataSmTP,]
   
      ind <- which(info.mutation[,"Consequence"]=="inframe_deletion")
      ind2 <- which(info.mutation[,"Consequence"]=="inframe_insertion")
@@ -997,14 +1070,6 @@ dataSmTP <- mutation$Tumor_Sample_Barcode
 names(res.mutation) <- c("stage1", "stage2", "stage3", "stage4")
 
 
-tmp <- NULL
-tmp <- c(tmp, list(listMoonlight[[1]][[1]]))
-tmp <- c(tmp, list(listMoonlight[[2]][[1]]))
-tmp <- c(tmp, list(listMoonlight[[3]][[1]]))
-tmp <- c(tmp, list(listMoonlight[[4]][[1]]))
-names(tmp) <- names(listMoonlight)    
-
- plotCircos(listMoonlight=listMoonlight,listMutation=res.mutation, additionalFilename="proc2_wmutation", intensityColDual=0.2,fontSize = 2)
 ```
 The results of the moonlight pipeline can be visualized with a circos plot.
 Outer ring: color by cancer type, Inner ring: OCGs and TSGs, 
@@ -1027,10 +1092,28 @@ library(TCGAbiolinks)
 library(tidyverse)
 
 # Download TCGA-LUAD gene expression data
-dataFilt <- getDataTCGA(cancerType = "LUAD", 
-                          dataType = "Gene expression",
-                          directory = "data",
-                          nSample = 4)
+query_exp <- GDCquery(project = "TCGA-LUAD",
+                      data.category = "Transcriptome Profiling",
+                      data.type = "Gene Expression Quantification",
+                      workflow.type = "STAR - Counts",
+                      legacy = FALSE)
+GDCdownload(query_exp)
+query_prepare <- GDCprepare(query = query_exp,
+                            save = TRUE,
+                            directory =  "GDCdata",
+                            save.filename = "exp_data.rda")
+
+## Process data
+dataPrep <- TCGAanalyze_Preprocessing(object = query_prepare,
+                                      cor.cut = 0.6)
+
+dataNorm <- TCGAanalyze_Normalization(tabDF = dataPrep,
+                                      geneInfo = geneInfoHT,
+                                      method = "gcContent")
+
+dataFilt <- TCGAanalyze_Filtering(tabDF = dataNorm,
+                                  method = "quantile",
+                                  qnt.cut =  0.25)
 
 # Download TCGA-LUAD mutation data
 query <- GDCquery(project = "TCGA-LUAD", 
@@ -1048,15 +1131,28 @@ dataMAF <- dataMAF %>%
            replace = FALSE)
 
 # Find differentially expressed genes between TCGA-LUAD and normal samples
-dataDEGs <- DPA(dataFilt = dataFilt,
-                dataType = "Gene expression")
+# Get tumor samples
+dataSmTP <- TCGAquery_SampleTypes(barcode = colnames(dataFilt), typesample = "TP")
+
+# Get normal samples
+dataSmNT <- TCGAquery_SampleTypes(barcode = colnames(dataFilt), typesample = "NT")
+
+# Get differentially expressed genes
+DEGsmatrix <- TCGAanalyze_DEA(mat1 = dataFilt[,dataSmNT],
+                              mat2 = dataFilt[,dataSmTP],
+                              Cond1type = "Normal",
+                              Cond2type = "Tumor",
+                              fdr.cut = 0.05 ,
+                              logFC.cut = 1,
+                              pipeline = "limma",
+                              voom = TRUE)
 
 # Perform gene regulatory network analysis
 dataGRN <- GRN(TFs = rownames(DEGsmatrix)[1:100], 
                normCounts = dataFilt,
-               nGenesPerm = 10, 
+               nGenesPerm = 2000, 
                kNearest = 3, 
-               nBoot = 10)
+               nBoot = 400)
 
 # Perform upstream regulatory analysis
 # As example, we use apoptosis and proliferation of cells as the biological processes
