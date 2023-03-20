@@ -10,8 +10,8 @@ GRN(
   DiffGenes = FALSE,
   normCounts,
   kNearest = 3,
-  nGenesPerm = 10,
-  nBoot = 10
+  nGenesPerm = 2000,
+  nBoot = 400
 )
 }
 \arguments{
