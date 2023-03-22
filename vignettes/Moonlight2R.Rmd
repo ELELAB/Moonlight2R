@@ -728,7 +728,7 @@ grid.raster(img)
 
 ### Introduction 
 This vignette shows a complete workflow of the 'Moonlight2R' package.
-The code is divided into four case studies:
+The code is divided into three case studies:
 
 * 1. Predicting oncogenic mediators using Moonlight's primary layer 
 * 2. Moonlight pipeline in one function
