@@ -18,7 +18,5 @@ matrix from FEA
 This function carries out the functional enrichment analysis (FEA)
 }
 \examples{
-dataDEGs <- DPA(dataFilt = dataFilt,
-dataType = "Gene expression")
-dataFEA <- FEA(DEGsmatrix = dataDEGs)
+dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 }

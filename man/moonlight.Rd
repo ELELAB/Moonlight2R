@@ -5,52 +5,29 @@
 \title{moonlight pipeline}
 \usage{
 moonlight(
-  cancerType = "panCancer",
-  dataType = "Gene expression",
-  directory = "GDCdata",
+  dataDEGs,
+  dataFilt,
   BPname = NULL,
-  cor.cut = 0.6,
-  qnt.cut = 0.25,
   Genelist = NULL,
-  fdr.cut = 0.01,
-  logFC.cut = 1,
-  corThreshold = 0.6,
   kNearest = 3,
-  nGenesPerm = 10,
+  nGenesPerm = 2000,
   DiffGenes = FALSE,
-  nBoot = 100,
+  nBoot = 400,
   nTF = NULL,
-  nSample = NULL,
   thres.role = 0,
-  stage = NULL,
-  subtype = 0,
-  samples = NULL,
   dataMAF,
   path_cscape_coding,
   path_cscape_noncoding
 )
 }
 \arguments{
-\item{cancerType}{select cancer type for which analysis should be run. panCancer
-for all available cancer types in TCGA. Defaults to panCancer}
+\item{dataDEGs}{table of differentially expressed genes}
 
-\item{dataType}{dataType}
-
-\item{directory}{directory}
+\item{dataFilt}{matrix of gene expression data with genes in rows and samples in columns}
 
 \item{BPname}{biological processes to use, if NULL: all processes will be used in analysis, RF for candidate; if not NULL the candidates for these processes will be determined (no learning)}
 
-\item{cor.cut}{cor.cut Threshold}
-
-\item{qnt.cut}{qnt.cut Threshold}
-
 \item{Genelist}{Genelist}
-
-\item{fdr.cut}{fdr.cut Threshold}
-
-\item{logFC.cut}{logFC.cut Threshold}
-
-\item{corThreshold}{corThreshold}
 
 \item{kNearest}{kNearest}
 
@@ -62,15 +39,7 @@ for all available cancer types in TCGA. Defaults to panCancer}
 
 \item{nTF}{nTF}
 
-\item{nSample}{nSample}
-
 \item{thres.role}{thres.role}
-
-\item{stage}{stage}
-
-\item{subtype}{subtype}
-
-\item{samples}{samples}
 
 \item{dataMAF}{A MAF file rda object for DMA}
 
@@ -84,14 +53,8 @@ table with cancer driver genes TSG and OCG.
 \description{
 moonlight is a tool for identification of cancer driver genes. 
 This function wraps the different steps of the complete analysis workflow.
-Providing different solutions:
-\enumerate{
-\item MoonlighR::FEA
-\item MoonlighR::URA
-\item MoonlighR::PIA
-}
 }
 \examples{
-dataDEGs <- DPA(dataFilt = dataFilt, dataType = "Gene expression")
-# to change with moonlight
+drivers <- moonlight(dataDEGs = DEGsmatrix, dataFilt = dataFilt, BPname = c("apoptosis", "proliferation of cells"),
+dataMAF = dataMAF, path_cscape_coding = "css_coding.vcf.gz", path_cscape_noncoding = "css_noncoding.vcf.gz")
 }

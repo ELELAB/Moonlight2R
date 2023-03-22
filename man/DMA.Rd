@@ -65,7 +65,7 @@ For more information about the different annotations added to the mutations plea
 \examples{
 
 DMA(dataMAF = dataMAF,
-    dataDEGs = DEGmatrix,
+    dataDEGs = DEGsmatrix,
     dataPRA = dataPRA,
     coding_file = "path/css_coding.vcf.gz",
     noncoding_file = "path/css_noncoding.vcf.gz",
@@ -76,7 +76,7 @@ cscape_somatic_output <- read.csv("./results/Cscape_somatic_output.csv")
 save(cscape_somatic_output, file = "./results/Cscape_somatic_output.rda")
     
 DMA(dataMAF = dataMAF,
-    dataDEGs = DEGmatrix,
+    dataDEGs = DEGsmatrix,
     dataPRA = dataPRA,
     runCscape = FALSE,
     results_folder = "./results")     
