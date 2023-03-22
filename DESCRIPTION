@@ -25,7 +25,7 @@ Authors@R:
 Depends: R (>= 4.2), doParallel, foreach
 Imports: parmigene, randomForest, SummarizedExperiment, gplots,
         circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
-        limma, grDevices, graphics, TCGAbiolinks (>= 2.25.3), GEOquery, stats,
+        limma, grDevices, graphics, GEOquery, stats, purrr,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
         tibble, tidyHeatmap, tidyr, liftOver
