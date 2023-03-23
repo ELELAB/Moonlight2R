@@ -1,7 +1,7 @@
 #' DMA
 #'
 #' This function carries out the driver mutation analysis.
-#' @param dataMaf A MAF file rda object.  
+#' @param dataMAF A MAF file rda object.  
 #' The MAF file must at least contain the following columns:
 #' \itemize{
 #' \item Hugo_Symbol eg. BRCA1
