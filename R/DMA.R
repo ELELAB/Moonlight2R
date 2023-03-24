@@ -48,7 +48,7 @@
 #' 
 #' @export
 #' @examples
-#'
+#' \dontrun{
 #' DMA(dataMAF = dataMAF,
 #'     dataDEGs = DEGsmatrix,
 #'     dataPRA = dataPRA,
@@ -65,12 +65,16 @@
 #'     dataPRA = dataPRA,
 #'     runCscape = FALSE,
 #'     results_folder = "./results")     
-
+#' }
 DMA <- function(dataMAF, dataDEGs, dataPRA, 
                 runCscape = TRUE,
                 coding_file, noncoding_file,
                 results_folder = "./DMAresults"){
   
+  data('LOC_transcription')
+  data('LOC_translation')
+  data('LOC_protein')
+
   # Create Output folder
   if (dir.exists(results_folder)){
     print("Output folder already exits")

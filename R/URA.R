@@ -11,6 +11,7 @@
 #' @export
 #' @return an adjacent matrix
 #' @examples
+#' data(DEGsmatrix)
 #' dataDEGs <- DEGsmatrix
 #' dataGRN <- GRN(TFs = rownames(dataDEGs)[1:100],
 #' DEGsmatrix = dataDEGs,

@@ -16,6 +16,3 @@ The name of the alphabeatically first gene in the tibble
 This function creates a unclustered heatmap from the inputted data tibble 
 and saves it
 }
-\examples{
-plotHeatmap(df = mytibble)
-}

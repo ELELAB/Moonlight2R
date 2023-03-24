@@ -10,9 +10,9 @@
 #' @return MAF tibble with positions lifted to another build 
 #' @export
 #' @examples
-#' 
+#' \dontrun{
 #' LiftMAF(Infile, Current_Build = 'GRCh38')
-
+#' }
 
 LiftMAF <- function(Infile, Current_Build){
   #The input file is assumed to be maf_tibble, this file is then lifted to 

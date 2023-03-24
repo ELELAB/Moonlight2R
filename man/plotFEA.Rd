@@ -54,6 +54,7 @@ no return value, FEA result is plotted
 This function visualize the functional enrichment analysis (FEA)'s barplot
 }
 \examples{
+data('DEGsmatrix')
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 plotFEA(dataFEA = dataFEA, additionalFilename = "_example",height = 20,width = 10)
 }

@@ -8,8 +8,8 @@
 #' @return tibble of cscape-somatic input
 #' @export
 #' @examples
-#' 
-#' MAFtoCscape(MAF)
+#' print(data(dataMAF))
+#' MAFtoCscape(dataMAF)
 
 
 MAFtoCscape <- function(MAF){
