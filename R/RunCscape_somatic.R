@@ -13,9 +13,9 @@
 #' @return returns a tibble with a score and remark for each SNP
 #' @export
 #' @examples
-#' 
+#' \dontrun{
 #' cscape_out <- RunCscape_somatic(input, coding_file, noncoding_file)
-
+#' }
 
 RunCscape_somatic <- function(input, coding_file, noncoding_file){
   cscape_in <- input %>%

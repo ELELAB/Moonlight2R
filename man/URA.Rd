@@ -22,6 +22,7 @@ an adjacent matrix
 This function carries out the upstream regulator analysis
 }
 \examples{
+data(DEGsmatrix)
 dataDEGs <- DEGsmatrix
 dataGRN <- GRN(TFs = rownames(dataDEGs)[1:100],
 DEGsmatrix = dataDEGs,

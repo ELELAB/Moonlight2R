@@ -13,8 +13,6 @@
 #' @return The name of the alphabeatically first gene in the tibble
 #' @export
 #'
-#' @examples
-#' plotHeatmap(df = mytibble)
 
 plotHeatmap <- function(df){
   first_gene <- pull(df[1,1])

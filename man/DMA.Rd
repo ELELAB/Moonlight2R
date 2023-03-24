@@ -63,7 +63,7 @@ For more information about the different annotations added to the mutations plea
 \code{data(LOC_transcription)} and \code{data(LOC_translation)}.
 }
 \examples{
-
+\dontrun{
 DMA(dataMAF = dataMAF,
     dataDEGs = DEGsmatrix,
     dataPRA = dataPRA,
@@ -80,4 +80,5 @@ DMA(dataMAF = dataMAF,
     dataPRA = dataPRA,
     runCscape = FALSE,
     results_folder = "./results")     
+}
 }

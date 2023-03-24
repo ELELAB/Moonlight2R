@@ -37,6 +37,8 @@ an adjacent matrix
 This function carries out the gene regulatory network inference using parmigene
 }
 \examples{
+data('DEGsmatrix')
+data('dataFilt')
 dataDEGs <- DEGsmatrix
 dataGRN <- GRN(TFs = rownames(dataDEGs)[1:100],
 DEGsmatrix = dataDEGs,

@@ -71,8 +71,8 @@ biocViews: DNAMethylation, DifferentialMethylation, GeneRegulation,
 Suggests: BiocStyle, knitr, rmarkdown, testthat, devtools, roxygen2,
         png
 VignetteBuilder: knitr
-LazyData: true
 URL: https://github.com/ELELAB/Moonlight2R
 BugReports: https://github.com/ELELAB/Moonlight2R/issues
 RoxygenNote: 7.2.3
+LazyData: true
 Encoding: UTF-8

@@ -23,6 +23,7 @@
 #' @export
 #' @return no return value, FEA result is plotted
 #' @examples
+#' data('DEGsmatrix')
 #' dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 #' plotFEA(dataFEA = dataFEA, additionalFilename = "_example",height = 20,width = 10)
 plotFEA <- function (dataFEA, topBP = 10, additionalFilename = NULL, height,
