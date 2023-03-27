@@ -30,12 +30,14 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' data(DEG_Mutations_Annotations)
+#' data(Oncogenic_mediators_mutation_summary)
+#' data(dataURA)
 #' plotMoonlight(DEG_Mutations_Annotations, 
 #'               Oncogenic_mediators_mutation_summary, 
 #'               dataURA, gene_type = "drivers", n = 50,
-#'               additionalFilename = "path/myplot_")
-#'}
+#'               additionalFilename = "myplot_")
+
 plotMoonlight <- function(DEG_Mutations_Annotations, 
                           Oncogenic_mediators_mutation_summary,
                           dataURA,
