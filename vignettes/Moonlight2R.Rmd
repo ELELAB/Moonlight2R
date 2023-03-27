@@ -385,7 +385,7 @@ vignette: >
 ---
   
 ```{r setup, include=FALSE}
-#knitr::opts_chunk$set(dpi = 72)
+knitr::opts_chunk$set(dpi = 72)
 knitr::opts_chunk$set(cache=FALSE)
 ```
 
