@@ -18,7 +18,6 @@ MAF tibble with positions lifted to another build
 This function lifts a MAF file to a different genomic build.
 }
 \examples{
-\dontrun{
-LiftMAF(Infile, Current_Build = 'GRCh38')
-}
+data(dataMAF)
+lift_maf_file <- LiftMAF(dataMAF, Current_Build = 'GRCh38')
 }
