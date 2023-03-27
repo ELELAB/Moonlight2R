@@ -5,6 +5,7 @@
 #' @param platform platform
 #' @param TCGAtumor tumor name
 #' @importFrom GEOquery getGEO
+#' @import Biobase
 #' @export
 #' @return return GEO gset
 #' @examples
