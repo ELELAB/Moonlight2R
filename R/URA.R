@@ -13,10 +13,12 @@
 #' @examples
 #' data(DEGsmatrix)
 #' dataDEGs <- DEGsmatrix
-#' dataGRN <- GRN(TFs = rownames(dataDEGs)[1:100],
+#' dataGRN <- GRN(TFs = rownames(dataDEGs)[1:10],
 #' DEGsmatrix = dataDEGs,
 #' DiffGenes = TRUE,
-#' normCounts = dataFilt)
+#' normCounts = dataFilt,
+#' nGenesPerm = 10,
+#' nBoot = 10)
 #' dataURA <-URA(dataGRN = dataGRN,
 #' DEGsmatrix = dataDEGs,
 #' BPname = c("apoptosis",
