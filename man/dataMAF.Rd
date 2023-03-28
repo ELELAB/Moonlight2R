@@ -5,15 +5,15 @@
 \alias{dataMAF}
 \title{Mutation data from TCGA LUAD}
 \format{
-A 3000x141 matrix.
+A 500x141 matrix.
 }
 \usage{
 data(dataMAF)
 }
 \value{
-A 3000x141 matrix.
+A 500x141 matrix.
 }
 \description{
-An examplary MAF file from TCGA on lung cancer LUAD. It contains 3000 randomly selected mutations.
+An examplary MAF file from TCGA on lung cancer LUAD. It contains 500 randomly selected mutations.
 }
 \keyword{datasets}
