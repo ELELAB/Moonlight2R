@@ -5,13 +5,13 @@
 \alias{dataURA}
 \title{Upstream regulator analysis}
 \format{
-A 2x2 matrix
+A 100x2 matrix
 }
 \usage{
 data(dataURA)
 }
 \value{
-A 2x2 matrix
+A 100x2 matrix
 }
 \description{
 The output of the URA function which carries out the 
