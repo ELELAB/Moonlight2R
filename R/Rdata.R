@@ -1,3 +1,195 @@
+#' Moonlight2R
+#'
+#' @description Moonlight2R is a package designed for the identification of cancer driver genes. Please see the
+#' documentation on our Bioconductor page for more details: https://www.bioconductor.org/packages/release/bioc/html/MoonlightR.html
+#'
+#' If you experience issues with the package, please open an Issue on our GitHub repository: https://github.com/ELELAB/Moonlight2R
+#'
+#' If you use this package in your research, please cite this paper: https://doi.org/10.1038/s41467-019-13803-0
+#'
+#' @name Moonlight2R
+#' @docType package
+NULL
+
+#' Differentially expressed genes
+#'
+#'@description  A matrix containing differentially expressed genes between lung cancer and normal
+#' samples found using TCGA-LUAD data and TCGAbiolinks. 
+#'@details The matrix contains the differentially expressed genes in rows and log2 fold change
+#' and FDR values in columns.
+#'
+#'@docType data
+#'@usage data(DEGsmatrix)
+#'@name DEGsmatrix
+#'@aliases DEGsmatrix
+#'@return A 3390x5 matrix
+#'
+#'@format A 3390x5 matrix
+#'
+"DEGsmatrix"
+
+
+#' Cancer-related biological processes
+#'
+#'@description  A dataset containing information about 101 cancer-related biological processes. 
+#'@details The dataset contains a list of the 101 biological processes which includes genes
+#' playing a role in each biological processes including literature findings of the genes' function
+#' in the biological processes.
+#'
+#'@docType data
+#'@usage data(DiseaseList)
+#'@name DiseaseList
+#'@aliases DiseaseList
+#'@return A list of 101 elements
+#'
+#'@format A list of 101 elements
+#'
+"DiseaseList"
+
+
+#' Information about genes
+#'
+#'@description  A matrix containing information about 20038 genes 
+#' including their gene description, location and family
+#'@details The matrix contains the genes in rows and description, 
+#' location and family in columns.
+#'
+#'@docType data
+#'@usage data(EAGenes)
+#'@name EAGenes
+#'@aliases EAGenes
+#'@return A 20038x5 matrix
+#'
+#'@format A 20038x5 matrix
+#'
+"EAGenes"
+
+#' Information on GEO and TCGA data
+#'
+#'@description  A matrix that provides the GEO dataset
+#'   matched to one of 18 TCGA cancer types
+#'@details The matrix contains the cancer types in rows and 
+#' information about sample type from both TCGA and GEO in columns.
+#'
+#'@docType data
+#'@usage data(GEO_TCGAtab)
+#'@name GEO_TCGAtab
+#'@aliases GEO_TCGAtab
+#'@return A 18x12 matrix
+#'
+#'@format A 18x12 matrix
+#'
+"GEO_TCGAtab"
+
+#' Gene expression data from TCGA-LUAD
+#'
+#'@description  A matrix that provides processed gene expression 
+#' data (obtained from RNA seq) from the TCGA-LUAD project
+#'@details The matrix contains the genes in rows and samples in 
+#' columns. The data has been downloaded and processed using 
+#' TCGAbiolinks.
+#'
+#'@docType data
+#'@usage data(dataFilt)
+#'@name dataFilt
+#'@aliases dataFilt
+#'@return A 3000x20 matrix
+#'
+#'@format A 3000x20 matrix
+#'
+"dataFilt"
+
+#' Gene regulatory network
+#'
+#'@description  The output of the GRN function which finds connections 
+#' between genes.
+#'@details The input to the GRN is the differentially expressed genes and #' the gene expression data.
+#'
+#'@docType data
+#'@usage data(dataGRN)
+#'@name dataGRN
+#'@aliases dataGRN
+#'@return A list of 2 elements where the first element is a 2x613 matrix #' and the second element is a vector of length 2
+#'
+#'@format A list of 2 elements where the first element is a 2x613 matrix 
+#' and the second element is a vector of length 2
+#'
+"dataGRN"
+
+#' Upstream regulator analysis
+#'
+#'@description  The output of the URA function which carries out the 
+#' upstream regulator analysis
+#'@details The input to URA is the output of GRN and a list of biological 
+#' processes and the differentially expressed genes
+#'
+#'@docType data
+#'@usage data(dataURA)
+#'@name dataURA
+#'@aliases dataURA
+#'@return A 2x2 matrix
+#'
+#'@format A 2x2 matrix
+#'
+"dataURA"
+
+
+#' Information of known cancer driver genes from COSMIC
+#'
+#'@description  A list of known cancer driver genes from COSMIC
+#'@details The list contains two elements: a vector of known tumor #' suppressors and a vector of known oncogenes 
+#'
+#'@docType data
+#'@usage data(knownDriverGenes)
+#'@name knownDriverGenes
+#'@aliases knownDriverGenes
+#'@return A list containing two elements where the first element is a 
+#' character vector of 55 and the second element is a character vector of #' 84
+#'
+#'@format A list containing two elements where the first element is a 
+#' character vector of 55 and the second element is a character vector of #' 84
+#'
+"knownDriverGenes"
+
+#' List of oncogenic mediators of 5 TCGA cancer types
+#'
+#'@description  A list of oncogenic mediators of 5 TCGA cancer types: 
+#' BLCA, BRCA, LUAD, READ and STAD
+#'@details Each element in the list contains differentially expressed 
+#' genes and output from the URA and PRA functions
+#'
+#'@docType data
+#'@usage data(listMoonlight)
+#'@name listMoonlight
+#'@aliases listMoonlight
+#'@return A list containing 5 elements where each element contains 
+#' differentially expressed genes and output from the URA and PRA 
+#' functions of 5 TCGA cancer types
+#'
+#'@format A list containing 5 elements where each element contains 
+#' differentially expressed genes and output from the URA and PRA 
+#' functions of 5 TCGA cancer types
+#'
+"listMoonlight"
+
+#' Information of growing/blocking characteristics of 101 biological
+#' processes
+#'
+#'@description  A matrix with biological processes in rows and the cancer #' growing or blocking effect of the process in columns
+#'@details For each biological processes the cancer growing/blocking 
+#' effect is indicated 
+#'
+#'@docType data
+#'@usage data(tabGrowBlock)
+#'@name tabGrowBlock
+#'@aliases tabGrowBlock
+#'@return A 101x3 matrix
+#'
+#'@format A 101x3 matrix
+#'
+"tabGrowBlock"
+
+
 #' Promoters
 #'
 #'@description Experimentially verified promoter sites by J. Michael Cherry, Stanford.
@@ -130,14 +322,14 @@
 
 #' Mutation data from TCGA LUAD
 #'
-#'@description An examplary MAF file from TCGA on lung cancer LUAD. It contains 3000 randomly selected mutations. 
+#'@description An examplary MAF file from TCGA on lung cancer LUAD. It contains 500 randomly selected mutations. 
 #'
 #'@docType data
 #'@usage data(dataMAF)
 #'@name dataMAF
 #'@aliases dataMAF
-#'@return A 3000x141 matrix.
-#'@format A 3000x141 matrix. 
+#'@return A 500x141 matrix.
+#'@format A 500x141 matrix. 
 #'
 #'
 "dataMAF"
