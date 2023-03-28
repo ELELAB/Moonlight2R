@@ -5,7 +5,7 @@
 #' @param platform platform
 #' @param TCGAtumor tumor name
 #' @importFrom GEOquery getGEO
-#' @import Biobase
+#' @importMethodsFrom Biobase fvarLabels fvarLabels<-
 #' @export
 #' @return return GEO gset
 #' @examples
