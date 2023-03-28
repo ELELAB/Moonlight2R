@@ -127,9 +127,9 @@ NULL
 #'@usage data(dataURA)
 #'@name dataURA
 #'@aliases dataURA
-#'@return A 2x2 matrix
+#'@return A 100x2 matrix
 #'
-#'@format A 2x2 matrix
+#'@format A 100x2 matrix
 #'
 "dataURA"
 
