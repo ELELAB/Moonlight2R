@@ -23,7 +23,7 @@ Authors@R:
 	   role="aut",
     	   ))
 Depends: doParallel, foreach
-Imports: parmigene, randomForest, SummarizedExperiment, gplots,
+Imports: parmigene, randomForest, gplots,
         circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
         grDevices, graphics, GEOquery, stats, purrr,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
