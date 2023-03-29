@@ -19,8 +19,8 @@
 #' DEGsmatrix = dataDEGs,
 #' DiffGenes = TRUE,
 #' normCounts = dataFilt,
-#' nGenesPerm = 10,
-#' nBoot = 10)
+#' nGenesPerm = 5,
+#' nBoot = 5)
 GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nGenesPerm = 2000, nBoot = 400) {
     normCountsA <- normCounts
     normCountsB <- normCounts
