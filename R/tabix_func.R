@@ -14,7 +14,7 @@
 #' @importFrom tibble tibble
 #'
 #' @return returns the score
-#' @export
+#' @keywords internal
 #' @examples
 #' \dontrun{ 
 #' data <- tabix_func(Ranges, Reference_Allele, Mutant, file_coding, file_noncoding)
