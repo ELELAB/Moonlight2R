@@ -7,8 +7,12 @@
 #' @return matrix from FEA
 #' @export
 #' @examples
+#' data(DEGsmatrix)
 #' dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 FEA <- function (BPname = NULL, DEGsmatrix){
+
+    data('DiseaseList')
+    data('EAGenes')
 
     DiseaseList <- get("DiseaseList")
     EAGenes <- get("EAGenes")

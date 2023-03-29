@@ -15,6 +15,8 @@
 #' thres.role = 0)
 PRA <- function(dataURA, BPname, thres.role = 0){
 
+    data('tabGrowBlock')
+    data('knownDriverGenes')
 
     tabGrowBlock <- get("tabGrowBlock")
     knownDriverGenes <- get("knownDriverGenes")

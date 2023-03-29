@@ -9,7 +9,7 @@ LiftMAF(Infile, Current_Build)
 \arguments{
 \item{Infile}{A tibble of MAF.}
 
-\item{Current_Build}{A charcter string, either \code{GRCh38} or \code{GRCh37}.}
+\item{Current_Build}{A charcter string, either \code{GRCh38} or \code{GRCh37}}
 }
 \value{
 MAF tibble with positions lifted to another build
@@ -18,6 +18,6 @@ MAF tibble with positions lifted to another build
 This function lifts a MAF file to a different genomic build.
 }
 \examples{
-
-LiftMAF(Infile, Current_Build = 'GRCh38')
+data(dataMAF)
+LiftMAF(dataMAF, Current_Build = 'GRCh38')
 }

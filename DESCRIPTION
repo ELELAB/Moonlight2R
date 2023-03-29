@@ -23,9 +23,9 @@ Authors@R:
 	   role="aut",
     	   ))
 Depends: R (>= 4.2), doParallel, foreach
-Imports: parmigene, randomForest, SummarizedExperiment, gplots,
+Imports: parmigene, randomForest, gplots,
         circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
-        limma, grDevices, graphics, GEOquery, stats, purrr,
+        grDevices, graphics, GEOquery, stats, purrr,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
         tibble, tidyHeatmap, tidyr, AnnotationHub
@@ -71,8 +71,8 @@ biocViews: DNAMethylation, DifferentialMethylation, GeneRegulation,
 Suggests: BiocStyle, knitr, rmarkdown, testthat, devtools, roxygen2,
         png
 VignetteBuilder: knitr
-LazyData: true
 URL: https://github.com/ELELAB/Moonlight2R
 BugReports: https://github.com/ELELAB/Moonlight2R/issues
 RoxygenNote: 7.2.3
+LazyData: true
 Encoding: UTF-8
