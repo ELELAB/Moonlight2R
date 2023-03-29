@@ -20,7 +20,8 @@ table with number of pubmed that affects, increase or decrase genes annotated in
 This function carries out the literature phenotype analysis (LPA)
 }
 \examples{
-data(DEGsmatrix)
+data('DEGsmatrix')
+data('DiseaseList')
 BPselected <- c("apoptosis")
 BPannotations <- DiseaseList[[match(BPselected, names(DiseaseList))]]$ID
 }

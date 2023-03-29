@@ -16,9 +16,9 @@
 #' @return returns the score
 #' @export
 #' @examples
-#' 
+#' \dontrun{ 
 #' data <- tabix_func(Ranges, Reference_Allele, Mutant, file_coding, file_noncoding)
-
+#'}
 
 
 tabix_func <- function(Ranges, Reference_Allele, Mutant, file_coding, file_noncoding){

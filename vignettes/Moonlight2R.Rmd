@@ -526,6 +526,12 @@ and mutation data) are stored in the Moonlight2R package:
 data(DEGsmatrix)
 data(dataFilt)
 data(dataMAF)
+data(GEO_TCGAtab)
+data(LOC_transcription)
+data(LOC_translation)
+data(LOC_protein)
+data(Oncogenic_mediators_mutation_summary)
+data(DEG_Mutations_Annotations)
 ```
 
 

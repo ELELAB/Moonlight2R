@@ -12,11 +12,15 @@
 #' @export
 #' @return an adjacent matrix
 #' @examples
+#' data('DEGsmatrix')
+#' data('dataFilt')
 #' dataDEGs <- DEGsmatrix
-#' dataGRN <- GRN(TFs = rownames(dataDEGs)[1:100],
+#' dataGRN <- GRN(TFs = rownames(dataDEGs)[1:10],
 #' DEGsmatrix = dataDEGs,
 #' DiffGenes = TRUE,
-#' normCounts = dataFilt)
+#' normCounts = dataFilt,
+#' nGenesPerm = 10,
+#' nBoot = 10)
 GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nGenesPerm = 2000, nBoot = 400) {
     normCountsA <- normCounts
     normCountsB <- normCounts

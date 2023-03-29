@@ -11,8 +11,8 @@
 #' @return MAF tibble with positions lifted to another build
 #' @export
 #' @examples
-#'
-#' LiftMAF(Infile, Current_Build = 'GRCh38')
+#' data(dataMAF)
+#' LiftMAF(dataMAF, Current_Build = 'GRCh38')
 
 
 LiftMAF <- function(Infile, Current_Build){
