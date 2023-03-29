@@ -18,5 +18,5 @@ More information on CSCapeSomatic are available on their official webpage:
 
 http://cscape-somatic.biocompute.org.uk/#download
 
-We use CScapeSomatic files as optional input of our `DMA()` function in Moonlight2R.
+We use CScapeSomatic files as input of our `DMA()` function in Moonlight2R.
 

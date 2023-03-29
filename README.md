@@ -51,8 +51,8 @@ library(Moonlight2R)
 vignette( "Moonlight2R", package="Moonlight2R")
 ```
 
-### Installation of optional requirements
+### Installation of other requirements
 
-To make the best out of Moonlight2R we recommend downloading the [CSCapeSomatic
+To make the best out of Moonlight2R the user should download the [CSCapeSomatic
 pre-computed scores](http://cscape-somatic.biocompute.org.uk/#download). More
 detailed instructions are available in the [INSTALL file](./INSTALL)
