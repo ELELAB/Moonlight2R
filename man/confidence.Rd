@@ -19,5 +19,5 @@ This function annotated a confidence level to the score
 }
 \examples{
 
-remark <- confidence(s, type)
+remark <- confidence(0.8, type='Coding')
 }

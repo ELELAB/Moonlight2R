@@ -36,5 +36,6 @@ no return value, plot is saved
 This function visualize the plotCircos
 }
 \examples{
+data('listMoonlight')
 plotCircos(listMoonlight = listMoonlight, additionalFilename = "_ncancer5")
 }

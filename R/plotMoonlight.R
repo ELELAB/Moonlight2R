@@ -30,14 +30,13 @@
 #' @export
 #'
 #' @examples
+#' data(DEG_Mutations_Annotations)
+#' data(Oncogenic_mediators_mutation_summary)
+#' data(dataURA)
 #' plotMoonlight(DEG_Mutations_Annotations, 
 #'               Oncogenic_mediators_mutation_summary, 
 #'               dataURA, gene_type = "drivers", n = 50,
-#'               additionalFilename = "path/myplot_")
-#' plotMoonlight(DEG_Mutations_Annotations, 
-#'               Oncogenic_Mediators_mutation_summary, 
-#'               dataURA, 
-#'               genelist = c("BRCA1", "BRCA2", "GATA3", "RB1"))
+#'               additionalFilename = "myplot_")
 
 plotMoonlight <- function(DEG_Mutations_Annotations, 
                           Oncogenic_mediators_mutation_summary,

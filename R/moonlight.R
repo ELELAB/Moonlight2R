@@ -17,8 +17,14 @@
 #' @export
 #' @return table with cancer driver genes TSG and OCG.
 #' @examples
-#' drivers <- moonlight(dataDEGs = DEGsmatrix, dataFilt = dataFilt, BPname = c("apoptosis", "proliferation of cells"),
-#' dataMAF = dataMAF, path_cscape_coding = "css_coding.vcf.gz", path_cscape_noncoding = "css_noncoding.vcf.gz")
+#' \dontrun{
+#' drivers <- moonlight(dataDEGs = DEGsmatrix, 
+#' dataFilt = dataFilt, 
+#' BPname = c("apoptosis", "proliferation of cells"),
+#' dataMAF = dataMAF, 
+#' path_cscape_coding = "css_coding.vcf.gz", 
+#' path_cscape_noncoding = "css_noncoding.vcf.gz")
+#' }
 moonlight <- function(dataDEGs, dataFilt, 
                       BPname = NULL, 
                       Genelist= NULL,

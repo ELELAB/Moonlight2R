@@ -8,7 +8,7 @@
 #' @export
 #' @examples
 #' 
-#' remark <- confidence(s, type)
+#' remark <- confidence(0.8, type='Coding')
 
 
 confidence <- function(s, type){

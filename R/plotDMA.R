@@ -33,16 +33,11 @@
 #' @export
 #'
 #' @examples
+#' data('DEG_Mutations_Annotations')
+#' data('Oncogenic_mediators_mutation_summary')
 #' plotDMA(DEG_Mutations_Annotations, 
 #'         Oncogenic_mediators_mutation_summary, 
-#'         type = "split", additionalFilename = "path/myplots_")
-#' plotDMA(DEG_Mutations_Annotations, 
-#'         Oncogenic_mediators_mutation_summary, 
-#'         type = "complete", additionalFilename = "path/myplot_")
-#' plotDMA(DEG_Mutations_Annotations, 
-#'         Oncogenic_mediators_mutation_summary, 
-#'         genelist = c("BRCA1", "BRCA2", "FOX1", "GATA3", "TP53"), 
-#'         additionalFilename = "path/myplot_")
+#'         type = "split", additionalFilename = "myplots_")
 
 plotDMA <- function(DEG_Mutations_Annotations, 
                     Oncogenic_mediators_mutation_summary,
@@ -148,6 +143,8 @@ plotDMA <- function(DEG_Mutations_Annotations,
 
     # Stable pdf into one pdf
     pdfs <- test %>% pull(heatmaps)
+    print(pdfs)
+    print(additionalFilename)
     pdf_combine(input = pdfs, 
                 output = paste(additionalFilename,"heatmaps_split.pdf", 
                                sep = ""))

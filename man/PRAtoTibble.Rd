@@ -16,6 +16,6 @@ tibble with drivers
 This function changes the PRA output to tibble format
 }
 \examples{
-
+data('dataPRA')
 PRAtoTibble(dataPRA)
 }

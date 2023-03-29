@@ -20,6 +20,7 @@
 #' @export
 #' @return no return value, plot is saved
 #' @examples 
+#' data('listMoonlight')
 #' plotCircos(listMoonlight = listMoonlight, additionalFilename = "_ncancer5")
 
 plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = NULL, 

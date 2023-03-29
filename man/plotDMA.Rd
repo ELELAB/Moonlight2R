@@ -42,14 +42,9 @@ in a single heatmap or split into several different ones.
 It is also possible to provide a personalised genelist to visualise.
 }
 \examples{
+data('DEG_Mutations_Annotations')
+data('Oncogenic_mediators_mutation_summary')
 plotDMA(DEG_Mutations_Annotations, 
         Oncogenic_mediators_mutation_summary, 
-        type = "split", additionalFilename = "path/myplots_")
-plotDMA(DEG_Mutations_Annotations, 
-        Oncogenic_mediators_mutation_summary, 
-        type = "complete", additionalFilename = "path/myplot_")
-plotDMA(DEG_Mutations_Annotations, 
-        Oncogenic_mediators_mutation_summary, 
-        genelist = c("BRCA1", "BRCA2", "FOX1", "GATA3", "TP53"), 
-        additionalFilename = "path/myplot_")
+        type = "split", additionalFilename = "myplots_")
 }
