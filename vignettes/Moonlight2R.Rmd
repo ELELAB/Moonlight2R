@@ -19,6 +19,11 @@ output:
         toc_depth: 2
         highlight: haddock
 
+vignette: >
+  %\VignetteIndexEntry{Moonlight2: An automatized workflow to study mechanistic indicators for driver gene prediction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+
 
 references:
 - id: ref1
@@ -378,11 +383,7 @@ references:
   issued:
    year: 2022
 
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
----
+
   
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(dpi = 72)
