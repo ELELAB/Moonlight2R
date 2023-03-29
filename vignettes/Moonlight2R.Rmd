@@ -381,7 +381,7 @@ references:
   DOI: "10.1101/2022.11.18.517066"
   issued:
    year: 2022
-
+---
   
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(dpi = 72)
@@ -467,7 +467,17 @@ of the proposed method.
 # Installation
 
 To install Moonlight2R use the code below.
-Moonlight2R requires R version >= 4.2.
+
+## Installation from BioConductor
+
+```{r, eval = FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Moonlight2R")
+```
+
+## Installation from GitHub
 
 First, install `devtools` or if you already have it installed, load it.
 ```{r, eval = FALSE}
@@ -480,7 +490,7 @@ Install Moonlight2R from GitHub:
 devtools::install_github(repo = "ELELAB/Moonlight2R")
 ```
 
-To install Moonlight2R with its accompanying vignette use the code below.  
+## Installation from GitHub with accompanying vignette 
 
 First, install the BiocStyle Bioconductor package.
 
