@@ -8,6 +8,7 @@
 #' @export
 #' @examples
 #' data(DEGsmatrix)
+#' DEGsmatrix <- DEGsmatrix[1:10, 1:10]
 #' dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 FEA <- function (BPname = NULL, DEGsmatrix){
 

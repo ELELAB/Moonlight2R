@@ -17,8 +17,8 @@
 #' DEGsmatrix = dataDEGs,
 #' DiffGenes = TRUE,
 #' normCounts = dataFilt,
-#' nGenesPerm = 10,
-#' nBoot = 10)
+#' nGenesPerm = 5,
+#' nBoot = 5)
 #' dataURA <-URA(dataGRN = dataGRN,
 #' DEGsmatrix = dataDEGs,
 #' BPname = c("apoptosis",
