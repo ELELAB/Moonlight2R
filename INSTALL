@@ -1,0 +1,22 @@
+# Installing additional requirements
+
+## CScapeSomatic data files
+
+In order to take full advantage of the Moonlight2R package, the user is advised
+to download CScapeSomatic precomputed scores. Please download the following
+files in the same directory on your system. For instance, on Linux/UNIX based
+systems:
+
+```
+curl http://cscape-somatic.biocompute.org.uk/css_coding.vcf.gz -o css_coding.vcf.gz
+curl http://cscape-somatic.biocompute.org.uk/css_coding.vcf.gz.tbi -o css_coding.vcf.gz.tbi
+curl http://cscape-somatic.biocompute.org.uk/css_noncoding.vcf.gz -o css_noncoding.vcf.gz
+curl http://cscape-somatic.biocompute.org.uk/css_noncoding.vcf.gz.tbi -o css_noncoding.vcf.gz.tbi
+```
+
+More information on CSCapeSomatic are available on their official webpage:
+
+http://cscape-somatic.biocompute.org.uk/#download
+
+We use CScapeSomatic files as optional input of our `DMA()` function in Moonlight2R.
+
