@@ -28,3 +28,4 @@ This function retrives the individial score for a SNP
 data <- tabix_func(Ranges, Reference_Allele, Mutant, file_coding, file_noncoding)
 }
 }
+\keyword{internal}
