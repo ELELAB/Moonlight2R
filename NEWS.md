@@ -4,7 +4,7 @@
 
 * first release of Moonlight2R.
 
-## New features (respect to MoonlightR)
+## New features (added or significantly changed respect to MoonlightR)
 
 * `DMA`			Driver mutation analysis
 
@@ -34,5 +34,5 @@
 
 * `Oncogenic_mediators_mutation_summary`	Oncogenic Mediators Mutation Summary  
 
-* `moonlight2R`		Function to run moonlight pipeline (renamed from first version of MoonlightR)
+* `moonlight`		Function to run moonlight pipeline
 
