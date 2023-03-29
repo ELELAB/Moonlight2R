@@ -9,7 +9,7 @@
 #' @return tibble with drivers
 #' @export
 #' @examples
-#' 
+#' data('dataPRA')
 #' PRAtoTibble(dataPRA)
 
 

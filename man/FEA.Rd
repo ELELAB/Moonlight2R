@@ -18,5 +18,6 @@ matrix from FEA
 This function carries out the functional enrichment analysis (FEA)
 }
 \examples{
+data(DEGsmatrix)
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 }

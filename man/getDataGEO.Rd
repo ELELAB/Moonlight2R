@@ -20,7 +20,5 @@ return GEO gset
 This function retrieves and prepares GEO data
 }
 \examples{
-\dontrun{
 dataGEO <-  getDataGEO(GEOobject = "GSE20347",platform = "GPL571")
-}
 }

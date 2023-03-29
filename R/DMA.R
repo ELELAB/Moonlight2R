@@ -1,7 +1,7 @@
 #' DMA
 #'
 #' This function carries out the driver mutation analysis.
-#' @param dataMaf A MAF file rda object.  
+#' @param dataMAF A MAF file rda object.  
 #' The MAF file must at least contain the following columns:
 #' \itemize{
 #' \item Hugo_Symbol eg. BRCA1
@@ -48,7 +48,7 @@
 #' 
 #' @export
 #' @examples
-#'
+#' \dontrun{
 #' DMA(dataMAF = dataMAF,
 #'     dataDEGs = DEGsmatrix,
 #'     dataPRA = dataPRA,
@@ -65,12 +65,16 @@
 #'     dataPRA = dataPRA,
 #'     runCscape = FALSE,
 #'     results_folder = "./results")     
-
+#' }
 DMA <- function(dataMAF, dataDEGs, dataPRA, 
                 runCscape = TRUE,
                 coding_file, noncoding_file,
                 results_folder = "./DMAresults"){
   
+  data('LOC_transcription')
+  data('LOC_translation')
+  data('LOC_protein')
+
   # Create Output folder
   if (dir.exists(results_folder)){
     print("Output folder already exits")
