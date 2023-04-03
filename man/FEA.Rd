@@ -9,7 +9,7 @@ FEA(BPname = NULL, DEGsmatrix)
 \arguments{
 \item{BPname}{BPname biological process such as "proliferation of cells", "ALL" (default) if FEA should be carried out for all 101 biological processes}
 
-\item{DEGsmatrix}{DEGsmatrix output from DEA such as dataDEGs"}
+\item{DEGsmatrix}{DEGsmatrix output from DEA such as dataDEGs}
 }
 \value{
 matrix from FEA
@@ -19,5 +19,6 @@ This function carries out the functional enrichment analysis (FEA)
 }
 \examples{
 data(DEGsmatrix)
+DEGsmatrix <- DEGsmatrix[1:10, ]
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 }
