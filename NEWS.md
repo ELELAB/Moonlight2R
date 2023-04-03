@@ -1,3 +1,9 @@
+# Moonlight2R 0.99.1
+
+## Summary
+
+* removed package documentation from Rdata.R
+
 # Moonlight2R 0.99.0
 
 ## Summary
