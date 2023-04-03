@@ -44,6 +44,6 @@ dataGRN <- GRN(TFs = rownames(dataDEGs)[1:10],
 DEGsmatrix = dataDEGs,
 DiffGenes = TRUE,
 normCounts = dataFilt,
-nGenesPerm = 10,
-nBoot = 10)
+nGenesPerm = 5,
+nBoot = 5)
 }
