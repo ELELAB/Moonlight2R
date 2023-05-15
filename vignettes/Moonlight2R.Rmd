@@ -388,9 +388,6 @@ knitr::opts_chunk$set(dpi = 72)
 knitr::opts_chunk$set(cache=FALSE)
 ```
 
-```{r, echo = FALSE,hide=TRUE, message=FALSE,warning=FALSE}
-devtools::load_all(".")
-```
 
 # Abstract
 
@@ -514,8 +511,10 @@ vignette( "Moonlight2R", package="Moonlight2R")
 
 
 # Load libraries
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 library(Moonlight2R)
+library(magrittr)
+library(dplyr)
 ```
 
 
@@ -551,10 +550,10 @@ You can search GEO data using the `getDataGEO` function.
 GEO_TCGAtab: a 18x12 matrix that provides the GEO data set we matched to one of the 18 given TCGA cancer types 
 
 ```{r, eval = TRUE, echo = TRUE}
-knitr::kable(GEO_TCGAtab, digits = 2, 
-             caption = "Table with GEO data set matched to one 
-             of the 18 given TCGA cancer types ",
-             row.names = TRUE)
+knitr::kable(GEO_TCGAtab, digits = 2,
+       caption = "Table with GEO data set matched to one
+       of the 18 given TCGA cancer types ",
+       row.names = TRUE)
 ```
 
 
