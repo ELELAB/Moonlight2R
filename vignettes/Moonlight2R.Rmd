@@ -660,6 +660,21 @@ dataDMA <- DMA(dataMAF = dataMAF,
                noncoding_file = "css_noncoding.vcf.gz")
 ```
 
+## `GTM`: Gene Text Mining
+The user can perform text mining on candidate driver genes predicted from `DMA` 
+using the `GTM` function. This function takes as input candidate driver genes 
+and a query and finds associated PubMed IDs. Standard PubMed syntax can be used 
+in the query. For example, Boolean operators AND, OR, NOT can be applied and 
+tags such as [AU], [TITLE/ABSTRACT], [Affiliation] can be used. 
+
+```{r, eval = TRUE}
+data(dataDMA)
+genes_query <- Reduce(c, dataDMA)
+dataGTM <- GTM(genes = genes_query, 
+	       query_string = "AND cancer AND driver")
+``` 
+
+
 ## `Level of consequence`: Effect of mutations on three different levels
 The user can investigate the predicted effect of different mutation types on the transcriptional 
 level through the table LOC_transcription:
