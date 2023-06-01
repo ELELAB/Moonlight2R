@@ -5,7 +5,7 @@
 \title{GTM
 This function carries out gene text mining.}
 \usage{
-GTM(genes, query_string = "AND cancer AND driver")
+GTM(genes, query_string = "AND cancer AND driver", max_records = 20)
 }
 \arguments{
 \item{genes}{A character string containing the genes
@@ -18,18 +18,19 @@ in query to follow the gene of interest. Default is
 can be used in the query. For example Boolean operators
 AND, OR, NOT can be applied and tags such as [AU], 
 [TITLE/ABSTRACT], [Affiliation] can be used.}
+
+\item{max_records}{An integer containing the maximum
+number of records to be fetched from PubMed.}
 }
 \value{
 A tibble containing results of text mining where
 PubMed was queried for information of input genes. Each
-row in the tibble contains a PubMed ID for a given gene.
-If more than 20 results from the specified query is obtained, 
-only the first 20 are included. The tibble contains four
-columns: Hugo_Symbol which contains the given gene, 
-pubmed_query which contains the query that was searched,
-pubmed_count which is the number of total publications 
-that the query resulted in and pubmed_ids which contains the
-PubMed IDs.
+row in the tibble contains a sentence from an abstract
+that contains either of the words supplied in the query.
+Each row also contains corresponding PubMed ID, gene, 
+total number of PubMed publications, doi, title, full
+abstract and year of publications, resulting in a total
+of eight columns.
 }
 \description{
 GTM

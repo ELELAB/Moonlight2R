@@ -5,13 +5,13 @@
 \alias{dataGTM}
 \title{Text mining of candidate driver genes}
 \format{
-A 14x4 tibble.
+A 57x8 tibble.
 }
 \usage{
 data(dataGTM)
 }
 \value{
-A 14x4 tibble.
+A 57x8 tibble.
 }
 \description{
 A tibble containing results of text mining where predicted
@@ -19,8 +19,9 @@ driver genes stored in dataDMA were queried for their role as drivers in
 PubMed
 }
 \details{
-The tibble contains the PubMed IDs for a given gene in rows and
-the columns contain the given gene, the query, total number of publications,
-and PubMed ID.
+The tibble contains sentences from abstracts from PubMed IDs 
+that contain either of the words supplied in the query. The tibble also
+contains PubMed IDs, total number of publications, doi, title, full
+abstract and year of publication.
 }
 \keyword{datasets}
