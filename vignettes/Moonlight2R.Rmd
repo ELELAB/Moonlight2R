@@ -661,17 +661,24 @@ dataDMA <- DMA(dataMAF = dataMAF,
 ```
 
 ## `GTM`: Gene Text Mining
-The user can perform text mining on candidate driver genes predicted from `DMA` 
-using the `GTM` function. This function takes as input candidate driver genes 
-and a query and finds associated PubMed IDs. Standard PubMed syntax can be used 
-in the query. For example, Boolean operators AND, OR, NOT can be applied and 
-tags such as [AU], [TITLE/ABSTRACT], [Affiliation] can be used. 
+The user can perform text mining on driver genes predicted from `DMA` 
+using the `GTM` function. This function takes as input driver genes, 
+a query and maximum number of records to retrieve from PubMed. 
+Standard PubMed syntax can be used in the query. For example, Boolean 
+operators AND, OR, NOT can be applied and tags such as [AU], 
+[TITLE/ABSTRACT], [Affiliation] can be used. `GTM` fetches data of 
+PubMed records matching the specified query and extracts sentences 
+from the abstract that contain either of the words supplied in the 
+query. This is done for each of the genes supplied in the input. These 
+sentences along with the PubMed ID, doi, title, full abstract, year of 
+publication, and total number of PubMed records are returned in a table. 
 
 ```{r, eval = TRUE}
 data(dataDMA)
 genes_query <- Reduce(c, dataDMA)
 dataGTM <- GTM(genes = genes_query, 
 	       query_string = "AND cancer AND driver")
+head(dataGTM)
 ``` 
 
 
