@@ -384,16 +384,17 @@
 #'@description  A tibble containing results of text mining where predicted
 #' driver genes stored in dataDMA were queried for their role as drivers in
 #' PubMed 
-#'@details The tibble contains the PubMed IDs for a given gene in rows and
-#' the columns contain the given gene, the query, total number of publications,
-#' and PubMed ID.
+#'@details The tibble contains sentences from abstracts from PubMed IDs 
+#' that contain either of the words supplied in the query. The tibble also
+#' contains PubMed IDs, total number of publications, doi, title, full
+#' abstract and year of publication. 
 #'
 #'@docType data
 #'@usage data(dataGTM)
 #'@name dataGTM
 #'@aliases dataGTM
-#'@return A 14x4 tibble.
+#'@return A 57x8 tibble.
 #'
-#'@format A 14x4 tibble.
+#'@format A 57x8 tibble.
 #'
 "dataGTM"
