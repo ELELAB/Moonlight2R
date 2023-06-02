@@ -379,22 +379,20 @@
 #'
 "Oncogenic_mediators_mutation_summary"
 
-#' Text mining of candidate driver genes
+#' Literature search of driver genes
 #'
-#'@description  A tibble containing results of text mining where predicted
+#'@description  A tibble containing results of literature search where predicted
 #' driver genes stored in dataDMA were queried for their role as drivers in
 #' PubMed 
-#'@details The tibble contains sentences from abstracts from PubMed IDs 
-#' that contain either of the words supplied in the query. The tibble also
-#' contains PubMed IDs, total number of publications, doi, title, full
-#' abstract and year of publication. 
+#'@details The tibble contains PubMed IDs, doi, title, abstract, year of publication,
+#' keywords, and total number of publications for the genes.
 #'
 #'@docType data
-#'@usage data(dataGTM)
-#'@name dataGTM
-#'@aliases dataGTM
-#'@return A 57x8 tibble.
+#'@usage data(dataGLS)
+#'@name dataGLS
+#'@aliases dataGLS
+#'@return A 14x8 tibble.
 #'
-#'@format A 57x8 tibble.
+#'@format A 14x8 tibble.
 #'
-"dataGTM"
+"dataGLS"
