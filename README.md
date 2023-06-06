@@ -56,3 +56,26 @@ vignette( "Moonlight2R", package="Moonlight2R")
 To make the best out of Moonlight2R the user should download the [CSCapeSomatic
 pre-computed scores](http://cscape-somatic.biocompute.org.uk/#download). More
 detailed instructions are available in the [INSTALL file](./INSTALL)
+
+
+### Changes between MoonlightR and Moonlight2R
+
+The following main functions were added to Moonlight2R to reflect its new features: 
+`DMA.R`, `GLS.R`, `plotDMA.R`, and `plotMoonlight.R` which are associated with the following 
+new helper functions: `LiftMAF.R`, `MAFtoCscape.R`, `PRAtoTibble.R`, `RunCscape_somatic.R`, 
+`confidence.R`, `plotHeatmap.R`, and `tabix_func.R`. 
+
+The following functions were not included in Moonlight2R: `DPA.R` and `getDataTCGA.R`. 
+They were removed to make Moonlight2R independent of TCGAbiolinks. 
+
+The `moonlight.R` function, which wraps the whole Moonlight pipeline in a single function, 
+was updated to reflect the new implementations in Moonlight2R. 
+
+Accordingly, example data has been updated which follows changes in the functions. 
+Specifically, the following data files have been added to Moonlight2R: 
+`DEG_Mutations_Annotations.rda`, `EncodePromoters.rda`, `LOC_protein.rda`, `LOC_transcription.rda`, 
+`LOC_translation.rda`, `NCG.rda`, `Oncogenic_mediators_mutation_summary.rda`, `cscape_somatic_output.rda`, 
+`dataDMA.rda`, `dataGLS.rda`, and `dataMAF.rda`. The following data files were not included in 
+Moonlight2R: `GDCprojects.rda` and `geneInfo.rda` as these files were connected to the deleted functions. 
+
+Finally, the vignette has been updated in light of changes implemented in Moonlight2R. 
