@@ -660,6 +660,28 @@ dataDMA <- DMA(dataMAF = dataMAF,
                noncoding_file = "css_noncoding.vcf.gz")
 ```
 
+## `GLS`: Gene Literature Search
+The user can perform a literature search on driver genes predicted from `DMA` 
+using the `GLS` function. This function takes as input driver genes, 
+a query and maximum number of records to retrieve from PubMed. 
+Standard PubMed syntax can be used in the query. For example, Boolean 
+operators AND, OR, NOT can be applied and tags such as [AU], 
+[TITLE/ABSTRACT], [Affiliation] can be used. `GLS` fetches data of 
+PubMed records matching the specified query and outputs PubMed IDs
+matching the query along with doi, title, abstract, year of publication,
+keywords, and total number of PubMed publications. This is done for each 
+of the genes supplied in the input.
+
+```{r, eval = TRUE}
+data(dataDMA)
+genes_query <- Reduce(c, dataDMA)
+dataGLS <- GLS(genes = genes_query, 
+	       query_string = "AND cancer AND driver",
+	       max_records = 20)
+head(dataGLS)
+``` 
+
+
 ## `Level of consequence`: Effect of mutations on three different levels
 The user can investigate the predicted effect of different mutation types on the transcriptional 
 level through the table LOC_transcription:

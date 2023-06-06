@@ -378,3 +378,21 @@
 #'
 #'
 "Oncogenic_mediators_mutation_summary"
+
+#' Literature search of driver genes
+#'
+#'@description  A tibble containing results of literature search where predicted
+#' driver genes stored in dataDMA were queried for their role as drivers in
+#' PubMed 
+#'@details The tibble contains PubMed IDs, doi, title, abstract, year of publication,
+#' keywords, and total number of publications for the genes.
+#'
+#'@docType data
+#'@usage data(dataGLS)
+#'@name dataGLS
+#'@aliases dataGLS
+#'@return A 14x8 tibble.
+#'
+#'@format A 14x8 tibble.
+#'
+"dataGLS"
