@@ -9,6 +9,54 @@ An Automatized Workflow to Study Mechanistic Indicators for Driver Gene Predicti
 
 contacts for repository: Elena Papaleo, elpap-at-dtu.dk, elenap-at-cancer.dk; Matteo Tiberti: tiberti-at-cancer.dk
 
+## Introduction
+
+This repository contains a new release fo our MoonlightR R package, called
+Moonlight2R, which implements the new and improved Moonlight2 workflow. Moonlight2R
+contains a number of differences and improvements respect to the original MoonlightR
+package. For a full overview of what the package can do, please see and cite when
+appropriate:
+
+> Astrid Saksager, Mona Nourbakhsh, Nikola Tom, Xi Steven Chen, Antonio Colaprico,
+> Catharina Olsen, Matteo Tiberti, Elena Papaleo*
+> An Automatized Workflow to Study Mechanistic Indicators for Driver Gene
+> Prediction with Moonlight2, bioRxiv 2022. doi: 10.1101/2022.11.18.517066
+
+### Documentation
+
+please see the material included in the repository. The Moonlight2R [vignette
+is publicly available on RPubs](https://rpubs.com/mtiberti/moonlight2r-vignette)
+
+### Changes respect to MoonlightR
+
+- The following user-facing functions were added to Moonlight2R:
+    - `DMA` and `plotDMA`, for the new driver mutation analysis layer
+    - `GLS`, for automated gene literature search for the most interesting
+    identified driver genes
+    - `plotMoonlight` function to generate a heatmap of Moonlight gene z-scores
+    for selected genes
+    - new helper functions: `LiftMAF`, `MAFtoCscape`, `PRAtoTibble`, `RunCscape_somatic`,
+`confidence`, `plotHeatmap`, and `tabix_func`
+
+- Deprecation and removal of the following functions, which were available in
+MoonlightR: `DPA` and `getDataTCGA`. This means that users now needs to supply
+their own differential expression analysis results (see vignettes) to run
+predictions with Moonlight2R
+
+- The `moonlight` function, which implements the whole Moonlight pipeline in a
+single function,  was updated accordingly to the new changes in Moonlight2R
+
+- Example data has been updated which follows changes in the functions.
+Specifically, the following data files have been added to Moonlight2R:
+`DEG_Mutations_Annotations.rda`, `EncodePromoters.rda`, `LOC_protein.rda`, `LOC_transcription.rda`,
+`LOC_translation.rda`, `NCG.rda`, `Oncogenic_mediators_mutation_summary.rda`, `cscape_somatic_output.rda`,
+`dataDMA.rda`, `dataGLS.rda`, and `dataMAF.rda`. The following data files were not included in
+Moonlight2R: `GDCprojects.rda` and `geneInfo.rda` as these files were connected to the deleted functions.
+
+- the vignette has been updated in light of changes implemented in Moonlight2R
+
+## Installation
+
 ### Installation from BioConductor
 
 To install this package from the BioConductor repositories, start R (version "4.3")
