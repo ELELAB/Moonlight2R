@@ -55,6 +55,8 @@ Moonlight2R: `GDCprojects.rda` and `geneInfo.rda` as these files were connected 
 
 - the vignette has been updated in light of changes implemented in Moonlight2R
 
+## Installation
+
 ### Installation from BioConductor
 
 To install this package from the BioConductor repositories, start R (version "4.3")
