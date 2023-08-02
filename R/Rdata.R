@@ -396,3 +396,160 @@
 #'@format A 14x8 tibble.
 #'
 "dataGLS"
+
+
+#' Methylation evidence table to define driver genes
+#'
+#'@description  A tibble containing combinations of methylation states
+#' of probes used to define driver genes 
+#'@details The tibble contains a value of 1 if a probe is found that
+#' is either hypo-, hyper-, dualmethylated or not methylated. This is
+#' compared with Moonlight's predictions of role of oncogenic mediators
+#' to define driver genes based on methylation evidence. 
+#'
+#'@docType data
+#'@usage data(MetEvidenceDriver)
+#'@name MetEvidenceDriver
+#'@aliases MetEvidenceDriver
+#'@return A 30x6 tibble.
+#'
+#'@format A 30x6 tibble.
+#'
+"MetEvidenceDriver"
+
+
+#' Methylation data matrix from TCGA-LUAD project
+#'
+#'@description  A data matrix containing methylation data from TCGA-LUAD
+#' where CpG probes are in rows and samples are in columns. 
+#'@details The CpG probes are in rows and samples are in columns.
+#'
+#'@docType data
+#'@usage data(dataMethyl)
+#'@name dataMethyl
+#'@aliases dataMethyl
+#'@return A 73x27 matrix.
+#'
+#'@format A 73x27 matrix.
+#'
+"dataMethyl"
+
+
+#' Gene expression data from TCGA-LUAD
+#'
+#'@description  A matrix that provides processed gene expression 
+#' data (obtained from RNA seq) from the TCGA-LUAD project
+#'@details The matrix contains the genes in rows and samples in 
+#' columns. The data has been downloaded and processed using 
+#' TCGAbiolinks. dataFiltCol is identical to dataFilt with the
+#' exception that in dataFiltCol the sample barcodes have been 
+#' shortened to contain only patient barcodes.
+#'
+#'@docType data
+#'@usage data(dataFiltCol)
+#'@name dataFiltCol
+#'@aliases dataFiltCol
+#'@return A 3000x20 matrix
+#'
+#'@format A 3000x20 matrix
+#'
+"dataFiltCol"
+
+
+#' Sample annotations of TCGA-LUAD project 
+#'
+#'@description  A matrix that annotates LUAD samples as either
+#' cancer or normal 
+#'@details The matrix contains two columns: "primary" which
+#' contains patient barcodes of TCGA-LUAD and "sample.type"
+#' which denotes if the sample is either a "Cancer" or 
+#' "Normal" sample
+#'
+#'@docType data
+#'@usage data(LUAD_sample_anno)
+#'@name LUAD_sample_anno
+#'@aliases LUAD_sample_anno
+#'@return A 23x2 matrix
+#'
+#'@format A 23x2 matrix
+#'
+"LUAD_sample_anno"
+
+
+#' Output example from EDA function 
+#'
+#'@description  The predicted driver genes based on methylation
+#' evidence 
+#'@details The data is a list of two elements where each 
+#' element represents predicted oncogenes and tumor suppressors
+#'
+#'@docType data
+#'@usage data(dataEDA)
+#'@name dataEDA
+#'@aliases dataEDA
+#'@return A list of length two
+#'
+#'@format A list of length two
+#'
+"dataEDA"
+
+
+#' Output example from EDA function 
+#'
+#'@description  The object, a list, that was returned from
+#' running the EpiMix function and is one of the outputs from the 
+#' EDA function. 
+#'@details The data is a list of nine elements which is outputted
+#' from the EpiMix function  
+#'
+#'@docType data
+#'@usage data(EpiMix_Results_Regular)
+#'@name EpiMix_Results_Regular
+#'@aliases EpiMix_Results_Regular
+#'@return A list of length nine
+#'
+#'@format A list of length nine
+#'
+"EpiMix_Results_Regular"
+
+
+#' Output example from EDA function 
+#'
+#'@description  Output file from running the EDA function which
+#' is a summary of the oncogenic mediators and their sum of
+#' methylated CpG probes together with the evidence level of
+#' their role as driver gene. 
+#'@details The data is a table where each row is an oncogenic
+#' mediator and the columns represent the predicted driver role
+#' and the sum of hypo-, hyper-, and dualmethylated CpG sites. 
+#'
+#'@docType data
+#'@usage data(Oncogenic_mediators_methylation_summary)
+#'@name Oncogenic_mediators_methylation_summary
+#'@aliases Oncogenic_mediators_methylation_summary
+#'@return A 25x7 tibble
+#'
+#'@format A 25x7 tibble
+#'
+"Oncogenic_mediators_methylation_summary"
+
+
+#' Output example from EDA function 
+#'
+#'@description  Output file from running EDA function which
+#' is a summary of DEGs and associated CpG probes 
+#'@details The data is a table where each row is a CpG probe
+#' in a DEG. Various annotations such as start/end site of
+#' CpG probe, promoter/enhancer annotations, NCG annotations
+#' are included in the table.
+#'
+#'@docType data
+#'@usage data(DEG_Methylation_Annotations.csv)
+#'@name DEG_Methylation_Annotations
+#'@aliases DEG_Methylation_Annotations
+#'@return A 3435x35 tibble
+#'
+#'@format A 3435x35 tibble
+#'
+"DEG_Methylation_Annotations"
+
