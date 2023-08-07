@@ -1,3 +1,9 @@
+# Moonlight2R 0.99.3
+
+## Summary
+
+* added tests with testthat
+
 # Moonlight2R 0.99.2
 
 ## Summary
