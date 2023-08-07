@@ -1,3 +1,11 @@
+# Moonlight2R 0.99.2
+
+## Summary
+
+* added `GLS` (Gene Literature Search) function
+
+* fixed library problems with vignettes
+
 # Moonlight2R 0.99.1
 
 ## Summary
