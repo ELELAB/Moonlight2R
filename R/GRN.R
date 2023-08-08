@@ -15,7 +15,8 @@
 #' data('DEGsmatrix')
 #' data('dataFilt')
 #' dataDEGs <- DEGsmatrix
-#' dataGRN <- GRN(TFs = rownames(dataDEGs)[1:10],
+#' set.seed(317)
+#' dataGRN <- GRN(TFs = sample(rownames(dataDEGs), 100),
 #' DEGsmatrix = dataDEGs,
 #' DiffGenes = TRUE,
 #' normCounts = dataFilt,

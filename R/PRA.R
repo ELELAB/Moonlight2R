@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #' data(dataURA)
-#' dataDual <- PRA(dataURA = dataURA,
+#' dataPRA <- PRA(dataURA = dataURA,
 #' BPname = c("apoptosis","proliferation of cells"),
 #' thres.role = 0)
 PRA <- function(dataURA, BPname, thres.role = 0){
