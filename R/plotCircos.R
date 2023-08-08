@@ -44,22 +44,22 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
     # mytsg <-  listMoonlight[[2]]
     # myocg <-  listMoonlight[[1]]
 
-    n.mygenes <- sapply(mytsg, length) + sapply(myocg,length)
+    n.mygenes <- vapply(mytsg, length, integer(1)) + vapply(myocg, length, integer(1))
     mynames <- mycancertypes
     ind.rm <- which(n.mygenes==0)
 
     if(length(ind.rm)>0){
         mytsg <-  mytsg[-ind.rm]
         myocg <-  myocg[-ind.rm]
-        n.mygenes <- sapply(mytsg, length) + sapply(myocg,length)
+        n.mygenes <- vapply(mytsg, length, integer(1)) + vapply(myocg, length, integer(1))
 
         mynames <- mycancertypes[-ind.rm]
         listMutation <- listMutation[-ind.rm]
     }
     n <- n - length(ind.rm)
 
-    ntsg <- sapply(mytsg,length)
-    nocg <- sapply(myocg, length)
+    ntsg <- vapply(mytsg, length, integer(1))
+    nocg <- vapply(myocg, length, integer(1))
 
     if(!is.null(additionalFilename)){
         pdf(paste0("circos_ocg_tsg",additionalFilename,".pdf"), width=16, height=16)
@@ -97,7 +97,7 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
                         aa = c(1, 0.5)
                         if(theta < 90 || theta > 270)  aa = c(0, 0.5)
 
-                        circlize::circos.text(x=mean(xlim), y=1.7, labels=paste0(name,"\n(",sapply(myocg,length)[i],", ",sapply(mytsg,length)[i],")"), facing = dd, cex=fontSize,  adj = aa)
+                        circlize::circos.text(x=mean(xlim), y=1.7, labels=paste0(name,"\n(",vapply(myocg, length, integer(1))[i],", ",vapply(mytsg, length, integer(1))[i],")"), facing = dd, cex=fontSize,  adj = aa)
 
                         #plot main sector
                         # print(df1$rcol[i])
@@ -106,9 +106,9 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
                                     col = mycols[i], border=mycols[i])
 
 
-                        circlize::circos.rect(xleft=xlim[1], ybottom=ylim[1], xright=xlim[2]-sapply(mytsg, length)[i], ytop=ylim[1]+0.3, 
+                        circlize::circos.rect(xleft=xlim[1], ybottom=ylim[1], xright=xlim[2]-vapply(mytsg, length, integer(1))[i], ytop=ylim[1]+0.3, 
                                     col = "darkgreen", border = "darkgreen")
-                        circlize::circos.rect(xleft=sapply(myocg, length)[i], ybottom=ylim[1], xright=xlim[2], ytop=ylim[1]+0.3, 
+                        circlize::circos.rect(xleft=vapply(myocg, length, integer(1))[i], ybottom=ylim[1], xright=xlim[2], ytop=ylim[1]+0.3, 
                                     col = "goldenrod", border = "goldenrod")
 
                         # #white line all the way around
@@ -212,8 +212,8 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
                 ind <- which(mytsg[[i]] %in% mytsg[[j]])
                 for(k in ind){
                     ind2 <- which(mytsg[[j]]==mytsg[[i]][k])
-                    circlize::circos.link(sector.index1=df1$cancertype[i], point1=c(sapply(myocg, length)[i]+k-1, sapply(myocg, length)[i]+ k),
-                        sector.index2=df1$cancertype[j], point2=c(sapply(myocg, length)[j]+ind2-1,sapply(myocg, length)[j]+ind2), col = mycol.tsg)
+                    circlize::circos.link(sector.index1=df1$cancertype[i], point1=c(vapply(myocg, length, integer(1))[i]+k-1, vapply(myocg, length, integer(1))[i]+ k),
+                        sector.index2=df1$cancertype[j], point2=c(vapply(myocg, length, integer(1))[j]+ind2-1,vapply(myocg, length, integer(1))[j]+ind2), col = mycol.tsg)
                 }
             }
         }
@@ -228,7 +228,7 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
             for(k in ind){
                 ind2 <- which(mytsg[[j]]==myocg[[i]][k])
                 circlize::circos.link(sector.index1=df1$cancertype[i], point1=c(k-1,k),
-                    sector.index2=df1$cancertype[j], point2=c(sapply(myocg, length)[j]+ind2-1,sapply(myocg, length)[j]+ind2), col = mycol.tsg.osg)
+                    sector.index2=df1$cancertype[j], point2=c(vapply(myocg, length, integer(1))[j]+ind2-1,vapply(myocg, length, integer(1))[j]+ind2), col = mycol.tsg.osg)
             }
         }
     }
