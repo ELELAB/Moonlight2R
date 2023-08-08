@@ -5,20 +5,20 @@
 \alias{dataGRN}
 \title{Gene regulatory network}
 \format{
-A list of 2 elements where the first element is a 2x613 matrix 
-and the second element is a vector of length 2
+A list of 2 elements where the first element is a 23x613 matrix 
+and the second element is a vector of length 23
 }
 \usage{
 data(dataGRN)
 }
 \value{
-A list of 2 elements where the first element is a 2x613 matrix #' and the second element is a vector of length 2
+A list of 2 elements where the first element is a 23x613 matrix and the second element is a vector of length 23
 }
 \description{
 The output of the GRN function which finds connections 
 between genes.
 }
 \details{
-The input to the GRN is the differentially expressed genes and #' the gene expression data.
+The input to the GRN is the differentially expressed genes and the gene expression data.
 }
 \keyword{datasets}
