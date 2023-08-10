@@ -422,8 +422,8 @@
 #'@usage data(dataGLS)
 #'@name dataGLS
 #'@aliases dataGLS
-#'@return A 14x8 tibble.
+#'@return A 13x8 tibble.
 #'
-#'@format A 14x8 tibble.
+#'@format A 13x8 tibble.
 #'
 "dataGLS"
