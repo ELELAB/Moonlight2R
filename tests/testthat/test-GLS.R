@@ -3,7 +3,8 @@
 # Run example of GLS
 data(dataDMA)
 genes_query <- Reduce(c, dataDMA)
-dataGLS_test <- GLS(genes = genes_query)
+dataGLS_test <- GLS(genes = genes_query,
+                    query_string = "AND cancer AND driver AND '1980/01/01'[Date - Publication] : '2023/01/01'[Date - Publication]")
 
 # Load example data of GLS serving as reference point
 data(dataGLS)
@@ -41,4 +42,3 @@ test_that("pubmed_count is double", {
 test_that("GLS output is identical to reference point", {
   expect_equal(dataGLS_test, dataGLS)
 })
-

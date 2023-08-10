@@ -25,13 +25,3 @@ test_that("output of URA is a double with 2 columns", {
 test_that("URA output is identical to reference point", {
   expect_equal(dataURA_test, dataURA)
 })
-
-
-
-
-
-
-
-
-
-

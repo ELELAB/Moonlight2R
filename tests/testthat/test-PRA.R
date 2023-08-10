@@ -22,13 +22,3 @@ test_that("output of PRA is a list with 2 elements", {
 test_that("PRA output is identical to reference point", {
   expect_equal(dataPRA_test, dataPRA)
 })
-
-
-
-
-
-
-
-
-
-

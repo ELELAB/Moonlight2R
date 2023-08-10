@@ -38,11 +38,3 @@ test_that("Moonlight scores, p-values and FDR values are numeric", {
 test_that("FEA output is identical to reference point", {
   expect_equal(dataFEA_test, dataFEA)
 })
-
-
-
-
-
-
-
-

@@ -34,11 +34,3 @@ test_that("names of elements in GRN output are correct", {
 test_that("GRN output is identical to reference point", {
   expect_equal(dataGRN_test, dataGRN, tolerance = 0.1)
 })
-
-
-
-
-
-
-
-

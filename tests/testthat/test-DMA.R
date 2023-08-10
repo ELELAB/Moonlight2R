@@ -20,13 +20,3 @@ test_that("output of DMA is a list with 2 elements", {
   expect_named(dataDMA, c("TSG", "OCG"))
   expect_true(all(sapply(dataDMA, is.character)))
 })
-
-
-
-
-
-
-
-
-
-
