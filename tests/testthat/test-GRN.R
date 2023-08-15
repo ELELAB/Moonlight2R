@@ -10,10 +10,11 @@ dataGRN_test <- GRN(TFs = sample(rownames(dataDEGs), 100),
                     DiffGenes = TRUE,
                     normCounts = dataFilt,
                     nGenesPerm = 5,
-                    nBoot = 5)
+                    nBoot = 5,
+		    noise_mi = 0)
 
 # Load example data of GRN serving as reference point
-data(dataGRN)
+data(dataGRN_no_noise)
 
 # Test that output of GRN is as expected
 
@@ -32,5 +33,5 @@ test_that("names of elements in GRN output are correct", {
 
 # Test that output of GRN is as expected compared to reference / example data
 test_that("GRN output is identical to reference point", {
-  expect_equal(dataGRN_test, dataGRN, tolerance = 0.1)
+  expect_equal(dataGRN_test, dataGRN_no_noise)
 })
