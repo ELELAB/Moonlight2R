@@ -118,6 +118,23 @@
 #'
 "dataGRN"
 
+#' Gene regulatory network
+#'
+#'@description  The output of the GRN function which finds connections 
+#' between genes where the noise is set to 0 for testing reproducibility purposes.
+#'@details The input to the GRN is the differentially expressed genes and the gene expression data.
+#'
+#'@docType data
+#'@usage data(dataGRN_no_noise)
+#'@name dataGRN_no_noise
+#'@aliases dataGRN_no_noise
+#'@return A list of 2 elements where the first element is a 23x613 matrix and the second element is a vector of length 23
+#'
+#'@format A list of 2 elements where the first element is a 23x613 matrix 
+#' and the second element is a vector of length 23
+#'
+"dataGRN_no_noise"
+
 #' Upstream regulator analysis
 #'
 #'@description  The output of the URA function which carries out the 
