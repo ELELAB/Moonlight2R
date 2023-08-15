@@ -8,6 +8,7 @@
 #' Must be less than the number of columns of normCounts.
 #' @param nGenesPerm nGenesPerm
 #' @param nBoot nBoot
+#' @param noise_mi noise in knnmi.cross function. Default is 1e-12. 
 #' @importFrom parmigene knnmi.cross
 #' @export
 #' @return an adjacent matrix
@@ -21,7 +22,7 @@
 #' normCounts = dataFilt,
 #' nGenesPerm = 5,
 #' nBoot = 5)
-GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nGenesPerm = 2000, nBoot = 400) {
+GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nGenesPerm = 2000, nBoot = 400, noise_mi = 1e-12) {
     normCountsA <- normCounts
     normCountsB <- normCounts
 
@@ -46,7 +47,7 @@ GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nG
     # messageEstimation <- print(paste("I Need about ", timeEstimatedMI_TFgenes, "seconds for this MI estimation. [Processing 17000k elements /s]  "))
 
     # system.time(
-    miTFGenes <- knnmi.cross(normCountsA[MRcandidates, ], normCountsB, k = kNearest)
+    miTFGenes <- knnmi.cross(normCountsA[MRcandidates, ], normCountsB, k = kNearest, noise = noise_mi)
     # )
 
 
@@ -64,7 +65,7 @@ GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nG
         SampleS <- sample(1:ncol(normCountsA))
         g <- sample(1:nrow(normCountsA), nGenesPerm)
         # if(i == 1) system.time(mi <- knnmi.cross(normCounts[tfListCancer, ], normCounts[g, SampleS], k = kNum)) else
-        mi <- knnmi.cross(normCountsA[tfListCancer, ], normCountsA[g, SampleS], k = kNearest)
+        mi <- knnmi.cross(normCountsA[tfListCancer, ], normCountsA[g, SampleS], k = kNearest, noise = noise_mi)
 
         maxmiCurr <- apply(mi,1, max)
         Cancer_null_distr[,i] <- maxmiCurr
