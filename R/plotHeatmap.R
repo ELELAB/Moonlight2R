@@ -15,6 +15,12 @@
 #'
 
 plotHeatmap <- function(df){
+
+  # Check user input
+  if (c("Moonlight_Oncogenic_Mediator") %in% colnames(Oncogenic_mediators_mutation_summary) == FALSE) {
+    stop("Moonlight_Oncogenic_Mediator must be a column name in Oncogenic_mediators_mutation_summary")
+  }
+
   first_gene <- pull(df[1,1])
   
   driver_mut_heatmap <-  df %>% 

@@ -27,6 +27,24 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
                        intensityColOCG = 0.5, intensityColTSG = 0.5, intensityColDual = 0.5, 
                        fontSize=1){
 
+    # Check user input
+  
+    if (is(listMoonlight, "list") == FALSE) {
+       stop("listMoonlight must be a list")
+    }
+  
+    if (!is(listMutation, "list") & !is.null(listMutation)) {
+       stop("listMutation must be either NULL or a list")
+    }
+  
+    if (!is.numeric(intensityColOCG) | !is.numeric(intensityColTSG) | !is.numeric(intensityColDual) | !is.numeric(fontSize)) {
+       stop("intensityColOCG, intensityColTSG, intensityColDual, and fontSize must be numeric")
+    }
+  
+    if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
+       stop("additionalFilename must be either NULL or a character vector containing filename of plot")
+    }
+
     ### prepare data
     n <- length(listMoonlight)
     mycancertypes <- names(listMoonlight)

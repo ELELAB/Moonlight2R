@@ -44,6 +44,29 @@ plotDMA <- function(DEG_Mutations_Annotations,
                     type = "split",
                     genelist = c(),
                     additionalFilename = ""){ 
+
+  # Check user input
+  
+  if (all(c("Hugo_Symbol", "logFC") %in% colnames(DEG_Mutations_Annotations)) == FALSE) {
+    stop("DEG_Mutations_Annotations must contain Hugo_Symbol and logFC as column names")
+  }
+  
+  if (all(c("CScape_Driver", "CScape_Passenger", "CScape_Unclassified", "Moonlight_Oncogenic_Mediator") %in% colnames(Oncogenic_mediators_mutation_summary)) == FALSE) {
+    stop("Oncogenic_mediators_mutation_summary must contain CScape_Driver, CScape_Passenger, CScape_Unclassified, and Moonlight_Oncogenic_Mediator as column names")
+  }
+  
+  if (!is.null(type) && (type %in% c("split", "complete")) == FALSE) {
+    stop("Type must either be NULL, split or complete")
+  }
+  
+  if (!is.null(genelist) & !is.character(genelist)) {
+    stop("Genelist must be either NULL or a character vector containing gene names")
+  }
+  
+  if (!is.character(additionalFilename)) {
+    stop("additionalFilename must be a character vector adding a prefix or filepath to the filename of the pdf")
+  }
+
   # Modify input
   DEGs <- DEG_Mutations_Annotations %>% 
     dplyr::select(Hugo_Symbol, logFC) %>% 

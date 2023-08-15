@@ -46,6 +46,36 @@ plotMoonlight <- function(DEG_Mutations_Annotations,
                           genelist = c(),
                           BPlist = c(),
                           additionalFilename = ""){
+
+  # Check user input
+  
+  if (all(c("Hugo_Symbol", "Moonlight_gene_z_score", "logFC") %in% colnames(DEG_Mutations_Annotations)) == FALSE) {
+    stop("DEG_Mutations_Annotations must contain Hugo_Symbol, Moonlight_gene_z_score, and logFC as column names")
+  }
+  
+  if (c("Moonlight_Oncogenic_Mediator") %in% colnames(Oncogenic_mediators_mutation_summary) == FALSE) {
+    stop("Oncogenic_mediators_mutation_summary must contain Moonlight_Oncogenic_Mediator as column name")
+  }
+  
+  if (is.null(dim(dataURA))) {
+    stop("The URA data must be non-empty with genes in rows and BPs in columns")
+  }
+  
+  if (!is.null(gene_type) && (gene_type %in% c("mediators", "drivers")) == FALSE) {
+    stop("Gene type must either be NULL, mediators or drivers")
+  }
+  
+  if (!is.null(genelist) & !is.character(genelist)) {
+    stop("Genelist must be either NULL or a character vector containing gene names")
+  }
+  
+  if (!is.null(BPlist) & !is.character(BPlist)) {
+    stop("BPlist must be either NULL or a character vector containing BP names")
+  }
+  
+  if (!is.character(additionalFilename)) {
+    stop("additionalFilename must be a character vector adding a prefix or filepath to the filename of the pdf")
+  }
   
   # The differentially expressed genes, that are annotated as TSG/OCG
   DEGs <- DEG_Mutations_Annotations %>% 

@@ -30,6 +30,21 @@
 GLS <- function(genes, 
                 query_string = "AND cancer AND driver",
 		max_records = 20) {
+
+  # Check user input
+  
+  if (!is.character(genes)) {
+    stop("Genes must be a character vector containing genes to search
+         in PubMed")
+  }
+  
+  if (!is.character(query_string)) {
+    stop("The query string must be a character vector")
+  }
+  
+  if (!is.numeric(max_records)) {
+    stop("The maximum number of records to retrieve must be numeric")
+  }
   
   # Initialize empty tibble to store results
   pubmed_mining <- tibble()
