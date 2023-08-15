@@ -1,7 +1,7 @@
 ---
-title: "Moonlight2: An automatized workflow to study mechanistic indicators for driver gene prediction"
-author: "Astrid Saksager^+^ ,
-        Mona Nourbakhsh^+^,
+title: "A workflow to study mechanistic indicators for driver gene prediction with Moonlight"
+author: "Mona Nourbakhsh^+^ ,
+        Astrid Saksager^+^,
         Nikola Tom, 
         Xi Steven Chen,
         Antonio Colaprico,
@@ -20,7 +20,7 @@ output:
         highlight: haddock
 
 vignette: >
-  %\VignetteIndexEntry{Moonlight2: An automatized workflow to study mechanistic indicators for driver gene prediction}
+  %\VignetteIndexEntry{A workflow to study mechanistic indicators for driver gene prediction with Moonlight}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 
@@ -372,15 +372,15 @@ references:
    year: 2020
 
 - id: ref27
-  title: "An Automatized Workflow to Study Mechanistic Indicators for Driver Gene Prediction with Moonlight"
+  title: "A workflow to study mechanistic indicators for driver gene prediction with Moonlight"
   author: 
-  - family:  Saksager, Astrid and Nourbakhsh, Mona and Tom, Nikola and Chen, Xi Steven and Colaprico, Antonio and Olsen, Catharina and Tiberti, Matteo and Papaleo, Elena
+  - family:  Nourbakhsh, Mona and Saksager, Astrid and Tom, Nikola and Chen, Xi Steven and Colaprico, Antonio and Olsen, Catharina and Tiberti, Matteo and Papaleo, Elena
   given:
-  journal: bioRxiv
-  URL: "https://www.biorxiv.org/content/10.1101/2022.11.18.517066v1"
-  DOI: "10.1101/2022.11.18.517066"
+  journal: Briefings in Bioinformatics
+  URL: "https://doi.org/10.1093/bib/bbad274"
+  DOI: "10.1093/bib/bbad274"
   issued:
-   year: 2022
+   year: 2023
 ---
   
 ```{r setup, include=FALSE}
@@ -561,11 +561,11 @@ knitr::kable(GEO_TCGAtab, digits = 2,
 ## `getDataGEO`: Search by cancer type and data type [Gene Expression]
 The user can query and download the cancer types supported by GEO, using the function `getDataGEO`:
 
-```{r, eval = FALSE , echo = TRUE, results='hide', warning = FALSE, message = FALSE}
-dataFilt_GEO <- getDataGEO(GEOobject = "GSE20347",platform = "GPL571")
+```{r, eval = TRUE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
+dataFilt_GEO <- getDataGEO(GEOobject = "GSE20347", platform = "GPL571")
 ```
 
-```{r, eval = FALSE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
+```{r, eval = TRUE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
 dataFilt_GEO <- getDataGEO(TCGAtumor = "ESCA")
 ```
 
@@ -598,13 +598,15 @@ knitr::include_graphics("FEAplot.gif")
 
 ## `GRN`: Gene Regulatory Network
 The user can perform a gene regulatory network analysis using the function `GRN` which infers 
-the network using the parmigene package.
+the network using the parmigene package. For illustrative purposes and to increase runtime, we 
+have set `nGenesPerm = 5` and `nBoot = 5` in the below example, however, recommend setting 
+these parameters to `nGenesPerm = 2000` and `nBoot = 400` to achieve optimal results.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 data(DEGsmatrix)
 data(dataFilt)
-dataGRN <- GRN(TFs = rownames(DEGsmatrix), normCounts = dataFilt,
-	               nGenesPerm = 2000,kNearest = 3,nBoot = 400)
+dataGRN <- GRN(TFs = sample(rownames(DEGsmatrix), 100), normCounts = dataFilt,
+	               nGenesPerm = 5, kNearest = 3, nBoot = 5)
 ```
 
 
@@ -720,13 +722,13 @@ plotNetworkHive(dataGRN, knownDriverGenes, 0.55)
 
 In the following plot the driver genes with driver mutations are shown.
 
-```{r, eval = FALSE,  warning = FALSE, message = FALSE, include=TRUE}
+```{r, eval = TRUE, warning = FALSE, message = FALSE, include=TRUE}
 data(dataDMA)
 data(DEG_Mutations_Annotations)
 data(Oncogenic_mediators_mutation_summary)
 plotDMA(DEG_Mutations_Annotations, 
         Oncogenic_mediators_mutation_summary, 
-        type = 'complete', additionalFilename = "./DMAresults/")
+        type = 'complete', additionalFilename = "")
 ```
 
 
@@ -739,7 +741,7 @@ knitr::include_graphics("heatmap_complete.gif")
 In the following plot the top 50 genes with the most driver mutations are visualised.
 The values are the moonlight gene z-score for the two biological processes
 
-```{r, eval = FALSE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
+```{r, eval = TRUE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
 data(DEG_Mutations_Annotations)
 data(Oncogenic_mediators_mutation_summary)
 data(dataURA)
@@ -765,18 +767,18 @@ The code is divided into three case studies:
 
 ## Case study n. 1: Predicting oncogenic mediators using Moonlight's primary layer
 
-```{r,eval = FALSE,echo=TRUE,message=FALSE,warning=FALSE, results='hide'}
+```{r,eval = TRUE,echo=TRUE,message=FALSE,warning=FALSE, results='hide'}
 data(DEGsmatrix)
 data(dataFilt)
 
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 
-dataGRN <- GRN(TFs = rownames(DEGsmatrix), 
+dataGRN <- GRN(TFs = sample(rownames(DEGsmatrix), 100), 
                DEGsmatrix = DEGsmatrix,
                DiffGenes = TRUE,
                normCounts = dataFilt,
-               nGenesPerm = 2000,
-               nBoot = 400)
+               nGenesPerm = 5,
+               nBoot = 5)
 
 dataURA <- URA(dataGRN = dataGRN, 
               DEGsmatrix = DEGsmatrix, 
@@ -796,7 +798,7 @@ oncogenic_mediators <- list("TSG"=names(dataDual$TSG), "OCG"=names(dataDual$OCG)
 ## `plotURA`: Upstream regulatory analysis plot
 The user can plot the result of the upstream regulatory analysis using the function `plotURA`.
 
-```{r, eval = FALSE,message=FALSE,warning=FALSE, results='hide'}
+```{r, eval = TRUE,message=FALSE,warning=FALSE, results='hide'}
  plotURA(dataURA = dataURA[c(names(dataDual$TSG), names(dataDual$OCG)),, drop = FALSE], additionalFilename = "_exampleVignette")
 ```
 
@@ -883,7 +885,7 @@ dataDMA <- DMA(dataMAF = dataMAF,
 
 Next, we analyze the predicted driver genes and their mutations. 
 
-```{r}
+```{r, eval = TRUE}
 # Extract oncogenic mediators that contain at least one driver mutation
 # These are the driver genes
 knitr::kable(Oncogenic_mediators_mutation_summary %>%
@@ -915,7 +917,7 @@ Please cite the MoonlightR and Moonlight2R packages:
 
 * "Interpreting pathways to discover cancer driver genes with Moonlight." Nature Communications (2020): [10.1038/s41467-019-13803-0](https://doi.org/10.1038/s41467-019-13803-0). [@ref26]
 
-* "An Automatized Workflow to Study Mechanistic Indicators for Driver Gene Prediction with Moonlight." bioRxiv (2022): [10.1101/2022.11.18.517066](https://doi.org/10.1101/2022.11.18.517066). [@ref27]
+* "A workflow to study mechanistic indicators for driver gene prediction with Moonlight." Briefings in Bioinformatics (2023): [10.1093/bib/bbad274](https://doi.org/10.1093/bib/bbad274). [@ref27]
 
 Related publications to this vignette:
 
