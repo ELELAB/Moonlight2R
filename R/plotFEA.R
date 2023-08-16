@@ -29,6 +29,17 @@
 plotFEA <- function (dataFEA, topBP = 10, additionalFilename = NULL, height,
                      width, offsetValue = 5, angle = 90, xleg = 35, yleg = 5, titleMain,
                      minY = -5, maxY = 10,  mycols = c("#8DD3C7", "#FFFFB3", "#BEBADA")) {
+
+    # Check user input
+  
+    if (all(c("Moonlight.Z.score", "FDR", "commonNg", "Diseases.or.Functions.Annotation") %in% colnames(dataFEA)) == FALSE) {
+       stop("Moonlight.Z.score, FDR, commonNg, and Diseases.or.Functions.Annotation must be column names in dataFEA")
+    }
+  
+    if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
+       stop("additionalFilename must be either NULL or a character vector adding a prefix or filepath to the filename of the pdf")
+    }
+
     titleMain <- "TCGA BRCA DEGs"
     if (!is.null(additionalFilename)) {
         pdf(additionalFilename, width, height)

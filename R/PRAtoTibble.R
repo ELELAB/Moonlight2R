@@ -16,6 +16,12 @@
 
 PRAtoTibble <- function(dataPRA){
 
+  # Check user input
+  
+  if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
+    stop("The two list elements in PRA data must be named TSG and OCG")
+  }
+
   # Wrangle Data:
   TSG <- as_tibble(dataPRA$TSG, rownames = NA) %>% 
     rownames_to_column(var = "Hugo_Symbol") %>%  

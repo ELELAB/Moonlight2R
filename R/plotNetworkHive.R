@@ -18,6 +18,24 @@
 #' plotNetworkHive(dataGRN = dataGRN, namesGenes = knownDriverGenes, thres = 0.55)
 plotNetworkHive <- function(dataGRN, namesGenes, thres, additionalFilename = NULL){
 
+    # Check user input
+  
+    if (is(namesGenes, "list") == FALSE) {
+       stop("namesGenes must be a list containing genes")
+    }
+  
+    if (!is.numeric(thres)) {
+       stop("thres must be numeric defining threshold of edges to be included")
+    }
+  
+    if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
+       stop("additionalFilename must be either NULL or a character vector containing part of the filename of plot")
+    }
+  
+    if (is(dataGRN, "list") == FALSE) {
+       stop("dataGRN must be a list")
+    }
+
     names.genes.all <- intersect(as.character(unique(c(unlist(namesGenes), rownames(dataGRN[[1]])))),colnames(dataGRN[[1]]))
     tmp <- dataGRN[[1]][,(names.genes.all)]
     tmp[tmp<thres] <- 0
