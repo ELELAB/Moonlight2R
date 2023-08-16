@@ -1,7 +1,7 @@
 Package: Moonlight2R
 Type: Package
 Title: Identify oncogenes and tumor suppressor genes from omics data
-Version: 0.99.2
+Version: 0.99.4
 Date:
 Authors@R:
   c(person("Astrid", "Saksager",
@@ -68,8 +68,14 @@ biocViews: DNAMethylation, DifferentialMethylation, GeneRegulation,
         GeneExpression, MethylationArray, DifferentialExpression,
         Pathways, Network, Survival, GeneSetEnrichment,
         NetworkEnrichment
-Suggests: BiocStyle, knitr, rmarkdown, testthat, devtools, roxygen2,
-        png
+Suggests: 
+    BiocStyle,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    devtools,
+    roxygen2,
+    png
 SystemRequirements: CScapeSomatic
 VignetteBuilder: knitr
 URL: https://github.com/ELELAB/Moonlight2R
@@ -77,3 +83,4 @@ BugReports: https://github.com/ELELAB/Moonlight2R/issues
 RoxygenNote: 7.2.3
 LazyData: true
 Encoding: UTF-8
+Config/testthat/edition: 3

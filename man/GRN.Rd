@@ -11,7 +11,8 @@ GRN(
   normCounts,
   kNearest = 3,
   nGenesPerm = 2000,
-  nBoot = 400
+  nBoot = 400,
+  noise_mi = 1e-12
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ Must be less than the number of columns of normCounts.}
 \item{nGenesPerm}{nGenesPerm}
 
 \item{nBoot}{nBoot}
+
+\item{noise_mi}{noise in knnmi.cross function. Default is 1e-12.}
 }
 \value{
 an adjacent matrix
@@ -40,7 +43,7 @@ This function carries out the gene regulatory network inference using parmigene
 data('DEGsmatrix')
 data('dataFilt')
 dataDEGs <- DEGsmatrix
-dataGRN <- GRN(TFs = rownames(dataDEGs)[1:10],
+dataGRN <- GRN(TFs = sample(rownames(dataDEGs), 100),
 DEGsmatrix = dataDEGs,
 DiffGenes = TRUE,
 normCounts = dataFilt,

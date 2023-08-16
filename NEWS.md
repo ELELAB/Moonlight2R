@@ -1,3 +1,19 @@
+# Moonlight2R 0.99.4
+
+## Summary
+
+* changed instances of `sapply` to `vapply`
+
+# Moonlight2R 0.99.3
+
+## Summary
+
+* added tests with testthat
+
+* updated following example data: dataFEA, dataGRN, dataURA, dataPRA and cscape_somatic_output
+
+* added following example data: dataURA_plot, dataGRN_no_noise 
+
 # Moonlight2R 0.99.2
 
 ## Summary
