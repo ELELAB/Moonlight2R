@@ -608,7 +608,7 @@ set by default in the function arguments.
 data(DEGsmatrix)
 data(dataFilt)
 dataGRN <- GRN(DEGsmatrix = DEGsmatrix, TFs = sample(rownames(DEGsmatrix), 100), normCounts = dataFilt,
-	               nGenesPerm = 5, kNearest = 3, nBoot = 5)
+	               nGenesPerm = 5, kNearest = 3, nBoot = 5, DiffGenes = TRUE)
 ```
 
 
@@ -749,7 +749,7 @@ data(Oncogenic_mediators_mutation_summary)
 data(dataURA)
 plotMoonlight(DEG_Mutations_Annotations,
         Oncogenic_mediators_mutation_summary, 
-        dataURA, gene_type = "drivers", n = 50)
+        dataURA_plot, gene_type = "drivers", n = 50)
 ```
 
 ```{r, fig.width=3, echo = FALSE, fig.align="center",hide=TRUE, message=FALSE,warning=FALSE}
@@ -785,7 +785,8 @@ dataGRN <- GRN(TFs = sample(rownames(DEGsmatrix), 100),
                DiffGenes = TRUE,
                normCounts = dataFilt,
                nGenesPerm = 5,
-               nBoot = 5)
+               nBoot = 5,
+	       kNearest = 3)
 
 dataURA <- URA(dataGRN = dataGRN, 
               DEGsmatrix = DEGsmatrix, 
@@ -806,7 +807,7 @@ oncogenic_mediators <- list("TSG"=names(dataDual$TSG), "OCG"=names(dataDual$OCG)
 The user can plot the result of the upstream regulatory analysis using the function `plotURA`.
 
 ```{r, eval = TRUE,message=FALSE,warning=FALSE, results='hide'}
- plotURA(dataURA = dataURA[c(names(dataDual$TSG), names(dataDual$OCG)),, drop = FALSE], additionalFilename = "_exampleVignette")
+ plotURA(dataURA = dataURA, additionalFilename = "_exampleVignette")
 ```
 
 The figure resulted from the code above is shown below:
@@ -861,6 +862,8 @@ data(dataMAF)
 
 # Perform gene regulatory network analysis
 dataGRN <- GRN(TFs = rownames(DEGsmatrix), 
+	       DEGsmatrix = DEGsmatrix,
+	       DiffGenes = TRUE,
                normCounts = dataFilt,
                nGenesPerm = 2000, 
                kNearest = 3, 
