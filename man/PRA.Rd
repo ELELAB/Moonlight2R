@@ -21,7 +21,7 @@ This function carries out the pattern recognition analysis
 }
 \examples{
 data(dataURA)
-dataDual <- PRA(dataURA = dataURA,
+dataPRA <- PRA(dataURA = dataURA,
 BPname = c("apoptosis","proliferation of cells"),
 thres.role = 0)
 }

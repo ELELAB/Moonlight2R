@@ -8,6 +8,7 @@
 #' Must be less than the number of columns of normCounts.
 #' @param nGenesPerm nGenesPerm
 #' @param nBoot nBoot
+#' @param noise_mi noise in knnmi.cross function. Default is 1e-12. 
 #' @importFrom parmigene knnmi.cross
 #' @export
 #' @return an adjacent matrix
@@ -15,13 +16,37 @@
 #' data('DEGsmatrix')
 #' data('dataFilt')
 #' dataDEGs <- DEGsmatrix
-#' dataGRN <- GRN(TFs = rownames(dataDEGs)[1:10],
+#' dataGRN <- GRN(TFs = sample(rownames(dataDEGs), 100),
 #' DEGsmatrix = dataDEGs,
 #' DiffGenes = TRUE,
 #' normCounts = dataFilt,
 #' nGenesPerm = 5,
 #' nBoot = 5)
-GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nGenesPerm = 2000, nBoot = 400) {
+GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nGenesPerm = 2000, nBoot = 400, noise_mi = 1e-12) {
+   
+    # Check user input
+  
+    if (!is.character(TFs) | length(TFs) == 0) {
+	stop("TFs must be a non-empty character vector containing gene names")
+    }
+  
+    if (.row_names_info(DEGsmatrix) < 0) {
+	stop("Row names were generated automatically. The input DEG table needs to have
+         the gene names as rownames. Double check that genes are rownames.")
+    }
+  
+    if (!is.logical(DiffGenes)) {
+	stop("DiffGenes must be either TRUE or FALSE")
+    }
+  
+    if (is.null(dim(normCounts))) {
+	stop("The expression data must be non-empty with genes in rows and samples in columns")
+    }
+  
+    if (!is.numeric(kNearest) | !is.numeric(nGenesPerm) | !is.numeric(nBoot) | !is.numeric(noise_mi)) {
+	stop("kNearest, nGenesPerm, nBoot and noise_mi must be numeric values")
+    }
+   
     normCountsA <- normCounts
     normCountsB <- normCounts
 
@@ -46,7 +71,7 @@ GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nG
     # messageEstimation <- print(paste("I Need about ", timeEstimatedMI_TFgenes, "seconds for this MI estimation. [Processing 17000k elements /s]  "))
 
     # system.time(
-    miTFGenes <- knnmi.cross(normCountsA[MRcandidates, ], normCountsB, k = kNearest)
+    miTFGenes <- knnmi.cross(normCountsA[MRcandidates, ], normCountsB, k = kNearest, noise = noise_mi)
     # )
 
 
@@ -64,7 +89,7 @@ GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nG
         SampleS <- sample(1:ncol(normCountsA))
         g <- sample(1:nrow(normCountsA), nGenesPerm)
         # if(i == 1) system.time(mi <- knnmi.cross(normCounts[tfListCancer, ], normCounts[g, SampleS], k = kNum)) else
-        mi <- knnmi.cross(normCountsA[tfListCancer, ], normCountsA[g, SampleS], k = kNearest)
+        mi <- knnmi.cross(normCountsA[tfListCancer, ], normCountsA[g, SampleS], k = kNearest, noise = noise_mi)
 
         maxmiCurr <- apply(mi,1, max)
         Cancer_null_distr[,i] <- maxmiCurr

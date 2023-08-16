@@ -18,6 +18,21 @@
 #' OCGs_genes <- names(dataDual$OCG)
 #' plotURA(dataURA = dataURA[c(TSGs_genes, OCGs_genes),],additionalFilename = "_example")
 plotURA<- function(dataURA, additionalFilename = "URAplot"){
+
+    # Check user input
+  
+    if (!is.matrix(dataURA)) {
+       stop("dataURA must be a numeric matrix")
+    }
+  
+    if (nrow(dataURA) < 2 | ncol(dataURA) < 2) {
+       stop("dataURA must have at least two rows and two columns")
+    }
+  
+    if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
+       stop("additionalFilename must be either NULL or a character vector containing part of the filename of plot")
+    }
+
     if(nrow(dataURA)>70){
         cexRow <- 0.1 + 1/(2*nrow(dataURA))*(log10(nrow(dataURA)))
     }else{
