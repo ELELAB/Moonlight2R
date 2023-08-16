@@ -23,6 +23,30 @@
 #' nGenesPerm = 5,
 #' nBoot = 5)
 GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nGenesPerm = 2000, nBoot = 400, noise_mi = 1e-12) {
+   
+    # Check user input
+  
+    if (!is.character(TFs) | length(TFs) == 0) {
+	stop("TFs must be a non-empty character vector containing gene names")
+    }
+  
+    if (.row_names_info(DEGsmatrix) < 0) {
+	stop("Row names were generated automatically. The input DEG table needs to have
+         the gene names as rownames. Double check that genes are rownames.")
+    }
+  
+    if (!is.logical(DiffGenes)) {
+	stop("DiffGenes must be either TRUE or FALSE")
+    }
+  
+    if (is.null(dim(normCounts))) {
+	stop("The expression data must be non-empty with genes in rows and samples in columns")
+    }
+  
+    if (!is.numeric(kNearest) | !is.numeric(nGenesPerm) | !is.numeric(nBoot) | !is.numeric(noise_mi)) {
+	stop("kNearest, nGenesPerm, nBoot and noise_mi must be numeric values")
+    }
+   
     normCountsA <- normCounts
     normCountsB <- normCounts
 

@@ -1,3 +1,9 @@
+# Moonlight2R 0.99.5
+
+## Summary
+
+* added several checks for correctness of main function arguments
+
 # Moonlight2R 0.99.4
 
 ## Summary

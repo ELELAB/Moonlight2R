@@ -16,6 +16,26 @@
 #' BPannotations <- DiseaseList[[match(BPselected, names(DiseaseList))]]$ID
 LPA <- function (dataDEGs, BP, BPlist) {
 
+  # Check user input
+  
+  if (.row_names_info(dataDEGs) < 0) {
+    stop("Row names were generated automatically. The input DEG table needs to have
+         the gene names as rownames. Double check that genes are rownames.")
+  }
+  
+  if ("logFC" %in% colnames(dataDEGs) == FALSE) {
+    stop("The input DEG table must contain a column called logFC.")
+  }
+  
+  if (all(BP %in% names(DiseaseList)) == FALSE) {
+    stop("BPname should be a character vector containing one or more BP(s) 
+         among possible BPs stored in the DiseaseList object.")
+  }
+  
+  if (!is.character(BPlist)) {
+    stop("BPlist must be a character vector of genes")
+  }
+
   BPgenesDEGs <- intersect(BPlist, rownames(dataDEGs))
   dataDEGsBP <- dataDEGs[BPgenesDEGs,]
 

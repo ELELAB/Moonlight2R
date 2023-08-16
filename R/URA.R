@@ -20,7 +20,20 @@
 #' BPname = c("apoptosis",
 #' "proliferation of cells"))
 URA <- function(dataGRN, DEGsmatrix, BPname, nCores = 1){
-doParallel::registerDoParallel(cores = nCores)
+
+  # Check user input
+  
+  if (.row_names_info(DEGsmatrix) < 0) {
+    stop("Row names were generated automatically. The input DEG table needs to have
+         the gene names as rownames. Double check that genes are rownames.")
+  }
+  
+  if (!is.null(BPname) && all(BPname %in% names(DiseaseList)) == FALSE) {
+    stop("BPname should be NULL or a character vector containing one or more BP(s) 
+         among possible BPs stored in the DiseaseList object.")
+  }
+
+  doParallel::registerDoParallel(cores = nCores)
 
   #globalVariables('j')
 

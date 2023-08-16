@@ -12,6 +12,20 @@
 #' dataGEO <-  getDataGEO(GEOobject = "GSE20347",platform = "GPL571")
 
 getDataGEO <- function(GEOobject = "GSE39004", platform = "GPL6244", TCGAtumor=NULL){
+
+  # Check user input
+  
+  if (!is.character(GEOobject)) {
+    stop("GEOobject must be a character vector")
+  }
+  
+  if (!is.character(platform)) {
+    stop("Platform must be a character vector")
+  }
+  
+  if (!is.null(TCGAtumor) & !is.character(TCGAtumor)) {
+    stop("TCGA tumor must either be NULL or a character vector")
+  }
     
   GEO_TCGAtab <- get("GEO_TCGAtab")
   
