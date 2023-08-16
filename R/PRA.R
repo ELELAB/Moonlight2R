@@ -10,10 +10,30 @@
 #' @export
 #' @examples
 #' data(dataURA)
-#' dataDual <- PRA(dataURA = dataURA,
+#' dataPRA <- PRA(dataURA = dataURA,
 #' BPname = c("apoptosis","proliferation of cells"),
 #' thres.role = 0)
 PRA <- function(dataURA, BPname, thres.role = 0){
+
+    # Check user input
+  
+    if (!is.null(BPname) && all(BPname %in% names(DiseaseList)) == FALSE) {
+	stop("BPname should be NULL or a character vector containing one or more BP(s) 
+         among possible BPs stored in the DiseaseList object.")
+    }
+  
+    if (is.null(dim(dataURA))) {
+	stop("The URA data must be non-empty with genes in rows and BPs in columns")
+    }
+  
+    if (all(colnames(dataURA) %in% names(DiseaseList)) == FALSE) {
+	stop("The columns in the URA data must be BPs among possible BPs 
+         stored in the DiseaseList")
+    }
+  
+    if (!is.numeric(thres.role)) {
+	stop("Thres.role must be numeric")
+    }
 
     data('tabGrowBlock')
     data('knownDriverGenes')

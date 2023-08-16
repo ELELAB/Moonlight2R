@@ -70,6 +70,30 @@ DMA <- function(dataMAF, dataDEGs, dataPRA,
                 runCscape = TRUE,
                 coding_file, noncoding_file,
                 results_folder = "./DMAresults"){
+
+  # Check user input
+  
+  if (is.null(dim(dataMAF))) {
+    stop("The mutation data must be a non-empty table")
+  }
+  
+  if (.row_names_info(dataDEGs) < 0) {
+    stop("Row names were generated automatically. The input DEG table needs to have
+         the gene names as rownames. Double check that genes are rownames.")
+  }
+  
+  if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
+    stop("The two list elements in PRA data must be named TSG and OCG")
+  }
+  
+  if (!is.logical(runCscape)) {
+    stop("runCscape must be either TRUE or FALSE")
+  }
+  
+  if (!is.character(results_folder)) {
+    stop("The results folder must be a character vector containing the
+         path to where DMA results should be stored")
+  }
   
   data('LOC_transcription')
   data('LOC_translation')

@@ -86,22 +86,54 @@
 #'
 "dataFilt"
 
+#' Functional enrichment analysis
+#'
+#'@description  The output of the FEA function which does enrichment analysis
+#'@details The input to the FEA is the differentially expressed genes.
+#'
+#'@docType data
+#'@usage data(dataFEA)
+#'@name dataFEA
+#'@aliases dataFEA
+#'@return A dataframe of dimension 101x7
+#'
+#'@format A dataframe of dimension 101x7
+#'
+"dataFEA"
+
 #' Gene regulatory network
 #'
 #'@description  The output of the GRN function which finds connections 
 #' between genes.
-#'@details The input to the GRN is the differentially expressed genes and #' the gene expression data.
+#'@details The input to the GRN is the differentially expressed genes and the gene expression data.
 #'
 #'@docType data
 #'@usage data(dataGRN)
 #'@name dataGRN
 #'@aliases dataGRN
-#'@return A list of 2 elements where the first element is a 2x613 matrix #' and the second element is a vector of length 2
+#'@return A list of 2 elements where the first element is a 23x613 matrix and the second element is a vector of length 23
 #'
-#'@format A list of 2 elements where the first element is a 2x613 matrix 
-#' and the second element is a vector of length 2
+#'@format A list of 2 elements where the first element is a 23x613 matrix 
+#' and the second element is a vector of length 23
 #'
 "dataGRN"
+
+#' Gene regulatory network
+#'
+#'@description  The output of the GRN function which finds connections 
+#' between genes where the noise is set to 0 for testing reproducibility purposes.
+#'@details The input to the GRN is the differentially expressed genes and the gene expression data.
+#'
+#'@docType data
+#'@usage data(dataGRN_no_noise)
+#'@name dataGRN_no_noise
+#'@aliases dataGRN_no_noise
+#'@return A list of 2 elements where the first element is a 23x613 matrix and the second element is a vector of length 23
+#'
+#'@format A list of 2 elements where the first element is a 23x613 matrix 
+#' and the second element is a vector of length 23
+#'
+"dataGRN_no_noise"
 
 #' Upstream regulator analysis
 #'
@@ -114,12 +146,28 @@
 #'@usage data(dataURA)
 #'@name dataURA
 #'@aliases dataURA
-#'@return A 100x2 matrix
+#'@return A 23x2 matrix
 #'
-#'@format A 100x2 matrix
+#'@format A 23x2 matrix
 #'
 "dataURA"
 
+#' Upstream regulator analysis
+#'
+#'@description  The output of the URA function which carries out the 
+#' upstream regulator analysis
+#'@details This URA data is used to showcase some of the visualization
+#' functions
+#'
+#'@docType data
+#'@usage data(dataURA_plot)
+#'@name dataURA_plot
+#'@aliases dataURA_plot
+#'@return A 12x2 matrix
+#'
+#'@format A 12x2 matrix
+#'
+"dataURA_plot"
 
 #' Information of known cancer driver genes from COSMIC
 #'
@@ -391,8 +439,8 @@
 #'@usage data(dataGLS)
 #'@name dataGLS
 #'@aliases dataGLS
-#'@return A 14x8 tibble.
+#'@return A 13x8 tibble.
 #'
-#'@format A 14x8 tibble.
+#'@format A 13x8 tibble.
 #'
 "dataGLS"

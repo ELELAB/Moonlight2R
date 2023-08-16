@@ -16,7 +16,14 @@
 #' # dataFEA <- GSEA(DEGsmatrix = dataDEGs)
 GSEA <- function (DEGsmatrix, top, plot = FALSE){
 
-    dataDEGsnew <- cbind(mRNA = rownames(DEGsmatrix), DEGsmatrix)
+  # Check user input
+  
+  if (.row_names_info(DEGsmatrix) < 0) {
+    stop("Row names were generated automatically. The input DEG table needs to have
+         the gene names as rownames. Double check that genes are rownames.")
+  }
+
+  dataDEGsnew <- cbind(mRNA = rownames(DEGsmatrix), DEGsmatrix)
   
   
   eg = as.data.frame(bitr(dataDEGsnew$mRNA,
