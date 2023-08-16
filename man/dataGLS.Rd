@@ -5,13 +5,13 @@
 \alias{dataGLS}
 \title{Literature search of driver genes}
 \format{
-A 14x8 tibble.
+A 13x8 tibble.
 }
 \usage{
 data(dataGLS)
 }
 \value{
-A 14x8 tibble.
+A 13x8 tibble.
 }
 \description{
 A tibble containing results of literature search where predicted
