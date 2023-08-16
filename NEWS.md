@@ -1,3 +1,9 @@
+# Moonlight2R 0.99.4
+
+## Summary
+
+* changed instances of `sapply` to `vapply`
+
 # Moonlight2R 0.99.3
 
 ## Summary
