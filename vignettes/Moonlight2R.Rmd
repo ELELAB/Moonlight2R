@@ -597,10 +597,12 @@ knitr::include_graphics("FEAplot.gif")
 
 
 ## `GRN`: Gene Regulatory Network
-The user can perform a gene regulatory network analysis using the function `GRN` which infers 
-the network using the parmigene package. For illustrative purposes and to increase runtime, we 
-have set `nGenesPerm = 5` and `nBoot = 5` in the below example, however, recommend setting 
-these parameters to `nGenesPerm = 2000` and `nBoot = 400` to achieve optimal results.
+The user can perform a gene regulatory network analysis using the function
+`GRN` which infers the network using the parmigene package. For illustrative
+purposes and to decrease runtime, we have set `nGenesPerm = 5` and `nBoot = 5`
+in the example below, however, we recommend setting these parameters to
+`nGenesPerm = 2000` and `nBoot = 400` to achieve optimal results, as they are
+set by default in the function arguments.
 
 ```{r, eval = TRUE}
 data(DEGsmatrix)
@@ -766,6 +768,11 @@ The code is divided into three case studies:
 * 3. Moonlight with driver mutation analysis
 
 ## Case study n. 1: Predicting oncogenic mediators using Moonlight's primary layer
+
+For illustrative purposes and to decrease runtime, we have set `nGenesPerm = 5`
+and `nBoot = 5` in the call of `GRN` in the following code block, however, we
+recommend setting these parameters to `nGenesPerm = 2000` and `nBoot = 400` to
+achieve optimal results, as they are set by default in the function arguments.
 
 ```{r,eval = TRUE,echo=TRUE,message=FALSE,warning=FALSE, results='hide'}
 data(DEGsmatrix)
