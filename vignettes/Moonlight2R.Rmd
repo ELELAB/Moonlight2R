@@ -607,7 +607,7 @@ set by default in the function arguments.
 ```{r, eval = TRUE}
 data(DEGsmatrix)
 data(dataFilt)
-dataGRN <- GRN(TFs = sample(rownames(DEGsmatrix), 100), normCounts = dataFilt,
+dataGRN <- GRN(DEGsmatrix = DEGsmatrix, TFs = sample(rownames(DEGsmatrix), 100), normCounts = dataFilt,
 	               nGenesPerm = 5, kNearest = 3, nBoot = 5)
 ```
 
