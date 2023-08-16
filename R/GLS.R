@@ -26,7 +26,8 @@
 #' @examples 
 #' data("dataDMA") 
 #' genes_query <- Reduce(c, dataDMA)
-#' dataGLS <- GLS(genes = genes_query) 
+#' dataGLS <- GLS(genes = genes_query,
+#'                query_string = "AND cancer AND driver AND '1980/01/01'[Date - Publication] : '2023/01/01'[Date - Publication]")
 GLS <- function(genes, 
                 query_string = "AND cancer AND driver",
 		max_records = 20) {

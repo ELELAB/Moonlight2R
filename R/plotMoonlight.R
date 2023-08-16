@@ -32,10 +32,10 @@
 #' @examples
 #' data(DEG_Mutations_Annotations)
 #' data(Oncogenic_mediators_mutation_summary)
-#' data(dataURA)
+#' data(dataURA_plot)
 #' plotMoonlight(DEG_Mutations_Annotations, 
 #'               Oncogenic_mediators_mutation_summary, 
-#'               dataURA, gene_type = "drivers", n = 50,
+#'               dataURA_plot, gene_type = "drivers", n = 50,
 #'               additionalFilename = "myplot_")
 
 plotMoonlight <- function(DEG_Mutations_Annotations, 
