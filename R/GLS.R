@@ -35,7 +35,7 @@ GLS <- function(genes,
   # Check user input
   
   if (!is.character(genes)) {
-    stop("Genes must be a character vector containing genes to search
+    stop("Genes must be a character vector containing gene names to search
          in PubMed")
   }
   

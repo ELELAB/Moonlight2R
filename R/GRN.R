@@ -27,7 +27,7 @@ GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nG
     # Check user input
   
     if (!is.character(TFs) | length(TFs) == 0) {
-	stop("TFs must be a non-empty character vector containing genes")
+	stop("TFs must be a non-empty character vector containing gene names")
     }
   
     if (.row_names_info(DEGsmatrix) < 0) {
