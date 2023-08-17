@@ -14,6 +14,9 @@
 #' data('DiseaseList')
 #' BPselected <- c("apoptosis")
 #' BPannotations <- DiseaseList[[match(BPselected, names(DiseaseList))]]$ID
+
+utils::globalVariables(c("DiseaseList"))
+
 LPA <- function (dataDEGs, BP, BPlist) {
 
   # Check user input

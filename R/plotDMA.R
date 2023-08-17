@@ -39,6 +39,10 @@
 #'         Oncogenic_mediators_mutation_summary, 
 #'         type = "split", additionalFilename = "myplots_")
 
+utils::globalVariables(c("Hugo_Symbol", "logFC", "CScape_Driver", "CScape_Passenger", "CScape_Unclassified",
+			 "Moonlight_Oncogenic_Mediator", "Mutation_type", "Count", "Total_Mutations", "gr",
+			 "heatmaps", "First_gene"))
+
 plotDMA <- function(DEG_Mutations_Annotations, 
                     Oncogenic_mediators_mutation_summary,
                     type = "split",

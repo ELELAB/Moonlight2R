@@ -38,6 +38,9 @@
 #'               dataURA_plot, gene_type = "drivers", n = 50,
 #'               additionalFilename = "myplot_")
 
+utils::globalVariables(c("Hugo_Symbol", "Moonlight_gene_z_score", "logFC", "Biological_Process", "Genes", 
+			 "Total_Mutations", "CScape_Driver", "Moonlight_Oncogenic_Mediator", "head", "Moonlight_score"))
+
 plotMoonlight <- function(DEG_Mutations_Annotations, 
                           Oncogenic_mediators_mutation_summary,
                           dataURA,

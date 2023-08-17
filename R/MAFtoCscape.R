@@ -11,6 +11,8 @@
 #' print(data(dataMAF))
 #' MAFtoCscape(dataMAF)
 
+utils::globalVariables(c("Variant_Type", "Chromosome", "Start_Position", "Reference_Allele", "Tumor_Seq_Allele1",
+			 "Tumor_Seq_Allele2", "Chr", "Mutant"))
 
 MAFtoCscape <- function(MAF){
   cscape <- MAF %>% 

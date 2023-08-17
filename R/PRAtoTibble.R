@@ -12,7 +12,7 @@
 #' data('dataPRA')
 #' PRAtoTibble(dataPRA)
 
-
+utils::globalVariables(c("Hugo_Symbol", "value"))
 
 PRAtoTibble <- function(dataPRA){
 
