@@ -12,8 +12,8 @@
 #' @return return GSEA result
 #' @export
 #' @examples
-#' dataDEGs <- DEGsmatrix
-#' # dataFEA <- GSEA(DEGsmatrix = dataDEGs)
+#' data(DEGsmatrix)
+#' dataFEA <- GSEA(DEGsmatrix = DEGsmatrix)
 GSEA <- function (DEGsmatrix, top, plot = FALSE){
 
   # Check user input
