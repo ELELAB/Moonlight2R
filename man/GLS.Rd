@@ -37,6 +37,8 @@ This function carries out gene literature search.
 \examples{
 data("dataDMA") 
 genes_query <- Reduce(c, dataDMA)
+query <- 
+"AND cancer AND driver AND '1980/01/01'[Date - Publication] : '2023/01/01'[Date - Publication]"
 dataGLS <- GLS(genes = genes_query,
-               query_string = "AND cancer AND driver AND '1980/01/01'[Date - Publication] : '2023/01/01'[Date - Publication]")
+               query_string = query)
 }
