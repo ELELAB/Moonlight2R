@@ -47,7 +47,7 @@ plotFEA <- function (dataFEA, topBP = 10, additionalFilename = NULL, height,
     par(mar = c(12, 5, 5, 1))
     dataFEA <- dataFEA[order(abs(dataFEA$Moonlight.Z.score),
                              decreasing = TRUE), ]
-    tmp <- dataFEA[1:topBP, ]
+    tmp <- dataFEA[seq.int(topBP), ]
     tmp <- as.data.frame(tmp)
     tmp$FDR <- as.numeric(tmp$FDR)
     tmp$Moonlight.Z.score <- as.numeric(tmp$Moonlight.Z.score)

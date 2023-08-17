@@ -8,7 +8,7 @@
 #' @export
 #' @examples
 #' data(DEGsmatrix)
-#' DEGsmatrix <- DEGsmatrix[1:10, ]
+#' DEGsmatrix <- DEGsmatrix[seq.int(10), ]
 #' dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 FEA <- function (BPname = NULL, DEGsmatrix){
 
@@ -43,7 +43,7 @@ FEA <- function (BPname = NULL, DEGsmatrix){
     TableDiseasesNew <- NULL
     pb <- txtProgressBar(min = 0, max = length(DiseaseList), style = 3)
 
-    for (k in 1:length(lf2)){
+    for (k in seq.int(lf2)){
         setTxtProgressBar(pb, k)
         res <- as.data.frame(matrix(0,nrow = 1, ncol = 7, dimnames = list(1,c("Diseases.or.Functions.Annotation","p.Value",
                            "Moonlight.Z.score","commonNg","FunctionNg","Delta","Molecules") )))
@@ -81,7 +81,7 @@ FEA <- function (BPname = NULL, DEGsmatrix){
         res$Molecules <- paste0(GeneList$PROBE_ID, collapse = ",")
 
 
-        for( idx in 1: nrow(selected_diseases)){
+        for( idx in seq.int(nrow(selected_diseases))){
             currTR <- selected_diseases$ID[idx]
 
             if (length(grep("Increases",selected_diseases[currTR,"Findings"]))==1){

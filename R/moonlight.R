@@ -89,7 +89,7 @@ moonlight <- function(dataDEGs, dataFilt,
         }
 
         if(is.null(Genelist)){
-            Genelist <- rownames(dataDEGs)[1:nTF]
+            Genelist <- rownames(dataDEGs)[seq.int(nTF)]
         }
         dataGRN <- GRN(TFs = Genelist, normCounts = dataFilt,
                        DEGsmatrix = dataDEGs,DiffGenes = FALSE,
