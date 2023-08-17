@@ -55,7 +55,7 @@ moonlight is a tool for identification of cancer driver genes.
 This function wraps the different steps of the complete analysis workflow.
 }
 \examples{
-\dontrun{
+\donttest{
 drivers <- moonlight(dataDEGs = DEGsmatrix, 
 dataFilt = dataFilt, 
 BPname = c("apoptosis", "proliferation of cells"),
