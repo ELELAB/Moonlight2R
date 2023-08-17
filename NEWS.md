@@ -1,3 +1,11 @@
+# Moonlight2R 0.99.6
+
+## Summary
+
+* switched `\dontrun` to `\donttest` in some examples
+
+* fixed vignette to have fewer `eval=FALSE` chunks
+
 # Moonlight2R 0.99.5
 
 ## Summary

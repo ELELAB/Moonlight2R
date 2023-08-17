@@ -17,7 +17,7 @@
 #' @export
 #' @return table with cancer driver genes TSG and OCG.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' drivers <- moonlight(dataDEGs = DEGsmatrix, 
 #' dataFilt = dataFilt, 
 #' BPname = c("apoptosis", "proliferation of cells"),

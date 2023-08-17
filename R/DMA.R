@@ -48,7 +48,7 @@
 #' 
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' DMA(dataMAF = dataMAF,
 #'     dataDEGs = DEGsmatrix,
 #'     dataPRA = dataPRA,
