@@ -1,3 +1,9 @@
+# Moonlight2R 0.99.7
+
+## Summary
+
+* added bindings for global variables in majority of functions
+
 # Moonlight2R 0.99.6
 
 ## Summary
