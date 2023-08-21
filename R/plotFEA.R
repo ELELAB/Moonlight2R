@@ -27,7 +27,7 @@
 #' dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 #' plotFEA(dataFEA = dataFEA, additionalFilename = "_example",height = 20,width = 10)
 plotFEA <- function (dataFEA, topBP = 10, additionalFilename = NULL, height,
-                     width, offsetValue = 5, angle = 90, xleg = 35, yleg = 5, titleMain,
+                     width, offsetValue = 5, angle = 90, xleg = 35, yleg = 5, titleMain = "",
                      minY = -5, maxY = 10,  mycols = c("#8DD3C7", "#FFFFB3", "#BEBADA")) {
 
     # Check user input
@@ -40,7 +40,7 @@ plotFEA <- function (dataFEA, topBP = 10, additionalFilename = NULL, height,
        stop("additionalFilename must be either NULL or a character vector adding a prefix or filepath to the filename of the pdf")
     }
 
-    titleMain <- "TCGA BRCA DEGs"
+
     if (!is.null(additionalFilename)) {
         pdf(additionalFilename, width, height)
     }
