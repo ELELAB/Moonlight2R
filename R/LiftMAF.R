@@ -14,8 +14,6 @@
 #' data(dataMAF)
 #' LiftMAF(dataMAF, Current_Build = 'GRCh38')
 
-utils::globalVariables(c("liftOver", "start", "end", "seqnames", "strand", "group", "group_name", "width"))
-
 LiftMAF <- function(Infile, Current_Build){
   #The input file is assumed to be maf_tibble, this file is then lifted to
   # either 38 or 37 and return as a tibble
@@ -49,3 +47,5 @@ LiftMAF <- function(Infile, Current_Build){
 
   return(outfile_tibble_lifted)
 }
+
+utils::globalVariables(c("liftOver", "start", "end", "seqnames", "strand", "group", "group_name", "width"))
