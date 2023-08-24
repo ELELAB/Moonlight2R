@@ -23,6 +23,8 @@
 #' data('listMoonlight')
 #' plotCircos(listMoonlight = listMoonlight, additionalFilename = "_ncancer5")
 
+utils::globalVariables(c("is"))
+
 plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = NULL, 
                        intensityColOCG = 0.5, intensityColTSG = 0.5, intensityColDual = 0.5, 
                        fontSize=1){
@@ -53,7 +55,7 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
     # listMoonlight$listMoonlight.osg <- listMoonlight[[2]]
 
     mytsg <- myocg <- NULL
-    for(i in 1:n){
+    for(i in seq.int(n)){
         mytsg <- c(mytsg, list(names(listMoonlight[[i]]$listCandidates$TSG)))
         myocg <- c(myocg, list(names(listMoonlight[[i]]$listCandidates$OCG)))
 
@@ -82,7 +84,7 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
     if(!is.null(additionalFilename)){
         pdf(paste0("circos_ocg_tsg",additionalFilename,".pdf"), width=16, height=16)
     }
-    df1 <- data.frame("order" =c(1:n), "cancertype"=mynames, "xmin"=rep(0,n), "xmax"=n.mygenes)
+    df1 <- data.frame("order" =seq.int(n), "cancertype"=mynames, "xmin"=rep(0,n), "xmax"=n.mygenes)
 
     ### Plot sectors (outer part)
     par(mar=c(1,1,6,6))
@@ -92,7 +94,7 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
     circlize::circos.par(cell.padding=c(0,0,0,0), track.margin=c(0,0.15), start.degree = 90, gap.degree =4)
 
     if(n>12){
-        mycols <- rainbow(n+4)[1:n]
+        mycols <- rainbow(n+4)[seq.int(n)]
     }else{
         mycols <- RColorBrewer::brewer.pal(n, "Set3")
     }
@@ -139,7 +141,7 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
     # for(i in 1:n){
     if(!is.null(listMutation)){
       mycols.mut <- c("white","darkviolet","tomato3")
-      for(i in 1:length(listMutation)){
+      for(i in seq.int(length(listMutation))){
         print(i)
         print(dim(listMutation[[i]]))
         if(length(myocg[[i]])>0){
@@ -152,7 +154,7 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
             print(length(myoverlap))
             print(length(myoverlap2))
 
-            for(j in 1:length(myocg[[i]])){
+            for(j in seq.int(length(myocg[[i]]))){
                 # print(j)
                 if(myoverlap[j]){
                   circlize::circos.rect(sector.index = df1$cancertype[i], xleft=cnt, ybottom=-1/2, xright=cnt+1, ytop=-0.33, 
@@ -181,7 +183,7 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
             print(length(myoverlap))
             print(length(myoverlap2))
 
-            for(j in 1:length(mytsg[[i]])){
+            for(j in seq.int(length(mytsg[[i]]))){
                 # print(j)
                 if(myoverlap[j]){
                   circlize::circos.rect(sector.index = df1$cancertype[i], xleft=nocg[i]+cnt, ybottom=-1/2, xright=nocg[i]+cnt+1, ytop=-0.33, 
@@ -207,9 +209,9 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
     ## plot inner part
     ### OCG - OCG
     mycol.ocg <- rgb(10/255, 99/255, 12/255, intensityColOCG)
-    for(i in 1:(n-1)){
+    for(i in seq.int(n-1)){
         print(paste("cancertype", i, "out of", n))
-        for(j in (i+1):n){
+        for(j in seq.int(i+1, n)){
             if(i!=j){
                 ind <- which(myocg[[i]] %in% myocg[[j]])
                 for(k in ind){
@@ -223,9 +225,9 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
     
     ### TSG - TSG 
     mycol.tsg <- rgb(217/255, 164/255, 50/255, intensityColTSG)
-    for(i in 1:(n-1)){
+    for(i in seq.int(n-1)){
         print(paste("cancertype", i, "out of", n))
-        for(j in (i+1):n){
+        for(j in seq.int(i+1, n)){
             if(i!=j){
                 ind <- which(mytsg[[i]] %in% mytsg[[j]])
                 for(k in ind){
@@ -239,9 +241,9 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
 
     # ### TSG - OSG
     mycol.tsg.osg <- rgb(252/255, 51/255, 57/255, intensityColDual)
-    for(i in 1:n){
+    for(i in seq.int(n)){
         print(paste("cancertype", i, "out of", n))
-        for(j in 1:n){
+        for(j in seq.int(n)){
             ind <- which(myocg[[i]] %in% mytsg[[j]])
             for(k in ind){
                 ind2 <- which(mytsg[[j]]==myocg[[i]][k])

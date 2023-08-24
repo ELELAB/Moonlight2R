@@ -14,6 +14,9 @@
 #' data('DiseaseList')
 #' BPselected <- c("apoptosis")
 #' BPannotations <- DiseaseList[[match(BPselected, names(DiseaseList))]]$ID
+
+utils::globalVariables(c("DiseaseList"))
+
 LPA <- function (dataDEGs, BP, BPlist) {
 
   # Check user input
@@ -57,7 +60,7 @@ LPA <- function (dataDEGs, BP, BPlist) {
 
   pb <- txtProgressBar(min = 0, max = nrow(DiseaseMN), style = 3)
 
-  for ( i in 1: nrow(DiseaseMN)){
+  for ( i in seq.int(nrow(DiseaseMN))){
 
     setTxtProgressBar(pb, i)
     curG <- DiseaseMN$ID[i]

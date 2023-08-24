@@ -25,6 +25,9 @@
 #' path_cscape_coding = "css_coding.vcf.gz", 
 #' path_cscape_noncoding = "css_noncoding.vcf.gz")
 #' }
+
+utils::globalVariables(c("DiseaseList"))
+
 moonlight <- function(dataDEGs, dataFilt, 
                       BPname = NULL, 
                       Genelist= NULL,
@@ -89,7 +92,7 @@ moonlight <- function(dataDEGs, dataFilt,
         }
 
         if(is.null(Genelist)){
-            Genelist <- rownames(dataDEGs)[1:nTF]
+            Genelist <- rownames(dataDEGs)[seq.int(nTF)]
         }
         dataGRN <- GRN(TFs = Genelist, normCounts = dataFilt,
                        DEGsmatrix = dataDEGs,DiffGenes = FALSE,

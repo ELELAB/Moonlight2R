@@ -1,3 +1,15 @@
+# Moonlight2R 0.99.8
+
+## Summary
+
+* replaced number sequences generation (e.g. using `seq(n)` instead of `1:n`) in all functions
+
+# Moonlight2R 0.99.7
+
+## Summary
+
+* added bindings for global variables in majority of functions
+
 # Moonlight2R 0.99.6
 
 ## Summary

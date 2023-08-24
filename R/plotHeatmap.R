@@ -14,6 +14,9 @@
 #' @export
 #'
 
+utils::globalVariables(c("Mutation_type", "Hugo_Symbol", "Count", "Total_Mutations", "logFC",
+			 "Oncogenic_mediators_mutation_summary"))
+
 plotHeatmap <- function(df){
 
   # Check user input
