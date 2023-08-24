@@ -20,7 +20,7 @@ returns a tibble with a score and remark for each SNP
 This function retrive cscape-scores to SNPs
 }
 \examples{
-\dontrun{
+\donttest{
 cscape_out <- RunCscape_somatic(input, coding_file, noncoding_file)
 }
 }

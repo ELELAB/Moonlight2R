@@ -84,10 +84,10 @@ GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nG
     Cancer_null_distr<-matrix(0,length(tfListCancer),nBoot)
     rownames(Cancer_null_distr)<-tfListCancer
 
-    for (i in 1: nBoot){
+    for (i in seq.int(nBoot)){
     # cat(paste( (nBoot-i),".",sep=""))
-        SampleS <- sample(1:ncol(normCountsA))
-        g <- sample(1:nrow(normCountsA), nGenesPerm)
+        SampleS <- sample(seq.int(ncol(normCountsA)))
+        g <- sample(seq.int(nrow(normCountsA)), nGenesPerm)
         # if(i == 1) system.time(mi <- knnmi.cross(normCounts[tfListCancer, ], normCounts[g, SampleS], k = kNum)) else
         mi <- knnmi.cross(normCountsA[tfListCancer, ], normCountsA[g, SampleS], k = kNearest, noise = noise_mi)
 
