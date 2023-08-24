@@ -1,3 +1,13 @@
+# Moonlight2R 0.99.9
+
+## Summary
+
+* fixed hardcoded plot title in `plotFEA`
+* updated reference in docs to published paper
+* fixed excessively long example line in GLS function
+* moved `globalVariables` calls after function definitions
+* turned `LazyData` to `false` and issued connected fixes
+
 # Moonlight2R 0.99.8
 
 ## Summary
