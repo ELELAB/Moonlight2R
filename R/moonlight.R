@@ -26,8 +26,6 @@
 #' path_cscape_noncoding = "css_noncoding.vcf.gz")
 #' }
 
-utils::globalVariables(c("DiseaseList"))
-
 moonlight <- function(dataDEGs, dataFilt, 
                       BPname = NULL, 
                       Genelist= NULL,
@@ -127,3 +125,5 @@ moonlight <- function(dataDEGs, dataFilt,
 
     return(res)
 }
+
+utils::globalVariables(c("DiseaseList"))

@@ -29,8 +29,6 @@
 #' dataGLS <- GLS(genes = genes_query,
 #'                query_string = "AND cancer AND driver AND '1980/01/01'[Date - Publication] : '2023/01/01'[Date - Publication]")
 
-utils::globalVariables(c("pmid", "doi", "title", "abstract", "year", "keywords", "gene"))
-
 GLS <- function(genes, 
                 query_string = "AND cancer AND driver",
 		max_records = 20) {
@@ -120,3 +118,5 @@ GLS <- function(genes,
   return(literature_search)
   
 }
+
+utils::globalVariables(c("pmid", "doi", "title", "abstract", "year", "keywords", "gene"))

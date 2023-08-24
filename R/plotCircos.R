@@ -23,8 +23,6 @@
 #' data('listMoonlight')
 #' plotCircos(listMoonlight = listMoonlight, additionalFilename = "_ncancer5")
 
-utils::globalVariables(c("is"))
-
 plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = NULL, 
                        intensityColOCG = 0.5, intensityColTSG = 0.5, intensityColDual = 0.5, 
                        fontSize=1){
@@ -256,5 +254,6 @@ plotCircos <- function(listMoonlight, listMutation = NULL, additionalFilename = 
     if(!is.null(additionalFilename)){
         dev.off()
     }
+}
 
-    }
+utils::globalVariables(c("is"))
