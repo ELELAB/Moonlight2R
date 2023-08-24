@@ -4,6 +4,7 @@
 #' @param DEGsmatrix DEGsmatrix output from DEA such as dataDEGs
 #' @param top is the number of top BP to plot
 #' @param plot if TRUE return a GSEA's plot
+#' @import org.Hs.eg.db
 #' @importFrom grDevices dev.list
 #' @importFrom grDevices graphics.off
 #' @importFrom clusterProfiler bitr 
@@ -12,8 +13,8 @@
 #' @return return GSEA result
 #' @export
 #' @examples
-#' dataDEGs <- DEGsmatrix
-#' # dataFEA <- GSEA(DEGsmatrix = dataDEGs)
+#' data("DEGsmatrix")
+#' dataFEA <- GSEA(DEGsmatrix = DEGsmatrix)
 GSEA <- function (DEGsmatrix, top, plot = FALSE){
 
   # Check user input

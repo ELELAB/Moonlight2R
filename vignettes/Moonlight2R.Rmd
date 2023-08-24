@@ -746,7 +746,7 @@ The values are the moonlight gene z-score for the two biological processes
 ```{r, eval = TRUE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
 data(DEG_Mutations_Annotations)
 data(Oncogenic_mediators_mutation_summary)
-data(dataURA)
+data(dataURA_plot)
 plotMoonlight(DEG_Mutations_Annotations,
         Oncogenic_mediators_mutation_summary, 
         dataURA_plot, gene_type = "drivers", n = 50)
@@ -807,7 +807,8 @@ oncogenic_mediators <- list("TSG"=names(dataDual$TSG), "OCG"=names(dataDual$OCG)
 The user can plot the result of the upstream regulatory analysis using the function `plotURA`.
 
 ```{r, eval = TRUE,message=FALSE,warning=FALSE, results='hide'}
- plotURA(dataURA = dataURA, additionalFilename = "_exampleVignette")
+data(dataURA) 
+plotURA(dataURA = dataURA, additionalFilename = "_exampleVignette")
 ```
 
 The figure resulted from the code above is shown below:
