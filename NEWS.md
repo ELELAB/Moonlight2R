@@ -1,3 +1,9 @@
+# Moonlight2R 0.99.8
+
+## Summary
+
+* replaced number sequences generation (e.g. using `seq(n)` instead of `1:n`) in all functions
+
 # Moonlight2R 0.99.7
 
 ## Summary

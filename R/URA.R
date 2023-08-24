@@ -50,7 +50,7 @@ URA <- function(dataGRN, DEGsmatrix, BPname, nCores = 1){
 
     j <- NULL
 
-    TableDiseases <- foreach(j = 1:length(tRlist), .combine = "rbind", .packages="foreach") %dopar% {
+    TableDiseases <- foreach(j = seq.int(tRlist), .combine = "rbind", .packages="foreach") %dopar% {
       #setTxtProgressBar(pb, j)
         currentTF <- as.character(tRlist[j] )
         currentTF_regulon <- names(which(dataGRN$miTFGenes[currentTF,] > as.numeric(dataGRN$maxmi[currentTF])))
