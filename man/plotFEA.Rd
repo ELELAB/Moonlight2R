@@ -14,7 +14,7 @@ plotFEA(
   angle = 90,
   xleg = 35,
   yleg = 5,
-  titleMain,
+  titleMain = "",
   minY = -5,
   maxY = 10,
   mycols = c("#8DD3C7", "#FFFFB3", "#BEBADA")
