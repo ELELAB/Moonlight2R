@@ -33,8 +33,8 @@
 
 GLS <- function(genes, 
                 query_string = "AND cancer AND driver",
-		max_records = 20) {
-
+                max_records = 20) {
+  
   # Check user input
   
   if (!is.character(genes)) {
@@ -55,9 +55,11 @@ GLS <- function(genes,
   
   # For each gene x in input, search PubMed based on specified 
   # query
-  literature_search <- map(genes, function(x) {
+  literature_search <- map(genes, 
+                           function(x) {
     
-    pubmed_query <- paste(x, query_string) 
+    pubmed_query <- paste(x, 
+                          query_string) 
     
     # Search and retrieve results from PubMed
     gene_pubmed <- get_pubmed_ids(pubmed_query)
@@ -73,7 +75,7 @@ GLS <- function(genes,
       top_results <- fetch_pubmed_data(gene_pubmed, 
                                        retstart = 0, 
                                        retmax = max_records)
-  
+      
       # Extract information from PubMed records into a table
       record_info <- table_articles_byAuth(top_results, 
                                            included_authors = "first", 
@@ -84,12 +86,17 @@ GLS <- function(genes,
       # PubMed records
       record_info_wrangled <- record_info %>% 
         as_tibble() %>% 
-        dplyr::select(c(pmid, doi, title, abstract, year, keywords)) %>% 
+        dplyr::select(c(pmid, 
+                        doi, 
+                        title, 
+                        abstract, 
+                        year, 
+                        keywords)) %>% 
         mutate(gene = x,
                pubmed_count = count_pubmed) %>%
         dplyr::relocate(gene, 
                         .after = pmid)
-   
+      
       # Bind table to table containing results from previous gene(s)
       pubmed_mining <- pubmed_mining %>% 
         bind_rows(record_info_wrangled)
@@ -121,4 +128,11 @@ GLS <- function(genes,
   
 }
 
-utils::globalVariables(c("pmid", "doi", "title", "abstract", "year", "keywords", "gene"))
+utils::globalVariables(c("pmid", 
+                         "doi", 
+                         "title", 
+                         "abstract", 
+                         "year", 
+                         "keywords", 
+                         "gene"))
+
