@@ -67,11 +67,6 @@
 #'     results_folder = "./results")     
 #' }
 
-utils::globalVariables(c("Variant_Classification", "ID", ".", "Chromosome", "X1", "X2", "X3", "Annotation",
-			 "Annotation_Start", "Annotation_End", "Hugo_Symbol", "Moonlight_Oncogenic_Mediator",
-			 "CScape_Mut_Class", "Potential_Effect_on_Transcription", "Potential_Effect_on_Translation",
-			 "Potential_Effect_on_Protein", "CScape_Driver", "CScape_No_mutations", "Chr"))
-
 DMA <- function(dataMAF, dataDEGs, dataPRA, 
                 runCscape = TRUE,
                 coding_file, noncoding_file,
@@ -345,3 +340,8 @@ DMA <- function(dataMAF, dataDEGs, dataPRA,
   return(list("TSG" = TSG,"OCG" = OCG))
   
 } # End of function --------------------------------------------
+
+utils::globalVariables(c("Variant_Classification", "ID", ".", "Chromosome", "X1", "X2", "X3", "Annotation",
+			 "Annotation_Start", "Annotation_End", "Hugo_Symbol", "Moonlight_Oncogenic_Mediator",
+			 "CScape_Mut_Class", "Potential_Effect_on_Transcription", "Potential_Effect_on_Translation",
+			 "Potential_Effect_on_Protein", "CScape_Driver", "CScape_No_mutations", "Chr"))

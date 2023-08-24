@@ -17,8 +17,6 @@
 #' data(dataGRN)
 #' plotNetworkHive(dataGRN = dataGRN, namesGenes = knownDriverGenes, thres = 0.55)
 
-utils::globalVariables(c("is"))
-
 plotNetworkHive <- function(dataGRN, namesGenes, thres, additionalFilename = NULL){
 
     # Check user input
@@ -80,3 +78,5 @@ plotNetworkHive <- function(dataGRN, namesGenes, thres, additionalFilename = NUL
         dev.off()
     }
 }
+
+utils::globalVariables(c("is"))
