@@ -1,12 +1,12 @@
 Package: Moonlight2R
 Type: Package
 Title: Identify oncogenes and tumor suppressor genes from omics data
-Version: 0.99.7
+Version: 0.99.8
 Date:
 Authors@R:
-  c(person("Astrid", "Saksager",
+  c(person("Mona", "Nourbakhsh",
            role="aut"),
-    person("Mona", "Nourbakhsh",
+    person("Astrid", "Saksager",
            role="aut"),
     person("Nikola", "Tom",
            role="aut"),
@@ -22,13 +22,13 @@ Authors@R:
     person("Elena", "Papaleo",
 	   role="aut",
     	   ))
-Depends: R (>= 4.2), doParallel, foreach
+Depends: R (>= 4.3), doParallel, foreach
 Imports: parmigene, randomForest, gplots,
         circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
         grDevices, graphics, GEOquery, stats, purrr,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
-        tibble, tidyHeatmap, tidyr, AnnotationHub, easyPubMed
+        tibble, tidyHeatmap, tidyr, AnnotationHub, easyPubMed, org.Hs.eg.db
 Description: The understanding of cancer mechanism requires
         the identification of genes playing a role in the development
         of the pathology and the characterization of their role
@@ -63,7 +63,7 @@ Description: The understanding of cancer mechanism requires
         between early stages (I, II) and late stages (III, IV). In the future, 
 	this analysis could be useful to determine the causes of different 
 	resistances to chemotherapeutic treatments.
-License: GPL (>= 3)
+License: GPL-3
 biocViews: DNAMethylation, DifferentialMethylation, GeneRegulation,
         GeneExpression, MethylationArray, DifferentialExpression,
         Pathways, Network, Survival, GeneSetEnrichment,
@@ -81,6 +81,6 @@ VignetteBuilder: knitr
 URL: https://github.com/ELELAB/Moonlight2R
 BugReports: https://github.com/ELELAB/Moonlight2R/issues
 RoxygenNote: 7.2.3
-LazyData: true
+LazyData: false
 Encoding: UTF-8
 Config/testthat/edition: 3

@@ -20,8 +20,6 @@
 #' data <- tabix_func(Ranges, Reference_Allele, Mutant, file_coding, file_noncoding)
 #'}
 
-utils::globalVariables(c(".", "V4", "V5"))
-
 tabix_func <- function(Ranges, Reference_Allele, Mutant, file_coding, file_noncoding){
   
   flag <- FALSE
@@ -99,3 +97,5 @@ tabix_func <- function(Ranges, Reference_Allele, Mutant, file_coding, file_nonco
   }
   return(data)
 }
+
+utils::globalVariables(c(".", "V4", "V5"))

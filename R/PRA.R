@@ -14,12 +14,12 @@
 #' BPname = c("apoptosis","proliferation of cells"),
 #' thres.role = 0)
 
-utils::globalVariables(c("DiseaseList"))
-
 PRA <- function(dataURA, BPname, thres.role = 0){
 
     # Check user input
-  
+
+    data(DiseaseList)
+
     if (!is.null(BPname) && all(BPname %in% names(DiseaseList)) == FALSE) {
 	stop("BPname should be NULL or a character vector containing one or more BP(s) 
          among possible BPs stored in the DiseaseList object.")
@@ -83,6 +83,6 @@ PRA <- function(dataURA, BPname, thres.role = 0){
     	# dataURA[,BPname]
 
     }
-
-
 }
+
+utils::globalVariables(c("DiseaseList"))

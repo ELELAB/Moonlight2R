@@ -12,8 +12,6 @@
 #' data('dataPRA')
 #' PRAtoTibble(dataPRA)
 
-utils::globalVariables(c("Hugo_Symbol", "value"))
-
 PRAtoTibble <- function(dataPRA){
 
   # Check user input
@@ -41,3 +39,5 @@ PRAtoTibble <- function(dataPRA){
   
   return(drivers)
 }
+
+utils::globalVariables(c("Hugo_Symbol", "value"))

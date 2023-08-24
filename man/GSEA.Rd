@@ -20,6 +20,6 @@ return GSEA result
 This function carries out the GSEA enrichment analysis.
 }
 \examples{
-dataDEGs <- DEGsmatrix
-# dataFEA <- GSEA(DEGsmatrix = dataDEGs)
+data("DEGsmatrix")
+dataFEA <- GSEA(DEGsmatrix = DEGsmatrix)
 }

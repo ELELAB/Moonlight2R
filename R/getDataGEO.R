@@ -13,6 +13,8 @@
 
 getDataGEO <- function(GEOobject = "GSE39004", platform = "GPL6244", TCGAtumor=NULL){
 
+
+  data('GEO_TCGAtab')
   # Check user input
   
   if (!is.character(GEOobject)) {

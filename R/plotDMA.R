@@ -39,10 +39,6 @@
 #'         Oncogenic_mediators_mutation_summary, 
 #'         type = "split", additionalFilename = "myplots_")
 
-utils::globalVariables(c("Hugo_Symbol", "logFC", "CScape_Driver", "CScape_Passenger", "CScape_Unclassified",
-			 "Moonlight_Oncogenic_Mediator", "Mutation_type", "Count", "Total_Mutations", "gr",
-			 "heatmaps", "First_gene"))
-
 plotDMA <- function(DEG_Mutations_Annotations, 
                     Oncogenic_mediators_mutation_summary,
                     type = "split",
@@ -152,7 +148,7 @@ plotDMA <- function(DEG_Mutations_Annotations,
     
     #Make vector with groups (40 genes in each plot x 3 (driver, pas, unclas) per gene) = 120
     split_vector <- rep(seq(1,ceiling(nrow(Summary_wrangled)/120), by = 1),each=120)
-    split_vector <- split_vector[1:nrow(Summary_wrangled)] 
+    split_vector <- split_vector[seq.int(nrow(Summary_wrangled))]  
     
     grouped_data <- Summary_wrangled %>% arrange(Hugo_Symbol) %>% 
       ungroup() %>%
@@ -181,3 +177,7 @@ plotDMA <- function(DEG_Mutations_Annotations,
   } 
   
 }
+
+utils::globalVariables(c("Hugo_Symbol", "logFC", "CScape_Driver",
+"CScape_Passenger", "CScape_Unclassified", "Moonlight_Oncogenic_Mediator",
+"Mutation_type", "Count", "Total_Mutations", "gr", "heatmaps", "First_gene"))

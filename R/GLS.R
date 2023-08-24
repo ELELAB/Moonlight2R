@@ -26,10 +26,10 @@
 #' @examples 
 #' data("dataDMA") 
 #' genes_query <- Reduce(c, dataDMA)
+#' query <- 
+#' "AND cancer AND driver AND '1980/01/01'[Date - Publication] : '2023/01/01'[Date - Publication]"
 #' dataGLS <- GLS(genes = genes_query,
-#'                query_string = "AND cancer AND driver AND '1980/01/01'[Date - Publication] : '2023/01/01'[Date - Publication]")
-
-utils::globalVariables(c("pmid", "doi", "title", "abstract", "year", "keywords", "gene"))
+#'                query_string = query)
 
 GLS <- function(genes, 
                 query_string = "AND cancer AND driver",
@@ -120,3 +120,5 @@ GLS <- function(genes,
   return(literature_search)
   
 }
+
+utils::globalVariables(c("pmid", "doi", "title", "abstract", "year", "keywords", "gene"))

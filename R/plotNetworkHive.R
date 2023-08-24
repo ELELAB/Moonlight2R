@@ -17,8 +17,6 @@
 #' data(dataGRN)
 #' plotNetworkHive(dataGRN = dataGRN, namesGenes = knownDriverGenes, thres = 0.55)
 
-utils::globalVariables(c("is"))
-
 plotNetworkHive <- function(dataGRN, namesGenes, thres, additionalFilename = NULL){
 
     # Check user input
@@ -57,7 +55,7 @@ plotNetworkHive <- function(dataGRN, namesGenes, thres, additionalFilename = NUL
     mycols <- c("darkgrey", "darkgreen","goldenrod")
     myadj$nodes$color <- mycols[myadj$nodes$axis]
     myadj$nodes$size <- 0.1
-    for(i in 1:nrow(myadj$nodes)){
+    for(i in seq.int(nrow(myadj$nodes))){
         myadj$nodes$radius[i] <- n.axis[paste0("a.",myadj$nodes$axis[i])]
         n.axis[paste0("a.",myadj$nodes$axis[i])] <- n.axis[paste0("a.",myadj$nodes$axis[i])]-1
     }
@@ -80,3 +78,5 @@ plotNetworkHive <- function(dataGRN, namesGenes, thres, additionalFilename = NUL
         dev.off()
     }
 }
+
+utils::globalVariables(c("is"))
