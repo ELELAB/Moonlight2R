@@ -17,6 +17,9 @@
 #' cscape_out <- RunCscape_somatic(input, coding_file, noncoding_file)
 #' }
 
+utils::globalVariables(c("Ranges", "Start_Position", "Reference_Allele", "Mutant", "file_coding", 
+			 "file_noncoding", "Mydata", "Remark"))
+
 RunCscape_somatic <- function(input, coding_file, noncoding_file){
   cscape_in <- input %>%
     unite(col = Ranges, c("Chr", "Start_Position"), sep = ":", remove = FALSE) %>%

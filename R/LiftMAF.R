@@ -14,6 +14,7 @@
 #' data(dataMAF)
 #' LiftMAF(dataMAF, Current_Build = 'GRCh38')
 
+utils::globalVariables(c("liftOver", "start", "end", "seqnames", "strand", "group", "group_name", "width"))
 
 LiftMAF <- function(Infile, Current_Build){
   #The input file is assumed to be maf_tibble, this file is then lifted to

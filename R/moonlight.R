@@ -25,6 +25,9 @@
 #' path_cscape_coding = "css_coding.vcf.gz", 
 #' path_cscape_noncoding = "css_noncoding.vcf.gz")
 #' }
+
+utils::globalVariables(c("DiseaseList"))
+
 moonlight <- function(dataDEGs, dataFilt, 
                       BPname = NULL, 
                       Genelist= NULL,
