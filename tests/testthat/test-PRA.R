@@ -2,6 +2,9 @@
 
 # Run example of PRA
 data(dataURA)
+data(DiseaseList)
+data(tabGrowBlock)
+data(knownDriverGenes)
 dataPRA_test <- PRA(dataURA = dataURA,
                     BPname = c("apoptosis", "proliferation of cells"),
                     thres.role = 0)

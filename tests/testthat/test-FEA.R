@@ -2,6 +2,8 @@
 
 # Run example of FEA
 data("DEGsmatrix")
+data("DiseaseList")
+data("EAGenes")
 DEGsmatrix <- DEGsmatrix[1:10, ]
 dataFEA_test <- FEA(DEGsmatrix = DEGsmatrix)
 

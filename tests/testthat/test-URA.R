@@ -2,6 +2,8 @@
 
 # Run example of URA
 data(DEGsmatrix)
+data(DiseaseList)
+data(EAGenes)
 dataDEGs <- DEGsmatrix
 data(dataGRN)
 dataURA_test <- URA(dataGRN = dataGRN,
