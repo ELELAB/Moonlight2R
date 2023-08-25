@@ -20,5 +20,6 @@ return GEO gset
 This function retrieves and prepares GEO data
 }
 \examples{
-dataGEO <-  getDataGEO(GEOobject = "GSE20347",platform = "GPL571")
+data(GEO_TCGAtab)
+dataGEO <-  getDataGEO(GEOobject = "GSE20347", platform = "GPL571")
 }
