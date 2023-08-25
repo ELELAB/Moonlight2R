@@ -576,6 +576,8 @@ For each DEG in the gene set a z-score is calculated. This score indicates how t
 
 ```{r, eval = TRUE, echo = TRUE, results='hide'}
 data(DEGsmatrix)
+data(DiseaseList)
+data(EAGenes)
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 ```
 
@@ -619,6 +621,8 @@ applied to each DEG in the enriched gene set and its neighbors in the GRN.
 ```{r, eval = TRUE, echo = TRUE, results='hide'}
 data(dataGRN)
 data(DEGsmatrix)
+data(DiseaseList)
+data(EAGenes)
 
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 
@@ -635,6 +639,8 @@ random forest classifier trained on known COSMIC OCGs/TSGs.
 
 ```{r, eval = TRUE}
 data(dataURA)
+data(tabGrowBlock)
+data(knownDriverGenes)
 dataPRA <- PRA(dataURA = dataURA,
                BPname = c("apoptosis","proliferation of cells"),
                thres.role = 0)
@@ -656,6 +662,9 @@ and css_noncoding.vcf.gz.tbi) must also be downloaded and be placed in the same 
 data(dataPRA)
 data(dataMAF)
 data(DEGsmatrix)
+data(LOC_transcription)
+data(LOC_translation)
+data(LOC_protein)
 dataDMA <- DMA(dataMAF = dataMAF,
                dataDEGs = DEGsmatrix, 
                dataPRA = dataPRA,
@@ -777,6 +786,10 @@ achieve optimal results, as they are set by default in the function arguments.
 ```{r,eval = TRUE,echo=TRUE,message=FALSE,warning=FALSE, results='hide'}
 data(DEGsmatrix)
 data(dataFilt)
+data(DiseaseList)
+data(EAGenes)
+data(tabGrowBlock)
+data(knownDriverGenes)
 
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 
