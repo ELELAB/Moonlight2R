@@ -38,21 +38,19 @@ getDataGEO <- function(GEOobject = "GSE39004",
     platform <- GEO_TCGAtab[GEO_TCGAtab$Cancer ==  TCGAtumor,"Platform"]
   }
   
-  gset <- getGEO(GEOobject, 
-                 GSEMatrix = TRUE, 
-                 AnnotGPL = TRUE)
+  gset <- getGEO(GEOobject, GSEMatrix = TRUE, AnnotGPL = TRUE)
   
   if (length(gset) > 1) {
     idx <- grep(platform, attr(gset, "names"))
   } else {
     idx <- 1
   }
-
+  
   gset <- gset[[idx]]
-
+  
   fvarLabels(gset) <- make.names(fvarLabels(gset))
-
+  
   return(gset)
-
+  
 }
 

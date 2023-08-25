@@ -24,58 +24,39 @@ plotNetworkHive <- function(dataGRN,
   # Check user input
   
   if (is(namesGenes, "list") == FALSE) {
-    
     stop("namesGenes must be a list containing genes")
-    
   }
   
   if (!is.numeric(thres)) {
-    
     stop("thres must be numeric defining threshold of edges to be included")
-    
   }
   
   if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
-    
     stop("additionalFilename must be either NULL or a character vector containing part of the filename of plot")
-    
   }
   
   if (is(dataGRN, "list") == FALSE) {
-    
     stop("dataGRN must be a list")
-    
   }
   
-  names.genes.all <- intersect(as.character(unique(c(unlist(namesGenes), 
-                                                     rownames(dataGRN[[1]])))),
-                               colnames(dataGRN[[1]]))
-  tmp <- dataGRN[[1]][,
-                      (names.genes.all)]
-  tmp[tmp<thres] <- 0
+  names.genes.all <- intersect(as.character(unique(c(unlist(namesGenes), rownames(dataGRN[[1]])))), colnames(dataGRN[[1]]))
+  tmp <- dataGRN[[1]][, (names.genes.all)]
+  tmp[tmp < thres] <- 0
   
-  genes.missing <- setdiff(names.genes.all, 
-                           rownames(dataGRN[[1]]))
-  tmp <- rbind(tmp, 
-               matrix(0, 
-                      nrow=length(genes.missing), 
-                      ncol=length(names.genes.all)))
-  rownames(tmp) <- c(rownames(dataGRN[[1]]), 
-                     genes.missing)
+  genes.missing <- setdiff(names.genes.all, rownames(dataGRN[[1]]))
+  tmp <- rbind(tmp, matrix(0, nrow = length(genes.missing), ncol = length(names.genes.all)))
+  rownames(tmp) <- c(rownames(dataGRN[[1]]), genes.missing)
   
-  tmp <- tmp[names.genes.all, 
-             names.genes.all]
+  tmp <- tmp[names.genes.all, names.genes.all]
   diag(tmp) <- 0
   
-  myadj <- adj2HPD(M = tmp, 
-                   axis.cols = "lightgray")
-  myadj$nodes$axis <- as.integer(rep(1, 
-                                     length(names.genes.all)) + c(2 * as.numeric(names.genes.all %in% namesGenes$TSG) + 
-                                                                    as.numeric(names.genes.all %in% namesGenes$OCG)))
+  myadj <- adj2HPD(M = tmp, axis.cols = "lightgray")
+  myadj$nodes$axis <- as.integer(rep(1, length(names.genes.all)) + 
+                                   c(2 * as.numeric(names.genes.all %in% namesGenes$TSG) + 
+                                       as.numeric(names.genes.all %in% namesGenes$OCG)))
   
   n.axis <-  table(myadj$nodes$axis)
-  names(n.axis) <- paste0("a.", 
-                          names(n.axis))
+  names(n.axis) <- paste0("a.", names(n.axis))
   
   mycols <- c("darkgrey", "darkgreen", "goldenrod")
   
@@ -83,13 +64,8 @@ plotNetworkHive <- function(dataGRN,
   myadj$nodes$size <- 0.1
   
   for (i in seq.int(nrow(myadj$nodes))) {
-    
-    myadj$nodes$radius[i] <- n.axis[paste0("a.",
-                                           myadj$nodes$axis[i])]
-    n.axis[paste0("a.",
-                  myadj$nodes$axis[i])] <- n.axis[paste0("a.",
-                                                         myadj$nodes$axis[i])] - 1
-    
+    myadj$nodes$radius[i] <- n.axis[paste0("a.", myadj$nodes$axis[i])]
+    n.axis[paste0("a.", myadj$nodes$axis[i])] <- n.axis[paste0("a.", myadj$nodes$axis[i])] - 1
   }
   
   ind.ocg <- which(rownames(tmp)[myadj$edges$id1] %in% namesGenes$OCG)
@@ -105,26 +81,14 @@ plotNetworkHive <- function(dataGRN,
   myadj$edges$color[ind.tsg] <- "goldenrod"
     
   if (!is.null(additionalFilename)) {
-    
-    pdf(paste0("networkHive", 
-               additionalFilename, 
-               ".pdf"))
-    
+    pdf(paste0("networkHive", additionalFilename, ".pdf"))
   }
   
-  HiveR::plotHive(myadj, 
-                  axLabs = c("remaining TFs", 
-                             "OCG", 
-                             "TSG"), 
-                  bkgnd="white", 
-                  anNode.gpar = gpar(fontsize = 10, 
-                                     col = "black", 
-                                     lwd = 0.5))
+  HiveR::plotHive(myadj, axLabs = c("remaining TFs", "OCG", "TSG"), bkgnd = "white", 
+                  anNode.gpar = gpar(fontsize = 10, col = "black", lwd = 0.5))
   
   if (!is.null(additionalFilename)) {
-    
     dev.off()
-    
   }
 }
 

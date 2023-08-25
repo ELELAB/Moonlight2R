@@ -38,7 +38,6 @@
 #' plotDMA(DEG_Mutations_Annotations, 
 #'         Oncogenic_mediators_mutation_summary, 
 #'         type = "split", additionalFilename = "myplots_")
-
 plotDMA <- function(DEG_Mutations_Annotations, 
                     Oncogenic_mediators_mutation_summary,
                     type = "split",
@@ -48,45 +47,32 @@ plotDMA <- function(DEG_Mutations_Annotations,
   # Check user input
   
   if (all(c("Hugo_Symbol", "logFC") %in% colnames(DEG_Mutations_Annotations)) == FALSE) {
-    
     stop("DEG_Mutations_Annotations must contain Hugo_Symbol and logFC as column names")
-    
   }
   
   if (all(c("CScape_Driver", "CScape_Passenger", "CScape_Unclassified", "Moonlight_Oncogenic_Mediator") %in% colnames(Oncogenic_mediators_mutation_summary)) == FALSE) {
-    
     stop("Oncogenic_mediators_mutation_summary must contain CScape_Driver, CScape_Passenger, CScape_Unclassified, and Moonlight_Oncogenic_Mediator as column names")
-    
   }
   
   if (!is.null(type) && (type %in% c("split", "complete")) == FALSE) {
-    
     stop("Type must either be NULL, split or complete")
-    
   }
   
   if (!is.null(genelist) & !is.character(genelist)) {
-    
     stop("Genelist must be either NULL or a character vector containing gene names")
-    
   }
   
   if (!is.character(additionalFilename)) {
-    
     stop("additionalFilename must be a character vector adding a prefix or filepath to the filename of the pdf")
-    
   }
   
   # Modify input
   DEGs <- DEG_Mutations_Annotations %>% 
-    dplyr::select(Hugo_Symbol, 
-                  logFC) %>% 
+    dplyr::select(Hugo_Symbol, logFC) %>% 
     distinct()
   
   Summary_wrangled <- Oncogenic_mediators_mutation_summary %>% 
-    pivot_longer(cols = c(CScape_Driver, 
-                          CScape_Passenger, 
-                          CScape_Unclassified), 
+    pivot_longer(cols = c(CScape_Driver, CScape_Passenger, CScape_Unclassified), 
                  names_to = "Mutation_type",
                  values_to = "Count") %>% 
     replace_na(list(Count = 0)) %>% 
@@ -115,36 +101,20 @@ plotDMA <- function(DEG_Mutations_Annotations,
                 cluster_columns = TRUE, 
                 show_column_dend = FALSE, 
                 show_column_names = TRUE,
-                palette_value = c("white", 
-                                         "blue", 
-                                         "darkblue"),
-                                         column_title = paste("Heatmap Driver annotation by CScape-Somatic",
-                                                              "\n Hugo_Symbol")) %>% 
-        add_tile(Moonlight_Oncogenic_Mediator, 
-                 palette = c("goldenrod2", 
-                                         "dodgerblue3")) %>% 
-                                           add_bar(Total_Mutations) %>% 
-        add_tile(logFC, 
-                 palette = c("chartreuse4",
-                                          "firebrick3"))
-                                          
+                palette_value = c("white", "blue", "darkblue"),
+                column_title = paste("Heatmap Driver annotation by CScape-Somatic",
+                                     "\n Hugo_Symbol")) %>% 
+        add_tile(Moonlight_Oncogenic_Mediator, palette = c("goldenrod2", "dodgerblue3")) %>% 
+        add_bar(Total_Mutations) %>% 
+        add_tile(logFC, palette = c("chartreuse4", "firebrick3"))
+      
       # Save plot
-      save_pdf(driver_mut_heatmap, 
-               height = 15, 
-               width = 35, 
-               units = "cm",
-               filename = paste(additionalFilename, 
-                                "heatmap_genelist.pdf",
-                                sep = "")) 
-    }
-    else {
-      
+      save_pdf(driver_mut_heatmap, height = 15, width = 35, units = "cm",
+               filename = paste(additionalFilename, "heatmap_genelist.pdf", sep = "")) 
+    } else {
       stop("The genelist must contain at least one OCG and one TSG")
-      
     }   
-    
-  } 
-  else if (type == "complete") {
+  } else if (type == "complete") {
     
     driver_mut_heatmap <- Summary_wrangled %>% 
       group_by(Moonlight_Oncogenic_Mediator) %>% 
@@ -156,50 +126,29 @@ plotDMA <- function(DEG_Mutations_Annotations,
               cluster_columns = TRUE, 
               show_column_dend = FALSE, 
               show_column_names = TRUE,
-              palette_value = c("white", 
-                                       "blue", 
-                                       "darkblue"),
-                                       column_title = paste("Heatmap Driver annotation by CScape-Somatic",
-                                                            "\n Hugo_Symbol")) %>% 
-      add_tile(Moonlight_Oncogenic_Mediator, 
-               palette = c("goldenrod2", 
-                                       "dodgerblue3")) %>% 
-                                         add_bar(Total_Mutations) %>% 
-      add_tile(logFC, 
-               palette = c("chartreuse4","firebrick3"))
+              palette_value = c("white", "blue", "darkblue"),
+              column_title = paste("Heatmap Driver annotation by CScape-Somatic",
+                                   "\n Hugo_Symbol")) %>% 
+      add_tile(Moonlight_Oncogenic_Mediator, palette = c("goldenrod2", "dodgerblue3")) %>% 
+      add_bar(Total_Mutations) %>% 
+      add_tile(logFC, palette = c("chartreuse4", "firebrick3"))
     
     # Save plot
-    save_pdf(driver_mut_heatmap, 
-             height = 15, 
-             width = 35, 
-             units = "cm",
-             filename = paste(additionalFilename, 
-                              "heatmap_complete.pdf",
-                              sep = ""))
+    save_pdf(driver_mut_heatmap, height = 15, width = 35, units = "cm",
+             filename = paste(additionalFilename, "heatmap_complete.pdf", sep = ""))
     
-  }  
-  else if (type == "split") { 
+  } else if (type == "split") { 
     
     # Create temporary heatmap folder
     if (dir.exists("./heatmaps")) {
-      
       stop("'heatmaps' folder already exits. Please remove it.")
-      
-    }
-    else {
-      
+    } else {
       print("A temporary heatmaps folder is created. It will be removed before finalising.")
-      dir.create(path = "./heatmaps", 
-                 showWarnings = TRUE, 
-                 recursive = TRUE)
-      
+      dir.create(path = "./heatmaps", showWarnings = TRUE, recursive = TRUE)
     }
     
     # Make vector with groups (40 genes in each plot x 3 (driver, pas, unclas) per gene) = 120
-    split_vector <- rep(seq(1,
-                            ceiling(nrow(Summary_wrangled) / 120), 
-                            by = 1),
-                        each = 120)
+    split_vector <- rep(seq(1, ceiling(nrow(Summary_wrangled) / 120), by = 1), each = 120)
     split_vector <- split_vector[seq.int(nrow(Summary_wrangled))]  
     
     grouped_data <- Summary_wrangled %>% 
@@ -212,15 +161,9 @@ plotDMA <- function(DEG_Mutations_Annotations,
     print("Start creating indivual heatmaps, this can take a while")
     test<- grouped_data %>% 
       ungroup %>%  
-      mutate(First_gene = map(grouped_data$data, 
-                              ~plotHeatmap(.))) %>% 
-      mutate(heatmaps = "heatmaps/heatmap_",
-             pdf = ".pdf") %>% 
-      unite(heatmaps, 
-            c(heatmaps, 
-              First_gene, 
-              pdf), 
-            sep = "")
+      mutate(First_gene = map(grouped_data$data, ~plotHeatmap(.))) %>% 
+      mutate(heatmaps = "heatmaps/heatmap_", pdf = ".pdf") %>% 
+      unite(heatmaps, c(heatmaps, First_gene, pdf), sep = "")
     print("Indivial heatmaps finished, start combining") 
     
     # Stable pdf into one pdf
@@ -228,29 +171,16 @@ plotDMA <- function(DEG_Mutations_Annotations,
       pull(heatmaps)
     print(pdfs)
     print(additionalFilename)
-    pdf_combine(input = pdfs, 
-                output = paste(additionalFilename,
-                               "heatmaps_split.pdf", 
-                               sep = ""))
+    pdf_combine(input = pdfs, output = paste(additionalFilename, "heatmaps_split.pdf", sep = ""))
     
     # Remove heatmap-folder with redudant pdfs
-    unlink("heatmaps", 
-           recursive = TRUE)
+    unlink("heatmaps", recursive = TRUE)
     
   } 
-  
 }
 
-utils::globalVariables(c("Hugo_Symbol", 
-                         "logFC", 
-                         "CScape_Driver",
-                         "CScape_Passenger", 
-                         "CScape_Unclassified", 
-                         "Moonlight_Oncogenic_Mediator",
-                         "Mutation_type", 
-                         "Count", 
-                         "Total_Mutations", 
-                         "gr", 
-                         "heatmaps", 
-                         "First_gene"))
+utils::globalVariables(c("Hugo_Symbol", "logFC", "CScape_Driver", "CScape_Passenger", 
+                         "CScape_Unclassified", "Moonlight_Oncogenic_Mediator",
+                         "Mutation_type", "Count", "Total_Mutations", "gr", 
+                         "heatmaps", "First_gene"))
 

@@ -74,34 +74,34 @@ DMA <- function(dataMAF,
                 coding_file,
                 noncoding_file,
                 results_folder = "./DMAresults") {
-
+  
   # Check user input
-
+  
   if (is.null(dim(dataMAF))) {
     stop("The mutation data must be a non-empty table")
   }
-
+  
   if (.row_names_info(dataDEGs) < 0) {
     stop("Row names were generated automatically. The input DEG table needs to have the gene names as rownames. Double check that genes are rownames.")
   }
-
+  
   if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
     stop("The two list elements in PRA data must be named TSG and OCG")
   }
-
+  
   if (!is.logical(runCscape)) {
     stop("runCscape must be either TRUE or FALSE")
   }
-
+  
   if (!is.character(results_folder)) {
     stop("The results folder must be a character vector containing the
     path to where DMA results should be stored")
   }
-
+  
   LOC_transcription <- get("LOC_transcription")
   LOC_translation <- get("LOC_translation")
   LOC_protein <- get("LOC_protein")
-
+  
   # Create Output folder
   if (dir.exists(results_folder)) {
     print("Output folder already exists")
@@ -110,64 +110,64 @@ DMA <- function(dataMAF,
                showWarnings = TRUE,
                recursive = TRUE)
   }
-
-    # Load data --------------------------------
-    # Read maf and add ID number to each mutation
+  
+  # Load data --------------------------------
+  # Read maf and add ID number to each mutation
   columns <- c("Hugo_Symbol",
-                "Chromosome",
-                "Start_Position",
-                "End_Position",
-                "Strand",
-                "Variant_Classification",
-                "Variant_Type",
-                "Reference_Allele",
-                "Tumor_Seq_Allele1",
-                "Tumor_Seq_Allele2")
-
+               "Chromosome",
+               "Start_Position",
+               "End_Position",
+               "Strand",
+               "Variant_Classification",
+               "Variant_Type",
+               "Reference_Allele",
+               "Tumor_Seq_Allele1",
+               "Tumor_Seq_Allele2")
+  
   if (all(columns %in% names(dataMAF)) == FALSE) {
     stop("MAF file does not contain the correct columns")
   }
-
+  
   dataMAF <- dataMAF %>% tibble::rowid_to_column("ID")
-
+  
   drivers_moonlight <- PRAtoTibble(dataPRA)
-
+  
   dataDEGs <- dataDEGs %>% tibble::rownames_to_column(var = "Hugo_Symbol")
-
+  
   # Load homemade mutations effect on transcription table
   transcription_binary <- get("LOC_transcription") %>%
     pivot_longer(cols = !Variant_Classification,
-                  names_to = "Variant_Type",
-                  values_to = "Potential_Effect_on_Transcription")
-
+                 names_to = "Variant_Type",
+                 values_to = "Potential_Effect_on_Transcription")
+  
   translation_binary <- get("LOC_translation") %>%
     pivot_longer(cols = !Variant_Classification,
-                  names_to = "Variant_Type",
-                  values_to = "Potential_Effect_on_Translation")
-
+                 names_to = "Variant_Type",
+                 values_to = "Potential_Effect_on_Translation")
+  
   protein_binary <- get("LOC_protein") %>%
     pivot_longer(cols = !Variant_Classification,
-                  names_to = "Variant_Type",
-                  values_to = "Potential_Effect_on_Protein")
-
+                 names_to = "Variant_Type",
+                 values_to = "Potential_Effect_on_Protein")
+  
   # Load ENCODE file (promoters)
   promoters <- get("EncodePromoters") %>% mutate(Annotation = "Promoter")
-
+  
   # Load NCG file
   NCG <- get("NCG")
-
+  
   # Wrangle data -----------------------------
   # Keep only mutations in DEGs
   DEGs_mut <- dataDEGs %>% left_join(dataMAF, by = "Hugo_Symbol")
-
+  
   # CScape-somatic -------------------------
   # Lifting from one build to another
   mut_only <- DEGs_mut %>% filter(!is.na(ID))
   DEGs_mut_hg19 <- LiftMAF(Infile = mut_only, Current_Build = "GRCh38")
-
+  
   if (runCscape == TRUE) {
     cscape_in <- MAFtoCscape(DEGs_mut_hg19)
-
+    
     # Check coding and noncoding files exits
     if (file.exists(coding_file) == FALSE | file.exists(noncoding_file) == FALSE) {
       stop("CScape-somatic vcf files not found at provided path.")
@@ -175,45 +175,35 @@ DMA <- function(dataMAF,
       # Run CScape-somatic
       print("CScape-somatic will now run. Please wait")
       cscape_somatic_output <- RunCscape_somatic(input = cscape_in,
-                                                coding_file = coding_file,
-                                                noncoding_file = noncoding_file)
-
-      save(cscape_somatic_output,
-            file = paste(results_folder,
-            "cscape_somatic_output.rda",sep = "/"))
+                                                 coding_file = coding_file,
+                                                 noncoding_file = noncoding_file)
+      
+      save(cscape_somatic_output, file = paste(results_folder, "cscape_somatic_output.rda", sep = "/"))
       print("CScape_somatic is finished. Output file is saved in result folder.")
     }
   } else if (runCscape == FALSE) {
-    cs_flag <- file.exists(paste(results_folder,
-                                 "cscape_somatic_output.rda",
-                                 sep = "/"))
+    cs_flag <- file.exists(paste(results_folder, "cscape_somatic_output.rda", sep = "/"))
     if (cs_flag == TRUE) {
-        print("CScape_somatic files have been found in results-folder.")
+      print("CScape_somatic files have been found in results-folder.")
     } else {
-        stop("cscape_somatic_output.rda file is not found in results-folder.
-Please provide correct path, or set runCScape = TRUE.")
+      stop("cscape_somatic_output.rda file is not found in results-folder.
+            Please provide correct path, or set runCScape = TRUE.")
     }
   }
-
+  
   # Reload CScape output and add cscape_columns in case one type is not found
   cscape_cols <- c(Coding_score = NA, Noncoding_score = NA, Remark = NA)
   load(paste(results_folder, "cscape_somatic_output.rda", sep = "/"))
   cscape_somatic_output <- cscape_somatic_output %>%
-    add_column(.,
-                !!!cscape_cols[setdiff(names(cscape_cols), names(.))]) %>%
-    rename_with(.cols = c("Coding_score",
-                "Noncoding_score",
-                "Remark"),
-                .fn = ~ paste("CScape_",
-                              .,
-                              sep = "")) %>%
+    add_column(., !!!cscape_cols[setdiff(names(cscape_cols), names(.))]) %>%
+    rename_with(.cols = c("Coding_score", "Noncoding_score", "Remark"),
+                .fn = ~ paste("CScape_", ., sep = "")) %>%
     mutate(Variant_Type = "SNP")
-
+  
   # Merge CScape results
   DEGs_mut_annotated_19 <- DEGs_mut_hg19 %>%
     separate(Chromosome,
-             into = c(NA,
-                     "Chr"),
+             into = c(NA, "Chr"),
              sep = 3,
              remove = FALSE,
              convert = TRUE) %>%
@@ -221,124 +211,116 @@ Please provide correct path, or set runCScape = TRUE.")
                               Reference_Allele == Tumor_Seq_Allele2 ~ Tumor_Seq_Allele1)) %>%
     left_join(cscape_somatic_output,
               by = c("Start_Position" = "Position",
-                      "Variant_Type",
-                      "Chr",
-                      "Mutant")) %>%
+                     "Variant_Type",
+                     "Chr",
+                     "Mutant")) %>%
     mutate(CScape_Mut_Class = case_when((CScape_Coding_score > 0.5 | CScape_Noncoding_score > 0.5) ~ "Driver", # Driver
                                         (CScape_Coding_score <= 0.5 | CScape_Noncoding_score <= 0.5 ~ "Passenger"), # Passenger
                                         TRUE ~ "Unclassified")) %>%  # no score is found
     unique()
-
+  
   # Lift back to 38
   DEGs_mut_annotated <- LiftMAF(Infile = DEGs_mut_annotated_19,
                                 Current_Build = "GRCh37")
-
+  
   # Annotate file --------------------------------
-
-    # Add level of consequence ----------
+  
+  # Add level of consequence ----------
   DEGs_mut_annotated <- DEGs_mut_annotated %>%
     left_join(transcription_binary,
               by = c("Variant_Classification",
-                      "Variant_Type")) %>%
+                     "Variant_Type")) %>%
     left_join(translation_binary,
               by = c("Variant_Classification",
-                      "Variant_Type")) %>%
+                     "Variant_Type")) %>%
     left_join(protein_binary,
               by = c("Variant_Classification",
-                      "Variant_Type"))
-
+                     "Variant_Type"))
+  
   # Add again the DEGs with no mutations --
   # and merge driver status from moonlight
   no_muts <- DEGs_mut %>%
     filter(is.na(ID))
-
+  
   DEGs_mut_annotated <- bind_rows(DEGs_mut_annotated,
                                   no_muts) %>%
     replace_na(list(CScape_Mut_Class = "No_mutations"))
-
+  
   # Add drivers from moonlight ------------
   DEGs_mut_annotated <- DEGs_mut_annotated %>%
     left_join(drivers_moonlight,
               by = "Hugo_Symbol")
-
+  
   ## Promoters -------------
-
-    # Merge Encode files into one
+  
+  # Merge Encode files into one
   encode_tibble <- promoters %>%
-    dplyr::select(X1,
-                  X2,
-                  X3,
-                  Annotation) %>%
+    dplyr::select(X1, X2, X3, Annotation) %>%
     dplyr::rename("Chromosome_annot" = "X1",
                   "Annotation_Start" = "X2",
                   "Annotation_End" = "X3")
-
+  
   # Join when mutation overlap with an annotations position
   mutations_encode <- genome_left_join(x = DEGs_mut_annotated,
-                                        y = encode_tibble,
-                                        by = c("Chromosome" = "Chromosome_annot",
+                                       y = encode_tibble,
+                                       by = c("Chromosome" = "Chromosome_annot",
                                               "Start_Position" = "Annotation_Start",
                                               "End_Position" = "Annotation_End")) %>%
     dplyr::select(-c("Chromosome_annot"))
-
+  
   # If a mutation overlap with several annotation, keep them in the same row
   DEGs_mut_annotated <- mutations_encode %>%
     group_by(ID) %>%
     mutate(Annotation = toString(Annotation),
-            Annotation_Start = toString(Annotation_Start),
-            Annotation_End = toString(Annotation_End)) %>%
+           Annotation_Start = toString(Annotation_Start),
+           Annotation_End = toString(Annotation_End)) %>%
     ungroup() %>%
     unique()
-
+  
   # Make summary table --------------------------
-
+  
   # Summarise CScape-somatic mutation types
   Summary_per_gene_1 <- DEGs_mut_annotated %>%
     group_by(Hugo_Symbol,
-              Moonlight_Oncogenic_Mediator,
-              CScape_Mut_Class) %>%
+             Moonlight_Oncogenic_Mediator,
+             CScape_Mut_Class) %>%
     summarise(n = n()) %>%
     pivot_wider(names_from = CScape_Mut_Class,
                 values_from = n,
                 names_prefix = "CScape_")
-
+  
   # Summarise level of consequence
   Summary_per_gene_2 <- DEGs_mut_annotated %>%
     group_by(Hugo_Symbol,
              Moonlight_Oncogenic_Mediator) %>%
-    summarise(Transcription_mut_sum = sum(Potential_Effect_on_Transcription,
-                                          na.rm = TRUE),
-              Translation_mut_sum = sum(Potential_Effect_on_Translation,
-                                        na.rm = TRUE),
-              Protein_mut_sum = sum(Potential_Effect_on_Protein,
-                                na.rm = TRUE),
+    summarise(Transcription_mut_sum = sum(Potential_Effect_on_Transcription, na.rm = TRUE),
+              Translation_mut_sum = sum(Potential_Effect_on_Translation, na.rm = TRUE),
+              Protein_mut_sum = sum(Potential_Effect_on_Protein, na.rm = TRUE),
               Total_Mutations = sum(!is.na(ID)))
-
+  
   # Join summaries and add NCG data
   Oncogenic_mediators_mutation_summary <- full_join(Summary_per_gene_1,
                                                     Summary_per_gene_2,
                                                     by = c("Hugo_Symbol",
-                                                            "Moonlight_Oncogenic_Mediator")) %>%
+                                                           "Moonlight_Oncogenic_Mediator")) %>%
     filter(!is.na(Moonlight_Oncogenic_Mediator)) %>%
     arrange(dplyr::desc(CScape_Driver)) %>%
     dplyr::select(!CScape_No_mutations) %>%
     left_join(NCG,
               by = c("Hugo_Symbol" = "symbol"))
-
+  
   save(Oncogenic_mediators_mutation_summary,
-       file = paste(results_folder,
-       "Oncogenic_mediators_mutation_summary.rda",
-       sep = "/"))
-
+       file = paste(results_folder, "Oncogenic_mediators_mutation_summary.rda", sep = "/"))
+  
   # Make mutation Table  including all annotations from this analysis --------
   # NCG is joined and the table order is restructured
   DEGs_lastCol <- colnames(dataDEGs)[ncol(dataDEGs)]
-
+  
   DEG_Mutations_Annotations <- DEGs_mut_annotated %>%
     left_join(NCG, by = c("Hugo_Symbol" = "symbol")) %>%
     relocate(ID) %>%
     relocate(starts_with("NCG"),
-              .after = DEGs_lastCol) %>%
+             .after = DEGs_lastCol) %>%
     relocate(any_of(c("Moonlight_gene_z_score",
                       "Moonlight_Oncogenic_Mediator",
                       "CScape_Coding_score",
@@ -353,33 +335,31 @@ Please provide correct path, or set runCScape = TRUE.")
                       "Annotation_End")),
              .after = DEGs_lastCol) %>%
     dplyr::select(!(Chr))
-
+  
   save(DEG_Mutations_Annotations,
-       file = paste(results_folder,
-                    "DEG_Mutations_Annotations.rda",
-                    sep = "/"))
-
+       file = paste(results_folder, "DEG_Mutations_Annotations.rda", sep = "/"))
+  
   # Return final list of drivers ------
   TSG <-  DEGs_mut_annotated %>%
     filter(Moonlight_Oncogenic_Mediator == "TSG",
-            CScape_Mut_Class == "Driver") %>%
+           CScape_Mut_Class == "Driver") %>%
     dplyr::select(Hugo_Symbol) %>%
     unique() %>%
     pull()
-
+  
   OCG <- DEGs_mut_annotated %>%
     filter(Moonlight_Oncogenic_Mediator == "OCG",
-            CScape_Mut_Class == "Driver") %>%
+           CScape_Mut_Class == "Driver") %>%
     dplyr::select(Hugo_Symbol) %>%
     unique() %>%
     pull()
-
-  return(list("TSG" = TSG,
-              "OCG" = OCG))
-
+  
+  return(list("TSG" = TSG, "OCG" = OCG))
+  
 }
 
 utils::globalVariables(c("Variant_Classification", "ID", ".", "Chromosome", "X1", "X2", "X3", "Annotation",
                          "Annotation_Start", "Annotation_End", "Hugo_Symbol", "Moonlight_Oncogenic_Mediator",
                          "CScape_Mut_Class", "Potential_Effect_on_Transcription", "Potential_Effect_on_Translation",
                          "Potential_Effect_on_Protein", "CScape_Driver", "CScape_No_mutations", "Chr"))
+
