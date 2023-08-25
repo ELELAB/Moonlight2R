@@ -42,53 +42,37 @@ moonlight <- function(dataDEGs,
   # Check user input
   
   if (.row_names_info(dataDEGs) < 0) {
-    
-    stop("Row names were generated automatically. The input DEG table needs to have
-			the gene names as rownames. Double check that genes are rownames.")
-    
+    stop("Row names were generated automatically. The input DEG table needs to 
+ have the gene names as rownames. Double check that genes are rownames.")    
   }
   
-  if (is.null(dim(dataFilt))) {
-    
+  if (is.null(dim(dataFilt))) {  
     stop("The expression data must be non-empty with genes in rows and samples in columns")
-    
   }
   
   if (!is.null(BPname) && all(BPname %in% names(DiseaseList)) == FALSE) {
-    
     stop("BPname should be NULL or a character vector containing one or more BP(s) 
 			among possible BPs stored in the DiseaseList object.")
-    
   }
   
   if (!is.null(Genelist) && !is.character(Genelist)) {
-    
     stop("Genelist must be NULL or a character vector containing gene names")
-    
   }
   
   if (!is.numeric(kNearest) | !is.numeric(nGenesPerm) | !is.numeric(nBoot) | !is.numeric(thres.role)) {
-    
     stop("kNearest, nGenesPerm, nBoot, and thres.role must be numeric values")
-    
   }
   
   if (!is.logical(DiffGenes)) {
-    
     stop("DiffGenes must be either TRUE or FALSE")
-    
   }
   
   if (is.null(dim(dataMAF))) {
-    
     stop("The mutation data must be a non-empty table")
-    
   }
   
   if (!is.character(path_cscape_coding) | !is.character(path_cscape_noncoding)) {
-    
     stop("Paths to cscape coding and non-coding files must be character vectors")
-    
   }
   
   res <- NULL
@@ -100,15 +84,11 @@ moonlight <- function(dataDEGs,
   
   #### Parameter nTF for testing purposes
   if (is.null(nTF)) {
-    
     nTF <- nrow(dataDEGs)
-    
   }
   
   if (is.null(Genelist)) {
-    
     Genelist <- rownames(dataDEGs)[seq.int(nTF)]
-    
   }
   
   dataGRN <- GRN(TFs = Genelist, 

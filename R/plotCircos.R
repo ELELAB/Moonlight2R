@@ -33,27 +33,19 @@ plotCircos <- function(listMoonlight,
   # Check user input
   
   if (is(listMoonlight, "list") == FALSE) {
-    
     stop("listMoonlight must be a list")
-    
   }
   
   if (!is(listMutation, "list") & !is.null(listMutation)) {
-    
     stop("listMutation must be either NULL or a list")
-    
   }
   
   if (!is.numeric(intensityColOCG) | !is.numeric(intensityColTSG) | !is.numeric(intensityColDual) | !is.numeric(fontSize)) {
-    
     stop("intensityColOCG, intensityColTSG, intensityColDual, and fontSize must be numeric")
-    
   }
   
   if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
-    
     stop("additionalFilename must be either NULL or a character vector containing filename of plot")
-    
   }
   
   ### Prepare data
@@ -64,31 +56,27 @@ plotCircos <- function(listMoonlight,
   
   for (i in seq.int(n)) {
     
-    mytsg <- c(mytsg, 
-               list(names(listMoonlight[[i]]$listCandidates$TSG)))
-    myocg <- c(myocg, 
-               list(names(listMoonlight[[i]]$listCandidates$OCG)))
+    mytsg <- c(mytsg, list(names(listMoonlight[[i]]$listCandidates$TSG)))
+    myocg <- c(myocg, list(names(listMoonlight[[i]]$listCandidates$OCG)))
     
   }
+
   names(mytsg) <- names(myocg) <- mycancertypes
   
-  n.mygenes <- vapply(mytsg, 
-                      length, 
-                      integer(1)) + vapply(myocg, 
-                                           length, 
-                                           integer(1))
+  n.mygenes <- vapply(mytsg, length, integer(1)) + 
+                vapply(myocg, length, integer(1))
+
   mynames <- mycancertypes
+
   ind.rm <- which(n.mygenes == 0)
   
   if (length(ind.rm) > 0) {
     
     mytsg <- mytsg[-ind.rm]
     myocg <-myocg[-ind.rm]
-    n.mygenes <- vapply(mytsg, 
-                        length, 
-                        integer(1)) + vapply(myocg, 
-                                             length, 
-                                             integer(1))
+
+    n.mygenes <- vapply(mytsg, length, integer(1)) +
+                  vapply(myocg, length, integer(1))
     
     mynames <- mycancertypes[-ind.rm]
     listMutation <- listMutation[-ind.rm]
@@ -97,18 +85,12 @@ plotCircos <- function(listMoonlight,
   
   n <- n - length(ind.rm)
   
-  ntsg <- vapply(mytsg, 
-                 length, 
-                 integer(1))
-  nocg <- vapply(myocg, 
-                 length, 
-                 integer(1))
+  ntsg <- vapply(mytsg, length, integer(1))
+  nocg <- vapply(myocg, length, integer(1))
   
   if (!is.null(additionalFilename)) {
     
-    pdf(paste0("circos_ocg_tsg",
-               additionalFilename,
-               ".pdf"), 
+    pdf(paste0("circos_ocg_tsg", additionalFilename, ".pdf"), 
         width = 16, 
         height = 16)
     
@@ -116,8 +98,7 @@ plotCircos <- function(listMoonlight,
   
   df1 <- data.frame("order" = seq.int(n), 
                     "cancertype" = mynames, 
-                    "xmin" = rep(0,
-                                 n), 
+                    "xmin" = rep(0, n), 
                     "xmax" = n.mygenes)
   
   ### Plot sectors (outer part)
@@ -131,15 +112,9 @@ plotCircos <- function(listMoonlight,
                        gap.degree = 4)
   
   if (n > 12) {
-    
     mycols <- rainbow(n + 4)[seq.int(n)]
-    
-  }
-  else {
-    
-    mycols <- RColorBrewer::brewer.pal(n, 
-                                       "Set3")
-    
+  }  else { 
+    mycols <- RColorBrewer::brewer.pal(n, "Set3")
   }
   
   ### Sector details

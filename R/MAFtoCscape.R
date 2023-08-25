@@ -23,15 +23,14 @@ MAFtoCscape <- function(MAF) {
     mutate(Mutant = case_when(Reference_Allele == Tumor_Seq_Allele1 ~ Tumor_Seq_Allele2,
                               Reference_Allele == Tumor_Seq_Allele2 ~ Tumor_Seq_Allele1)) %>% 
     separate(Chromosome, 
-             into = c(NA, 
-                      "Chr"), 
+             into = c(NA, "Chr"), 
              sep = 3) %>% 
     dplyr::select(Chr, 
                   Start_Position, 
                   Reference_Allele, 
                   Mutant)
+      
   return(cscape)
-  
 }
 
 utils::globalVariables(c("Variant_Type", 

@@ -20,30 +20,22 @@ getDataGEO <- function(GEOobject = "GSE39004",
   # Check user input
   
   if (!is.character(GEOobject)) {
-    
-    stop("GEOobject must be a character vector")
-    
+    stop("GEOobject must be a character vector")    
   }
   
   if (!is.character(platform)) {
-    
     stop("Platform must be a character vector")
-    
   }
   
   if (!is.null(TCGAtumor) & !is.character(TCGAtumor)) {
-    
     stop("TCGA tumor must either be NULL or a character vector")
-    
   }
   
   GEO_TCGAtab <- get("GEO_TCGAtab")
   
   if (length(TCGAtumor) != 0) {
-    
     GEOobject <- GEO_TCGAtab[GEO_TCGAtab$Cancer ==  TCGAtumor,"Dataset"]
     platform <- GEO_TCGAtab[GEO_TCGAtab$Cancer ==  TCGAtumor,"Platform"]
-    
   }
   
   gset <- getGEO(GEOobject, 
@@ -51,20 +43,16 @@ getDataGEO <- function(GEOobject = "GSE39004",
                  AnnotGPL = TRUE)
   
   if (length(gset) > 1) {
-    
     idx <- grep(platform, attr(gset, "names"))
-    
-  }
-  else {
-    
+  } else {
     idx <- 1
-    
   }
-  
+
   gset <- gset[[idx]]
-  
+
   fvarLabels(gset) <- make.names(fvarLabels(gset))
-  
-  return(gset) 
+
+  return(gset)
+
 }
 

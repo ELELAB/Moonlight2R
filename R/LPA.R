@@ -14,44 +14,36 @@
 #' data('DiseaseList')
 #' BPselected <- c("apoptosis")
 #' BPannotations <- DiseaseList[[match(BPselected, names(DiseaseList))]]$ID
-LPA <- function(dataDEGs, 
-                BP, 
+LPA <- function(dataDEGs,
+                BP,
                 BPlist) {
-  
+
   # Check user input
-  
+
   if (.row_names_info(dataDEGs) < 0) {
-
-    stop("Row names were generated automatically. The input DEG table needs to have
-         the gene names as rownames. Double check that genes are rownames.")
-
+    stop("Row names were generated automatically. The input DEG table needs to
+ have the gene names as rownames. Double check that genes are rownames.")
   }
-  
+
   if ("logFC" %in% colnames(dataDEGs) == FALSE) {
-
     stop("The input DEG table must contain a column called logFC.")
-
   }
-  
+
   if (all(BP %in% names(DiseaseList)) == FALSE) {
-
-    stop("BPname should be a character vector containing one or more BP(s) 
+    stop("BPname should be a character vector containing one or more BP(s)
          among possible BPs stored in the DiseaseList object.")
-
   }
-  
+
   if (!is.character(BPlist)) {
-
     stop("BPlist must be a character vector of genes")
-
   }
-  
-  BPgenesDEGs <- intersect(BPlist, 
+
+  BPgenesDEGs <- intersect(BPlist,
                            rownames(dataDEGs))
 
   dataDEGsBP <- dataDEGs[BPgenesDEGs, ]
-  
-  DiseaseMN <- matrix(0, 
+
+  DiseaseMN <- matrix(0,
                       nrow(dataDEGsBP),
                       7)
 
@@ -62,84 +54,77 @@ LPA <- function(dataDEGs,
                            "Findings",
                            "PubmedDecreases",
                            "PubmedIncreases")
+
   DiseaseMN <- as.data.frame(DiseaseMN)
-  DiseaseMN$Prediction..based.on.expression.direction. <- rep("Decreased", 
+  DiseaseMN$Prediction..based.on.expression.direction. <- rep("Decreased",
                                                               nrow(dataDEGsBP))
-  
+
   DiseaseMN$ID <- BPgenesDEGs
   DiseaseMN$Genes.in.dataset <- BPgenesDEGs
-  DiseaseMN$Exp.Log.Ratio <- dataDEGs[BPgenesDEGs,
-                                      "logFC"]
+  DiseaseMN$Exp.Log.Ratio <- dataDEGs[BPgenesDEGs, "logFC"]
   rownames(DiseaseMN) <- DiseaseMN$ID
-  
-  pb <- txtProgressBar(min = 0, 
-                       max = nrow(DiseaseMN), 
+
+  pb <- txtProgressBar(min = 0,
+                       max = nrow(DiseaseMN),
                        style = 3)
-  
+
   for (i in seq.int(nrow(DiseaseMN))) {
-    
-    setTxtProgressBar(pb, 
-                      i)
+
+    setTxtProgressBar(pb, i)
+
     curG <- DiseaseMN$ID[i]
-    
+
     keypubmed <- paste(curG,
                        BP,
                        "decreases")
 
-    res <- EUtilsSummary(keypubmed, 
-                         type = "esearch", 
+    res <- EUtilsSummary(keypubmed,
+                         type = "esearch",
                          db = "pubmed")
 
     fetch <- EUtilsGet(res,
-                       type = "efetch", 
+                       type = "efetch",
                        db = "pubmed")
 
     RecordsDec <- length(fetch@PMID)
 
-    DiseaseMN[curG,
-              "PubmedDecreases"] <- RecordsDec
-    
+    DiseaseMN[curG, "PubmedDecreases"] <- RecordsDec
+
     keypubmed <- paste(curG,
                        BP,
                        "increases")
-    res <- EUtilsSummary(keypubmed, 
-                         type = "esearch", 
+
+    res <- EUtilsSummary(keypubmed,
+                         type = "esearch",
                          db = "pubmed")
 
     fetch <- EUtilsGet(res,
-                       type = "efetch", 
+                       type = "efetch",
                        db = "pubmed")
 
     RecordsInc <- length(fetch@PMID)
-    
+
     DiseaseMN[curG,
               "PubmedIncreases"] <- RecordsInc
-    
-    if (DiseaseMN[curG,
-                  "PubmedDecreases"] == DiseaseMN[curG,
-                                                  "PubmedIncreases"]) {
-      DiseaseMN[curG,
-                "Findings"] <- paste0("Affects (", RecordsInc, ")")
+
+    if (DiseaseMN[curG, "PubmedDecreases"] == DiseaseMN[curG, "PubmedIncreases"]) {
+      DiseaseMN[curG, "Findings"] <- paste0("Affects (", RecordsInc, ")")
     }
-    
-    if (DiseaseMN[curG,"PubmedDecreases"] < DiseaseMN[curG,"PubmedIncreases"]) {
-      DiseaseMN[curG,
-                "Findings"] <- paste0("Increases (", RecordsInc, ")")
+
+    if (DiseaseMN[curG, "PubmedDecreases"] < DiseaseMN[curG, "PubmedIncreases"]) {
+      DiseaseMN[curG, "Findings"] <- paste0("Increases (", RecordsInc, ")")
     }
-    
-    if (DiseaseMN[curG,
-                  "PubmedDecreases"] > DiseaseMN[curG,
-                                                 "PubmedIncreases"]) {
-      DiseaseMN[curG,
-                "Findings"] <- paste0("Decreases (", RecordsDec, ")")
+
+    if (DiseaseMN[curG, "PubmedDecreases"] > DiseaseMN[curG, "PubmedIncreases"]) {
+      DiseaseMN[curG, "Findings"] <- paste0("Decreases (", RecordsDec, ")")
     }
-    
+
   }
-  
+
   close(pb)
-  
+
   return(DiseaseMN)
-  
+
 }
 
 utils::globalVariables(c("DiseaseList"))
