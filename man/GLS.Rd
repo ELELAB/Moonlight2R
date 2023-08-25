@@ -11,12 +11,12 @@ GLS(genes, query_string = "AND cancer AND driver", max_records = 20)
 \item{genes}{A character string containing the genes
 to search in PubMed database}
 
-\item{query_string}{A character string containing words 
-in query to follow the gene of interest. Default is 
+\item{query_string}{A character string containing words
+in query to follow the gene of interest. Default is
 "AND cancer AND driver" resulting in a final query of
 "Gene AND cancer AND driver". Standard PubMed syntax
 can be used in the query. For example Boolean operators
-AND, OR, NOT can be applied and tags such as [AU], 
+AND, OR, NOT can be applied and tags such as [AU],
 [TITLE/ABSTRACT], [Affiliation] can be used.}
 
 \item{max_records}{An integer containing the maximum
@@ -24,10 +24,10 @@ number of records to be fetched from PubMed.}
 }
 \value{
 A tibble containing results of literature search
-where PubMed was queried for information of input genes. 
+where PubMed was queried for information of input genes.
 Each row in the tibble contains a PubMed ID matching the
-query, doi, title, abstract, year of publication, keywords, 
-and total number of PubMed publications, resulting in a 
+query, doi, title, abstract, year of publication, keywords,
+and total number of PubMed publications, resulting in a
 total of eight columns.
 }
 \description{
@@ -35,9 +35,9 @@ GLS
 This function carries out gene literature search.
 }
 \examples{
-data("dataDMA") 
+data("dataDMA")
 genes_query <- Reduce(c, dataDMA)
-query <- 
+query <-
 "AND cancer AND driver AND '1980/01/01'[Date - Publication] : '2023/01/01'[Date - Publication]"
 dataGLS <- GLS(genes = genes_query,
                query_string = query)
