@@ -10,6 +10,9 @@
 #' @export
 #' @examples
 #' data(dataURA)
+#' data(DiseaseList)
+#' data(tabGrowBlock)
+#' data(knownDriverGenes)
 #' dataPRA <- PRA(dataURA = dataURA,
 #' BPname = c("apoptosis","proliferation of cells"),
 #' thres.role = 0)
@@ -20,7 +23,7 @@ PRA <- function(dataURA,
   
   # Check user input
   
-  data(DiseaseList)
+  DiseaseList <- get("DiseaseList")
   
   if (!is.null(BPname) && all(BPname %in% names(DiseaseList)) == FALSE) {
     
@@ -47,9 +50,6 @@ PRA <- function(dataURA,
     stop("Thres.role must be numeric")
     
   }
-  
-  data("tabGrowBlock")
-  data("knownDriverGenes")
   
   tabGrowBlock <- get("tabGrowBlock")
   knownDriverGenes <- get("knownDriverGenes")

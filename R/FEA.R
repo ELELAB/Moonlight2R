@@ -8,13 +8,12 @@
 #' @export
 #' @examples
 #' data(DEGsmatrix)
+#' data(DiseaseList)
+#' data(EAGenes)
 #' DEGsmatrix <- DEGsmatrix[seq.int(10), ]
 #' dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
-FEA <- function (BPname = NULL, 
-                 DEGsmatrix){
-  
-  data("DiseaseList")
-  data("EAGenes")
+FEA <- function(BPname = NULL, 
+                DEGsmatrix) {
   
   DiseaseList <- get("DiseaseList")
   EAGenes <- get("EAGenes")

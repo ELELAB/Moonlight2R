@@ -73,7 +73,7 @@ DMA <- function(dataMAF,
                 runCscape = TRUE,
                 coding_file, 
 		noncoding_file,
-                results_folder = "./DMAresults"){
+                results_folder = "./DMAresults") {
 
   # Check user input
   
@@ -99,9 +99,9 @@ DMA <- function(dataMAF,
          path to where DMA results should be stored")
   }
   
-  data("LOC_transcription")
-  data("LOC_translation")
-  data("LOC_protein")
+  LOC_transcription <- get("LOC_transcription")
+  LOC_translation <- get("LOC_translation")
+  LOC_protein <- get("LOC_protein")
 
   # Create Output folder
   if (dir.exists(results_folder)) {

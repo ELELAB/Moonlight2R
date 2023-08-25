@@ -23,7 +23,9 @@
 #' @export
 #' @return no return value, FEA result is plotted
 #' @examples
-#' data('DEGsmatrix')
+#' data(DEGsmatrix)
+#' data(DiseaseList)
+#' data(EAGenes)
 #' dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 #' plotFEA(dataFEA = dataFEA, additionalFilename = "_example",height = 20,width = 10)
 plotFEA <- function(dataFEA, 
