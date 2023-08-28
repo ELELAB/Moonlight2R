@@ -106,60 +106,42 @@ plotCircos <- function(listMoonlight,
   circlize::circos.initialize(factors = df1$cancertype, 
                               xlim = cbind(df1$xmin, 
                                            df1$xmax))
+
+  plot_settings <- function(x, y) {
+    
+    # Select details of current sector
+    name <- get.cell.meta.data("sector.index")
+    i <- get.cell.meta.data("sector.numeric.index")
+    xlim <- get.cell.meta.data("xlim")
+    ylim <- get.cell.meta.data("ylim")
+    
+    # Text direction (dd) and adjusmtents (aa)
+    theta <- circlize(mean(xlim), 1.3)[1, 1] %% 360
+    dd <- ifelse(theta < 90 || theta > 270, "clockwise", "reverse.clockwise")
+    aa <- c(1, 0.5)
+    if (theta < 90 || theta > 270)  aa = c(0, 0.5)
+    
+    circlize::circos.text(x = mean(xlim), y = 1.7, labels = paste0(name, "\n(", vapply(myocg, length, integer(1))[i], ", ", vapply(mytsg, length, integer(1))[i],")"), facing = dd, cex = fontSize,  adj = aa)
+    
+    # Plot main sector
+    print(xlim)
+    circlize::circos.rect(xleft = xlim[1], ybottom = ylim[1], xright = xlim[2], ytop = ylim[2],
+                          col = mycols[i], border = mycols[i])
+    
+    circlize::circos.rect(xleft = xlim[1], ybottom = ylim[1], xright = xlim[2] - vapply(mytsg, length, integer(1))[i], ytop = ylim[1] + 0.3, 
+                          col = "darkgreen", border = "darkgreen")
+    circlize::circos.rect(xleft = vapply(myocg, length, integer(1))[i], ybottom = ylim[1], xright = xlim[2], ytop = ylim[1] + 0.3, 
+                          col = "goldenrod", border = "goldenrod")
+    
+    # White line all the way around
+    circlize::circos.rect(xleft = xlim[1], ybottom = 0.3, xright = xlim[2], ytop = 0.32, col = "white", border = "white")
+    
+  }
   
   ### Plot sectors
   circlize::circos.trackPlotRegion(ylim = c(0, 1), factors = df1$cancertype, track.height = 0.1,
                                    # panel.fun for each sector
-                                   panel.fun = function(x, y) {
-                                     
-                                     #select details of current sector
-                                     name <- get.cell.meta.data("sector.index")
-                                     i <- get.cell.meta.data("sector.numeric.index")
-                                     xlim <- get.cell.meta.data("xlim")
-                                     ylim <- get.cell.meta.data("ylim")
-                                     
-                                     #text direction (dd) and adjusmtents (aa)
-                                     theta <- circlize(mean(xlim), 1.3)[1, 1] %% 360
-                                     dd <- ifelse(theta < 90 || theta > 270, "clockwise", "reverse.clockwise")
-                                     aa <- c(1, 0.5)
-                                     if (theta < 90 || theta > 270)  aa = c(0, 0.5)
-                                     
-                                     circlize::circos.text(x = mean(xlim), y = 1.7, 
-                                                           labels = paste0(name, "\n(", vapply(myocg, length, integer(1))[i], ", ", vapply(mytsg, length, integer(1))[i], ")"), 
-                                                           facing = dd, cex = fontSize, adj = aa)
-                                     
-                                     #plot main sector
-                                     # print(df1$rcol[i])
-                                     print(xlim)
-                                     circlize::circos.rect(xleft = xlim[1], 
-                                                           ybottom = ylim[1], 
-                                                           xright = xlim[2], 
-                                                           ytop = ylim[2],
-                                                           col = mycols[i], 
-                                                           border = mycols[i])
-                                     
-                                     circlize::circos.rect(xleft = xlim[1], 
-                                                           ybottom = ylim[1], 
-                                                           xright = xlim[2] - vapply(mytsg, length, integer(1))[i], 
-                                                           ytop = ylim[1] + 0.3, 
-                                                           col = "darkgreen", 
-                                                           border = "darkgreen")
-                                     circlize::circos.rect(xleft = vapply(myocg, length, integer(1))[i], 
-                                                           ybottom = ylim[1], 
-                                                           xright = xlim[2], 
-                                                           ytop = ylim[1] + 0.3, 
-                                                           col = "goldenrod", 
-                                                           border = "goldenrod")
-                                     
-                                     # white line all the way around
-                                     circlize::circos.rect(xleft = xlim[1], 
-                                                           ybottom = 0.3, 
-                                                           xright = xlim[2], 
-                                                           ytop = 0.32, 
-                                                           col = "white", 
-                                                           border = "white")
-                                     
-                                   })  
+                                   panel.fun = plot_settings)  
   
   if (!is.null(listMutation)) {
     

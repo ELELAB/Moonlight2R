@@ -54,31 +54,32 @@ GLS <- function(genes,
   
   # For each gene x in input, search PubMed based on specified
   # query
-  literature_search <- map(genes, function(x) {
-    
+
+  search_pubmed <- function(x) {
+  
     pubmed_query <- paste(x, query_string)
-    
+  
     # Search and retrieve results from PubMed
     gene_pubmed <- get_pubmed_ids(pubmed_query)
-    
+  
     # Retrieve number of publications
     count_pubmed <- gene_pubmed$Count %>%
       as.numeric()
-    
+  
     # If query matches any pubmed records
     if (count_pubmed > 0) {
-      
+    
       # Fetch data of PubMed records searched via above query
       top_results <- fetch_pubmed_data(gene_pubmed,
                                        retstart = 0,
                                        retmax = max_records)
-      
+    
       # Extract information from PubMed records into a table
       record_info <- table_articles_byAuth(top_results,
                                            included_authors = "first",
                                            max_chars = -1,
                                            getKeywords = TRUE)
-      
+    
       # Select only PubMed id, doi, title, abstract, year, and keywords of
       # PubMed records
       record_info_wrangled <- record_info %>%
@@ -86,27 +87,29 @@ GLS <- function(genes,
         dplyr::select(c(pmid, doi, title, abstract, year, keywords)) %>%
         mutate(gene = x, pubmed_count = count_pubmed) %>%
         dplyr::relocate(gene, .after = pmid)
-      
+    
       # Bind table to table containing results from previous gene(s)
       pubmed_mining <- pubmed_mining %>%
         bind_rows(record_info_wrangled)
-      
+    
       # If no records of query is found in PubMed
     } else {
-      
+    
       # Create tibble of one row of gene that did not have any PubMed results
       no_results_tbl <- tibble(pmid = NA, gene = x, doi = NA,
                                title = NA, abstract = NA, year = NA,
                                keywords = NA, pubmed_count = count_pubmed)
-      
+    
       # Bind tibble of gene without PubMed information to table containing
       # results of previous gene(s)
       pubmed_mining <- pubmed_mining %>%
         bind_rows(no_results_tbl)
-      
-    }
     
-  }) %>%
+    }
+  
+  }  
+
+  literature_search <- map(genes, search_pubmed) %>%
     bind_rows()
   
   return(literature_search)
