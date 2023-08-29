@@ -30,80 +30,80 @@ GRN <- function(TFs,
                 nGenesPerm = 2000,
                 nBoot = 400,
                 noise_mi = 1e-12) {
-  
+
   # Check user input
-  
+
   if (!is.character(TFs) | length(TFs) == 0) {
     stop("TFs must be a non-empty character vector containing gene names")
   }
-  
+
   if (.row_names_info(DEGsmatrix) < 0) {
     stop("Row names were generated automatically. The input DEG table needs to
-          have the gene names as rownames. Double check that genes are rownames.")
+have the gene names as rownames. Double check that genes are rowname")
   }
-  
+
   if (!is.logical(DiffGenes)) {
     stop("DiffGenes must be either TRUE or FALSE")
   }
-  
+
   if (is.null(dim(normCounts))) {
-    stop("The expression data must be non-empty with genes in rows and samples in columns")
+    stop("The expression data must be non-empty with genes in rows and samples 
+in columns")
   }
-  
+
   if (!is.numeric(kNearest) | !is.numeric(nGenesPerm) | !is.numeric(nBoot) | !is.numeric(noise_mi)) {
     stop("kNearest, nGenesPerm, nBoot and noise_mi must be numeric values")
   }
-  
+
   normCountsA <- normCounts
   normCountsB <- normCounts
-  
+
   if (DiffGenes == TRUE) {
     commonGenes <- intersect(rownames(DEGsmatrix), rownames(normCountsB))
     normCountsB <- normCountsB[commonGenes,]
-    
+
   } else {
     normCountsB <- normCountsA
   }
-  
+
   MRcandidates <- intersect(rownames(normCountsA), TFs)
-  
+
   # Mutual information between TF and genes
   sampleNames <- colnames(normCounts)
   geneNames <- rownames(normCounts)
-  
+
   miTFGenes <- knnmi.cross(normCountsA[MRcandidates, ],
                            normCountsB,
                            k = kNearest,
                            noise = noise_mi)
-  
+
   # Threshold with bootstrap
   tfListCancer <- TFs
   tfListCancer <- intersect(tfListCancer, rownames(normCountsA))
-  
+
   maxmi <- rep(0, length(tfListCancer))
-  
+
   Cancer_null_distr <- matrix(0, length(tfListCancer), nBoot)
   rownames(Cancer_null_distr) <- tfListCancer
-  
+
   for (i in seq.int(nBoot)) {
-    
+
     SampleS <- sample(seq.int(ncol(normCountsA)))
     g <- sample(seq.int(nrow(normCountsA)), nGenesPerm)
     mi <- knnmi.cross(normCountsA[tfListCancer, ],
                       normCountsA[g, SampleS],
                       k = kNearest,
                       noise = noise_mi)
-    
+
     maxmiCurr <- apply(mi, 1, max)
     Cancer_null_distr[,i] <- maxmiCurr
     index <- maxmi < maxmiCurr
     maxmi[index] <- maxmiCurr[index]
-    
-  }
-  
-  names(maxmi) <- rownames(Cancer_null_distr)
-  
-  return(list(miTFGenes = miTFGenes, maxmi = maxmi))
-  
-}
 
+  }
+
+  names(maxmi) <- rownames(Cancer_null_distr)
+
+  return(list(miTFGenes = miTFGenes, maxmi = maxmi))
+
+}
