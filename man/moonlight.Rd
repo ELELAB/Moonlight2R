@@ -51,16 +51,16 @@ moonlight(
 table with cancer driver genes TSG and OCG.
 }
 \description{
-moonlight is a tool for identification of cancer driver genes. 
+moonlight is a tool for identification of cancer driver genes.
 This function wraps the different steps of the complete analysis workflow.
 }
 \examples{
 \donttest{
-drivers <- moonlight(dataDEGs = DEGsmatrix, 
-dataFilt = dataFilt, 
+drivers <- moonlight(dataDEGs = DEGsmatrix,
+dataFilt = dataFilt,
 BPname = c("apoptosis", "proliferation of cells"),
-dataMAF = dataMAF, 
-path_cscape_coding = "css_coding.vcf.gz", 
+dataMAF = dataMAF,
+path_cscape_coding = "css_coding.vcf.gz",
 path_cscape_noncoding = "css_noncoding.vcf.gz")
 }
 }

@@ -24,7 +24,7 @@ returns the score
 This function retrives the individial score for a SNP
 }
 \examples{
-\donttest{ 
+\donttest{
 data <- tabix_func(Ranges, Reference_Allele, Mutant, file_coding, file_noncoding)
 }
 }

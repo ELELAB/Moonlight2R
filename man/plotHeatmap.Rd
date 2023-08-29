@@ -13,6 +13,6 @@ plotHeatmap(df)
 The name of the alphabeatically first gene in the tibble
 }
 \description{
-This function creates a unclustered heatmap from the inputted data tibble 
+This function creates a unclustered heatmap from the inputted data tibble
 and saves it
 }

@@ -17,16 +17,16 @@ plotDMA(
 
 \item{Oncogenic_mediators_mutation_summary}{A tibble, output file from DMA.}
 
-\item{type}{A character string. It can take the values \code{"split"} or \code{"complete"}. 
+\item{type}{A character string. It can take the values \code{"split"} or \code{"complete"}.
 If both type and genelist are \code{NULL}, the function will default to \code{"split"}.
 \itemize{
-\item \code{"split"} will split the entire dataset into sections of 40 genes and create individual plots. 
+\item \code{"split"} will split the entire dataset into sections of 40 genes and create individual plots.
 These plots will be merged into one pdf. The genes will be sorted alphabeatically.
 \item \code{"complete"} will create one plot, though it will not be possible to see the individual gene names.
-The heatmap will be clustered hierarchically. 
+The heatmap will be clustered hierarchically.
 }}
 
-\item{genelist}{A character vector containing HUGO symbols. 
+\item{genelist}{A character vector containing HUGO symbols.
 A single heatmap will be created with only these genes.
 The heatmap will be hierarchically clustered. This will overwrite \code{type}.}
 
@@ -36,7 +36,7 @@ The heatmap will be hierarchically clustered. This will overwrite \code{type}.}
 No return value. DMA results are plotted.
 }
 \description{
-This function creates one or more heatmaps on the output from DMA. 
+This function creates one or more heatmaps on the output from DMA.
 It visualises the CScape-Somatic annotations per oncogenic mediator either
 in a single heatmap or split into several different ones.
 It is also possible to provide a personalised genelist to visualise.
@@ -44,7 +44,7 @@ It is also possible to provide a personalised genelist to visualise.
 \examples{
 data('DEG_Mutations_Annotations')
 data('Oncogenic_mediators_mutation_summary')
-plotDMA(DEG_Mutations_Annotations, 
-        Oncogenic_mediators_mutation_summary, 
+plotDMA(DEG_Mutations_Annotations,
+        Oncogenic_mediators_mutation_summary,
         type = "split", additionalFilename = "myplots_")
 }
