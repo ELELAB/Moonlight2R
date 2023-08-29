@@ -2,7 +2,7 @@
 #'
 #' This function changes the PRA output to tibble format
 #' @param dataPRA RDA object (list of two) from PRA
-#' @import dplyr  
+#' @import dplyr
 #' @importFrom magrittr "%>%"
 #' @importFrom stringr str_trim
 #'
@@ -11,33 +11,34 @@
 #' @examples
 #' data('dataPRA')
 #' PRAtoTibble(dataPRA)
-
-PRAtoTibble <- function(dataPRA){
+PRAtoTibble <- function(dataPRA) {
 
   # Check user input
-  
+
   if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
     stop("The two list elements in PRA data must be named TSG and OCG")
   }
 
-  # Wrangle Data:
-  TSG <- as_tibble(dataPRA$TSG, rownames = NA) %>% 
-    rownames_to_column(var = "Hugo_Symbol") %>%  
-    mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = 'both'),
+  # Wrangle data
+
+  TSG <- as_tibble(dataPRA$TSG, rownames = NA) %>%
+    rownames_to_column(var = "Hugo_Symbol") %>%
+    mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = "both"),
            Moonlight_Oncogenic_Mediator = "TSG") %>%
     dplyr::rename(Moonlight_gene_z_score = value)
-  
-  OCG <- as_tibble(dataPRA$OCG, rownames = NA) %>% 
-    rownames_to_column(var = "Hugo_Symbol") %>% 
-    mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = 'both'),
-           Moonlight_Oncogenic_Mediator = "OCG") %>% 
+
+  OCG <- as_tibble(dataPRA$OCG, rownames = NA) %>%
+    rownames_to_column(var = "Hugo_Symbol") %>%
+    mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = "both"),
+           Moonlight_Oncogenic_Mediator = "OCG") %>%
     dplyr::rename(Moonlight_gene_z_score = value)
-  
-  drivers <- full_join(TSG, OCG, by = c("Hugo_Symbol", 
-                                        "Moonlight_gene_z_score", 
-                                        "Moonlight_Oncogenic_Mediator") ) 
-  
+
+  drivers <- full_join(TSG, OCG, by = c("Hugo_Symbol",
+                                        "Moonlight_gene_z_score",
+                                        "Moonlight_Oncogenic_Mediator"))
+
   return(drivers)
+
 }
 
 utils::globalVariables(c("Hugo_Symbol", "value"))

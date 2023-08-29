@@ -8,6 +8,9 @@ data(EncodePromoters)
 data(NCG)
 data(dataFilt)
 data(cscape_somatic_output)
+data(LOC_transcription)
+data(LOC_translation)
+data(LOC_protein)
 dataDMA <- DMA(dataMAF = dataMAF,
                dataDEGs = DEGsmatrix,
                dataPRA = dataPRA,

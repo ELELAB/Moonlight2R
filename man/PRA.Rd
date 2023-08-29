@@ -21,6 +21,9 @@ This function carries out the pattern recognition analysis
 }
 \examples{
 data(dataURA)
+data(DiseaseList)
+data(tabGrowBlock)
+data(knownDriverGenes)
 dataPRA <- PRA(dataURA = dataURA,
 BPname = c("apoptosis","proliferation of cells"),
 thres.role = 0)

@@ -26,6 +26,7 @@ data(DEGsmatrix)
 dataDEGs <- DEGsmatrix
 data(dataGRN)
 data(DiseaseList)
+data(EAGenes)
 dataURA <- URA(dataGRN = dataGRN,
 DEGsmatrix = dataDEGs,
 BPname = c("apoptosis",

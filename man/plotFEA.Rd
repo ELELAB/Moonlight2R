@@ -14,7 +14,7 @@ plotFEA(
   angle = 90,
   xleg = 35,
   yleg = 5,
-  titleMain,
+  titleMain = "",
   minY = -5,
   maxY = 10,
   mycols = c("#8DD3C7", "#FFFFB3", "#BEBADA")
@@ -54,7 +54,9 @@ no return value, FEA result is plotted
 This function visualize the functional enrichment analysis (FEA)'s barplot
 }
 \examples{
-data('DEGsmatrix')
+data(DEGsmatrix)
+data(DiseaseList)
+data(EAGenes)
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 plotFEA(dataFEA = dataFEA, additionalFilename = "_example",height = 20,width = 10)
 }
