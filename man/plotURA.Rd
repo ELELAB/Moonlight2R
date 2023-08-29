@@ -19,6 +19,9 @@ This function visualizes the URA in a heatmap
 }
 \examples{
 data(dataURA)
+data(DiseaseList)
+data(tabGrowBlock)
+data(knownDriverGenes)
 dataDual <- PRA(dataURA = dataURA,
 BPname = c("apoptosis","proliferation of cells"),
 thres.role = 0)

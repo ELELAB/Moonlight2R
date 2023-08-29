@@ -47,9 +47,9 @@ Can be downloaded at \url{http://cscape-somatic.biocompute.org.uk/#download}. Th
 }
 \value{
 List of two, containing TSGs and OCGs with at least one driver mutation. Additionally files are saved in \code{results_folder}.
-All output files are in compressed .rda format. 
+All output files are in compressed .rda format.
 \describe{
-\item{DEG_mutations_annotations.rda}{All differentially expressed genes’ mutations and their annotations. These annotations include e.g. Cscape-somatic assessment, Level of Consequence, overlab with promoter sites and information from Network of Cancer Genes (NCG 7.0). All information from MAF and DEA is contained.} 
+\item{DEG_mutations_annotations.rda}{All differentially expressed genes’ mutations and their annotations. These annotations include e.g. Cscape-somatic assessment, Level of Consequence, overlab with promoter sites and information from Network of Cancer Genes (NCG 7.0). All information from MAF and DEA is contained.}
 \item{Oncogenic_mediators_annotation_summary.rda}{All oncogenic mediators and an summarisation of their mutation based on CScape-somatic assessment, Level of Consequences and total number of mutations. If a gene as previously been assessed as a driver in Network of Cancer Genes (7.0), it is annotated in a separate column. }
 \item{Cscape_somatic_output.rda}{The file contain the cscape-somatic assessment for every mutation found in the differentially expressed genes. It is formatted exactly as the output of cscape-somatic, as if it was run in the terminal, except it is saved as .rda instead of csv. }
 }
@@ -58,12 +58,12 @@ All output files are in compressed .rda format.
 This function carries out the driver mutation analysis.
 }
 \details{
-For more information about the different annotations added to the mutations please see the documentation as followes: 
+For more information about the different annotations added to the mutations please see the documentation as followes:
 \code{data(NCG)}, \code{data(EncodePromoters)}, \code{data(LOC_protein)}
 \code{data(LOC_transcription)} and \code{data(LOC_translation)}.
 }
 \examples{
-\dontrun{
+\donttest{
 DMA(dataMAF = dataMAF,
     dataDEGs = DEGsmatrix,
     dataPRA = dataPRA,
@@ -74,11 +74,11 @@ DMA(dataMAF = dataMAF,
 #If the cscape-somatic file have already been created
 cscape_somatic_output <- read.csv("./results/Cscape_somatic_output.csv")
 save(cscape_somatic_output, file = "./results/Cscape_somatic_output.rda")
-    
+
 DMA(dataMAF = dataMAF,
     dataDEGs = DEGsmatrix,
     dataPRA = dataPRA,
     runCscape = FALSE,
-    results_folder = "./results")     
+    results_folder = "./results")
 }
 }

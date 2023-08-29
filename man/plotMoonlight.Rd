@@ -22,16 +22,16 @@ plotMoonlight(
 
 \item{dataURA}{Output URA function.}
 
-\item{gene_type}{A character string either \code{"mediators"} or \code{"drivers"}. 
+\item{gene_type}{A character string either \code{"mediators"} or \code{"drivers"}.
 \itemize{
-\item If \code{NULL} defaults to \code{"drivers"}. 
+\item If \code{NULL} defaults to \code{"drivers"}.
 \item \code{"mediators"} will show the oncogenic mediators with the highst number of mutations regardless of driver/passenger classification.
 \item \code{"drivers"} will show the driver genes with the highest number of driver mutations.
 }}
 
 \item{n}{Numeric. The top number of genes to be plotted. If \code{NULL} defaults to 50.}
 
-\item{genelist}{A vector of strings containing Hugo Symbols of genes. 
+\item{genelist}{A vector of strings containing Hugo Symbols of genes.
 Overwrites \code{gene_type} argument.}
 
 \item{BPlist}{A vector of strings. Selection of the biological processes to visualise.
@@ -48,9 +48,9 @@ This function creates a heatmap of Moonlight gene z-scores for selected genes.
 \examples{
 data(DEG_Mutations_Annotations)
 data(Oncogenic_mediators_mutation_summary)
-data(dataURA)
-plotMoonlight(DEG_Mutations_Annotations, 
-              Oncogenic_mediators_mutation_summary, 
-              dataURA, gene_type = "drivers", n = 50,
+data(dataURA_plot)
+plotMoonlight(DEG_Mutations_Annotations,
+              Oncogenic_mediators_mutation_summary,
+              dataURA_plot, gene_type = "drivers", n = 50,
               additionalFilename = "myplot_")
 }

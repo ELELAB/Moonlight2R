@@ -19,6 +19,8 @@ This function carries out the functional enrichment analysis (FEA)
 }
 \examples{
 data(DEGsmatrix)
-DEGsmatrix <- DEGsmatrix[1:10, ]
+data(DiseaseList)
+data(EAGenes)
+DEGsmatrix <- DEGsmatrix[seq.int(10), ]
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 }

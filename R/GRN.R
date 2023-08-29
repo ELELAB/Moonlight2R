@@ -8,6 +8,7 @@
 #' Must be less than the number of columns of normCounts.
 #' @param nGenesPerm nGenesPerm
 #' @param nBoot nBoot
+#' @param noise_mi noise in knnmi.cross function. Default is 1e-12.
 #' @importFrom parmigene knnmi.cross
 #' @export
 #' @return an adjacent matrix
@@ -15,66 +16,94 @@
 #' data('DEGsmatrix')
 #' data('dataFilt')
 #' dataDEGs <- DEGsmatrix
-#' dataGRN <- GRN(TFs = rownames(dataDEGs)[1:10],
+#' dataGRN <- GRN(TFs = sample(rownames(dataDEGs), 100),
 #' DEGsmatrix = dataDEGs,
 #' DiffGenes = TRUE,
 #' normCounts = dataFilt,
 #' nGenesPerm = 5,
 #' nBoot = 5)
-GRN <- function(TFs, DEGsmatrix, DiffGenes = FALSE, normCounts, kNearest = 3, nGenesPerm = 2000, nBoot = 400) {
-    normCountsA <- normCounts
-    normCountsB <- normCounts
+GRN <- function(TFs,
+                DEGsmatrix,
+                DiffGenes = FALSE,
+                normCounts,
+                kNearest = 3,
+                nGenesPerm = 2000,
+                nBoot = 400,
+                noise_mi = 1e-12) {
 
-    if(DiffGenes==TRUE){
-      commonGenes <- intersect(rownames(DEGsmatrix), rownames(normCountsB) )
-      normCountsB <- normCountsB[commonGenes,]
-    }else{
-        normCountsB <- normCountsA
-    }
+  # Check user input
 
+  if (!is.character(TFs) | length(TFs) == 0) {
+    stop("TFs must be a non-empty character vector containing gene names")
+  }
 
-    MRcandidates <- intersect(rownames(normCountsA),TFs)
+  if (.row_names_info(DEGsmatrix) < 0) {
+    stop("Row names were generated automatically. The input DEG table needs to
+have the gene names as rownames. Double check that genes are rowname")
+  }
 
+  if (!is.logical(DiffGenes)) {
+    stop("DiffGenes must be either TRUE or FALSE")
+  }
 
-    # Mutual information between TF and genes
-    sampleNames <- colnames(normCounts)
-    geneNames <- rownames(normCounts)
+  if (is.null(dim(normCounts))) {
+    stop("The expression data must be non-empty with genes in rows and samples 
+in columns")
+  }
 
-    # messageMI_TFgenes <- paste("Estimation of MI among [", length(MRcandidates), " TRs and ", nrow(normCounts), " genes].....", sep = "")
-    # timeEstimatedMI_TFgenes1 <- length(MRcandidates)*nrow(normCounts)/1000
-    # timeEstimatedMI_TFgenes <- format(timeEstimatedMI_TFgenes1*ncol(normCounts)/17000, digits = 2)
-    # messageEstimation <- print(paste("I Need about ", timeEstimatedMI_TFgenes, "seconds for this MI estimation. [Processing 17000k elements /s]  "))
+  if (!is.numeric(kNearest) | !is.numeric(nGenesPerm) | !is.numeric(nBoot) | !is.numeric(noise_mi)) {
+    stop("kNearest, nGenesPerm, nBoot and noise_mi must be numeric values")
+  }
 
-    # system.time(
-    miTFGenes <- knnmi.cross(normCountsA[MRcandidates, ], normCountsB, k = kNearest)
-    # )
+  normCountsA <- normCounts
+  normCountsB <- normCounts
 
+  if (DiffGenes == TRUE) {
+    commonGenes <- intersect(rownames(DEGsmatrix), rownames(normCountsB))
+    normCountsB <- normCountsB[commonGenes,]
 
-    # threshold with bootstrap
-    tfListCancer <- TFs
-    tfListCancer <- intersect(tfListCancer,rownames(normCountsA))
+  } else {
+    normCountsB <- normCountsA
+  }
 
-    maxmi<-rep(0,length(tfListCancer))
+  MRcandidates <- intersect(rownames(normCountsA), TFs)
 
-    Cancer_null_distr<-matrix(0,length(tfListCancer),nBoot)
-    rownames(Cancer_null_distr)<-tfListCancer
+  # Mutual information between TF and genes
+  sampleNames <- colnames(normCounts)
+  geneNames <- rownames(normCounts)
 
-    for (i in 1: nBoot){
-    # cat(paste( (nBoot-i),".",sep=""))
-        SampleS <- sample(1:ncol(normCountsA))
-        g <- sample(1:nrow(normCountsA), nGenesPerm)
-        # if(i == 1) system.time(mi <- knnmi.cross(normCounts[tfListCancer, ], normCounts[g, SampleS], k = kNum)) else
-        mi <- knnmi.cross(normCountsA[tfListCancer, ], normCountsA[g, SampleS], k = kNearest)
+  miTFGenes <- knnmi.cross(normCountsA[MRcandidates, ],
+                           normCountsB,
+                           k = kNearest,
+                           noise = noise_mi)
 
-        maxmiCurr <- apply(mi,1, max)
-        Cancer_null_distr[,i] <- maxmiCurr
-        index <- maxmi < maxmiCurr
-        maxmi[index]<- maxmiCurr[index]
-    }
+  # Threshold with bootstrap
+  tfListCancer <- TFs
+  tfListCancer <- intersect(tfListCancer, rownames(normCountsA))
 
-    names(maxmi) <- rownames(Cancer_null_distr)
+  maxmi <- rep(0, length(tfListCancer))
 
+  Cancer_null_distr <- matrix(0, length(tfListCancer), nBoot)
+  rownames(Cancer_null_distr) <- tfListCancer
 
-    return(list(miTFGenes = miTFGenes, maxmi = maxmi))
+  for (i in seq.int(nBoot)) {
+
+    SampleS <- sample(seq.int(ncol(normCountsA)))
+    g <- sample(seq.int(nrow(normCountsA)), nGenesPerm)
+    mi <- knnmi.cross(normCountsA[tfListCancer, ],
+                      normCountsA[g, SampleS],
+                      k = kNearest,
+                      noise = noise_mi)
+
+    maxmiCurr <- apply(mi, 1, max)
+    Cancer_null_distr[,i] <- maxmiCurr
+    index <- maxmi < maxmiCurr
+    maxmi[index] <- maxmiCurr[index]
+
+  }
+
+  names(maxmi) <- rownames(Cancer_null_distr)
+
+  return(list(miTFGenes = miTFGenes, maxmi = maxmi))
 
 }
