@@ -665,6 +665,8 @@ data(DEGsmatrix)
 data(LOC_transcription)
 data(LOC_translation)
 data(LOC_protein)
+data(NCG)
+data(EncodePromoters)
 dataDMA <- DMA(dataMAF = dataMAF,
                dataDEGs = DEGsmatrix, 
                dataPRA = dataPRA,
@@ -836,6 +838,16 @@ knitr::include_graphics("URAplot.gif")
 data(dataFilt)
 data(DEGsmatrix)
 data(dataMAF)
+data(DiseaseList)
+data(EAGenes)
+data(tabGrowBlock)
+data(knownDriverGenes)
+data(LOC_transcription)
+data(LOC_translation)
+data(LOC_protein)
+data(NCG)
+data(EncodePromoters)
+
 listMoonlight <- moonlight(dataDEGs = DEGsmatrix,
                            dataFilt = dataFilt,
                            nTF = 100,
@@ -872,7 +884,15 @@ knitr::include_graphics("circos_ocg_tsg_ncancer5.gif")
 data(DEGsmatrix)
 data(dataFilt)
 data(dataMAF)
-
+data(DiseaseList)
+data(EAGenes)
+data(tabGrowBlock)
+data(knownDriverGenes)
+data(LOC_transcription)
+data(LOC_translation)
+data(LOC_protein)
+data(NCG)
+data(EncodePromoters)
 
 # Perform gene regulatory network analysis
 dataGRN <- GRN(TFs = rownames(DEGsmatrix), 
