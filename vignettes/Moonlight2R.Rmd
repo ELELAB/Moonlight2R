@@ -665,6 +665,8 @@ data(DEGsmatrix)
 data(LOC_transcription)
 data(LOC_translation)
 data(LOC_protein)
+data(NCG)
+data(EncodePromoters)
 dataDMA <- DMA(dataMAF = dataMAF,
                dataDEGs = DEGsmatrix, 
                dataPRA = dataPRA,
@@ -832,14 +834,31 @@ knitr::include_graphics("URAplot.gif")
 
 ## Case study n. 2: Moonlight pipeline in one function
 
+For illustrative purposes and to decrease runtime, we have set `nGenesPerm = 5` and `nBoot = 5`
+in the example below, however, we recommend setting these parameters to
+`nGenesPerm = 2000` and `nBoot = 400` to achieve optimal results, as they are
+set by default in the function arguments.
+
 ```{r,eval = FALSE,echo=TRUE,message=FALSE,warning=FALSE}
 data(dataFilt)
 data(DEGsmatrix)
 data(dataMAF)
+data(DiseaseList)
+data(EAGenes)
+data(tabGrowBlock)
+data(knownDriverGenes)
+data(LOC_transcription)
+data(LOC_translation)
+data(LOC_protein)
+data(NCG)
+data(EncodePromoters)
+
 listMoonlight <- moonlight(dataDEGs = DEGsmatrix,
                            dataFilt = dataFilt,
                            nTF = 100,
                            DiffGenes = TRUE,
+			   nGenesPerm = 5,
+                           nBoot = 5,
                            BPname = c("apoptosis","proliferation of cells"),
                            dataMAF = dataMAF,
                            path_cscape_coding = "css_coding.vcf.gz", 
@@ -867,21 +886,34 @@ knitr::include_graphics("circos_ocg_tsg_ncancer5.gif")
 
 ## Case study n. 3: Moonlight with driver mutation analysis  
 
+For illustrative purposes and to decrease runtime, we have set `nGenesPerm = 5` and `nBoot = 5`
+in the example below, however, we recommend setting these parameters to
+`nGenesPerm = 2000` and `nBoot = 400` to achieve optimal results, as they are
+set by default in the function arguments.
+
 ```{r,eval = FALSE,echo=TRUE,message=FALSE,warning=FALSE}
 
 data(DEGsmatrix)
 data(dataFilt)
 data(dataMAF)
-
+data(DiseaseList)
+data(EAGenes)
+data(tabGrowBlock)
+data(knownDriverGenes)
+data(LOC_transcription)
+data(LOC_translation)
+data(LOC_protein)
+data(NCG)
+data(EncodePromoters)
 
 # Perform gene regulatory network analysis
 dataGRN <- GRN(TFs = rownames(DEGsmatrix), 
 	       DEGsmatrix = DEGsmatrix,
 	       DiffGenes = TRUE,
                normCounts = dataFilt,
-               nGenesPerm = 2000, 
+               nGenesPerm = 5, 
                kNearest = 3, 
-               nBoot = 400)
+               nBoot = 5)
 
 # Perform upstream regulatory analysis
 # As example, we use apoptosis and proliferation of cells as the biological processes
@@ -910,6 +942,9 @@ dataDMA <- DMA(dataMAF = dataMAF,
 Next, we analyze the predicted driver genes and their mutations. 
 
 ```{r, eval = TRUE}
+data(Oncogenic_mediators_mutation_summary)
+data(DEG_Mutations_Annotations)
+
 # Extract oncogenic mediators that contain at least one driver mutation
 # These are the driver genes
 knitr::kable(Oncogenic_mediators_mutation_summary %>%

@@ -21,21 +21,35 @@ PRAtoTibble <- function(dataPRA) {
 
   # Wrangle data
 
-  TSG <- as_tibble(dataPRA$TSG, rownames = NA) %>%
-    rownames_to_column(var = "Hugo_Symbol") %>%
-    mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = "both"),
-           Moonlight_Oncogenic_Mediator = "TSG") %>%
-    dplyr::rename(Moonlight_gene_z_score = value)
+  if (!is.null(dataPRA$TSG)) {
+    TSG <- as_tibble(dataPRA$TSG, rownames = NA) %>%
+      rownames_to_column(var = "Hugo_Symbol") %>%
+      mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = "both"),
+             Moonlight_Oncogenic_Mediator = "TSG") %>%
+      dplyr::rename(Moonlight_gene_z_score = value)
+  } else {
+    TSG <- NULL
+  }
 
-  OCG <- as_tibble(dataPRA$OCG, rownames = NA) %>%
-    rownames_to_column(var = "Hugo_Symbol") %>%
-    mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = "both"),
-           Moonlight_Oncogenic_Mediator = "OCG") %>%
-    dplyr::rename(Moonlight_gene_z_score = value)
+  if (!is.null(dataPRA$OCG)) {
+    OCG <- as_tibble(dataPRA$OCG, rownames = NA) %>%
+      rownames_to_column(var = "Hugo_Symbol") %>%
+      mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = "both"),
+             Moonlight_Oncogenic_Mediator = "OCG") %>%
+      dplyr::rename(Moonlight_gene_z_score = value)
+  } else {
+    OCG <- NULL
+  }
 
-  drivers <- full_join(TSG, OCG, by = c("Hugo_Symbol",
-                                        "Moonlight_gene_z_score",
-                                        "Moonlight_Oncogenic_Mediator"))
+  if (!is.null(TSG) & !is.null(OCG)) {
+    drivers <- full_join(TSG, OCG, by = c("Hugo_Symbol",
+                                          "Moonlight_gene_z_score",
+                                          "Moonlight_Oncogenic_Mediator"))
+  } else if (is.null(TSG)) {
+    drivers <- OCG
+  } else if (is.null(OCG)) {
+    drivers <- TSG
+  }
 
   return(drivers)
 
