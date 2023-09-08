@@ -1,3 +1,10 @@
+# Moonlight2R 0.99.11
+
+## Summary
+
+* added missing data loadings in vignette
+* changed handling of null cases in `PRAToTibble`
+
 # Moonlight2R 0.99.10
 
 ## Summary
