@@ -20,6 +20,16 @@ PRA <- function(dataURA,
                 BPname,
                 thres.role = 0) {
 
+  # List of variable names
+  variables_to_check <- c("DiseaseList", "tabGrowBlock", "knownDriverGenes")
+
+  # Check and load variables if they do not exist
+  for (variable_name in variables_to_check) {
+    if (!exists(variable_name)) {
+      data(variable_name)
+    }
+  }
+
   # Check user input
 
   DiseaseList <- get("DiseaseList")
@@ -40,10 +50,6 @@ among possible BPs stored in the DiseaseList object.")
   if (!is.numeric(thres.role)) {
     stop("Thres.role must be numeric")
   }
-
-  data(DiseaseList)
-  data(tabGrowBlock)
-  data(knownDriverGenes)
 
   tabGrowBlock <- get("tabGrowBlock")
   knownDriverGenes <- get("knownDriverGenes")

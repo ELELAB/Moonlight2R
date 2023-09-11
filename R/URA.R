@@ -37,8 +37,15 @@ have the gene names as rownames. Double check that genes are rownames.")
 BP(s) among possible BPs stored in the DiseaseList object.")
   }
 
-  data(DiseaseList)
-  data(EAGenes)
+  # List of variable names
+  variables_to_check <- c("DiseaseList", "EAGenes")
+
+  # Check and load variables if they do not exist
+  for (variable_name in variables_to_check) {
+    if (!exists(variable_name)) {
+      data(variable_name)
+    }
+  }
 
   doParallel::registerDoParallel(cores = nCores)
   DiseaseList <- get("DiseaseList")

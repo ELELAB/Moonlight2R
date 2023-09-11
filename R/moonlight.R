@@ -75,16 +75,18 @@ moonlight <- function(dataDEGs,
     stop("Paths to cscape coding and non-coding files must be character vectors")
   }
 
-  data(LOC_transcription)
-  data(LOC_translation)
-  data(LOC_protein)
-  data(EncodePromoters)
-  data(NCG)
-  data(DiseaseList)
-  data(EAGenes)
-  data(tabGrowBlock)
-  data(knownDriverGenes)
+  # List of variable names
+  variables_to_check <- c("LOC_transcription", "LOC_translation", "LOC_protein",
+                          "EncodePromoters", "NCG", "DiseaseList", "EAGenes",
+                          "tabGrowBlock", "knownDriverGenes")
 
+  # Check and load variables if they do not exist
+  for (variable_name in variables_to_check) {
+    if (!exists(variable_name)) {
+      data(variable_name)
+    }
+  }
+  
   res <- NULL
 
   ### Gene regulatory network
