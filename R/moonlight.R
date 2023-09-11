@@ -75,6 +75,16 @@ moonlight <- function(dataDEGs,
     stop("Paths to cscape coding and non-coding files must be character vectors")
   }
 
+  data(LOC_transcription)
+  data(LOC_translation)
+  data(LOC_protein)
+  data(EncodePromoters)
+  data(NCG)
+  data(DiseaseList)
+  data(EAGenes)
+  data(tabGrowBlock)
+  data(knownDriverGenes)
+
   res <- NULL
 
   ### Gene regulatory network

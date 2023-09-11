@@ -99,6 +99,12 @@ have the gene names as rownames. Double check that genes are rownames.")
 path to where DMA results should be stored")
   }
 
+  data(LOC_transcription)
+  data(LOC_translation)
+  data(LOC_protein)
+  data(EncodePromoters)
+  data(NCG)
+
   LOC_transcription <- get("LOC_transcription")
   LOC_translation <- get("LOC_translation")
   LOC_protein <- get("LOC_protein")

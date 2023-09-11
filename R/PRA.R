@@ -41,6 +41,10 @@ among possible BPs stored in the DiseaseList object.")
     stop("Thres.role must be numeric")
   }
 
+  data(DiseaseList)
+  data(tabGrowBlock)
+  data(knownDriverGenes)
+
   tabGrowBlock <- get("tabGrowBlock")
   knownDriverGenes <- get("knownDriverGenes")
 
