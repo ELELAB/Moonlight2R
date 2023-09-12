@@ -15,14 +15,8 @@ getDataGEO <- function(GEOobject = "GSE39004",
                        platform = "GPL6244",
                        TCGAtumor = NULL) {
 
-  # List of variable names
-  variables_to_check <- c("GEO_TCGAtab")
-
-  # Check and load variables if they do not exist
-  for (variable_name in variables_to_check) {
-    if (! variable_name %in% names(.GlobalEnv)) {
-      data(variable_name)
-    }
+  if (! "GEO_TCGAtab" %in% names(.GlobalEnv)) {
+    data(list=c("GEO_TCGAtab"))
   }
 
   GEO_TCGAtab <- get("GEO_TCGAtab")

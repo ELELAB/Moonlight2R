@@ -106,7 +106,7 @@ path to where DMA results should be stored")
   # Check and load variables if they do not exist
   for (variable_name in variables_to_check) {
     if (! variable_name %in% names(.GlobalEnv)) {
-      data(variable_name)
+      data(list=c(variable_name))
     }
   }
 

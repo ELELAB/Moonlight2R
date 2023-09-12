@@ -25,8 +25,19 @@ URA <- function(dataGRN,
                 BPname,
                 nCores = 1) {
 
-  # Check user input
+  # List of variable names
+  variables_to_check <- c("DiseaseList", "EAGenes")
 
+  # Check and load variables if they do not exist
+  for (variable_name in variables_to_check) {
+    if (! variable_name %in% names(.GlobalEnv)) {
+      data(list=c(variable_name))
+    }
+  }
+
+  DiseaseList <- get("DiseaseList")
+
+  # Check user input
   if (.row_names_info(DEGsmatrix) < 0) {
     stop("Row names were generated automatically. The input DEG table needs to
 have the gene names as rownames. Double check that genes are rownames.")
@@ -37,18 +48,7 @@ have the gene names as rownames. Double check that genes are rownames.")
 BP(s) among possible BPs stored in the DiseaseList object.")
   }
 
-  # List of variable names
-  variables_to_check <- c("DiseaseList", "EAGenes")
-
-  # Check and load variables if they do not exist
-  for (variable_name in variables_to_check) {
-    if (! variable_name %in% names(.GlobalEnv)) {
-      data(variable_name)
-    }
-  }
-
   doParallel::registerDoParallel(cores = nCores)
-  DiseaseList <- get("DiseaseList")
 
   if (is.null(BPname)) {
     BPname <- names(DiseaseList)
