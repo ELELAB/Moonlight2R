@@ -25,7 +25,7 @@ PRA <- function(dataURA,
 
   # Check and load variables if they do not exist
   for (variable_name in variables_to_check) {
-    if (!exists(variable_name)) {
+    if (! variable_name %in% names(.GlobalEnv)) {
       data(variable_name)
     }
   }
