@@ -12,7 +12,8 @@
 #' @export
 #' @examples
 #' data(dataMAF)
-#' LiftMAF(dataMAF, Current_Build = 'GRCh38')
+#' dataMAF_example <- dataMAF[1:5,]
+#' LiftMAF(dataMAF_example, Current_Build = 'GRCh38')
 LiftMAF <- function(Infile,
                     Current_Build) {
 
