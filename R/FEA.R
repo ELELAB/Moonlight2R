@@ -15,6 +15,16 @@
 FEA <- function(BPname = NULL,
                 DEGsmatrix) {
 
+  # List of variable names
+  variables_to_check <- c("DiseaseList", "EAGenes")
+
+  # Check and load variables if they do not exist
+  for (variable_name in variables_to_check) {
+    if (! variable_name %in% names(.GlobalEnv)) {
+      data(list=c(variable_name))
+    }
+  }
+
   DiseaseList <- get("DiseaseList")
   EAGenes <- get("EAGenes")
 

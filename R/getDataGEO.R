@@ -15,6 +15,10 @@ getDataGEO <- function(GEOobject = "GSE39004",
                        platform = "GPL6244",
                        TCGAtumor = NULL) {
 
+  if (! "GEO_TCGAtab" %in% names(.GlobalEnv)) {
+    data(list=c("GEO_TCGAtab"))
+  }
+
   GEO_TCGAtab <- get("GEO_TCGAtab")
 
   # Check user input

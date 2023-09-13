@@ -1,3 +1,9 @@
+# Moonlight2R 0.99.12
+
+## Summary
+
+* added data loadings in functions 
+
 # Moonlight2R 0.99.11
 
 ## Summary
