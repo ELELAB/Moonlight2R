@@ -57,6 +57,6 @@ This function visualize the functional enrichment analysis (FEA)'s barplot
 data(DEGsmatrix)
 data(DiseaseList)
 data(EAGenes)
-dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
+data(dataFEA)
 plotFEA(dataFEA = dataFEA, additionalFilename = "_example",height = 20,width = 10)
 }

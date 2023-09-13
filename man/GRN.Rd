@@ -43,10 +43,10 @@ This function carries out the gene regulatory network inference using parmigene
 data('DEGsmatrix')
 data('dataFilt')
 dataDEGs <- DEGsmatrix
-dataGRN <- GRN(TFs = sample(rownames(dataDEGs), 100),
+dataGRN <- GRN(TFs = sample(rownames(dataDEGs), 50),
 DEGsmatrix = dataDEGs,
 DiffGenes = TRUE,
 normCounts = dataFilt,
-nGenesPerm = 5,
-nBoot = 5)
+nGenesPerm = 2,
+nBoot = 2)
 }
