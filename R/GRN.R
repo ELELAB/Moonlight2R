@@ -15,9 +15,8 @@
 #' @examples
 #' data('DEGsmatrix')
 #' data('dataFilt')
-#' dataDEGs <- DEGsmatrix
-#' dataGRN <- GRN(TFs = sample(rownames(dataDEGs), 50),
-#' DEGsmatrix = dataDEGs,
+#' dataGRN <- GRN(TFs = sample(rownames(DEGsmatrix), 30),
+#' DEGsmatrix = DEGsmatrix,
 #' DiffGenes = TRUE,
 #' normCounts = dataFilt,
 #' nGenesPerm = 2,

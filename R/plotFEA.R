@@ -27,7 +27,7 @@
 #' data(DiseaseList)
 #' data(EAGenes)
 #' data(dataFEA)
-#' plotFEA(dataFEA = dataFEA, additionalFilename = "_example",height = 20,width = 10)
+#' plotFEA(dataFEA = dataFEA[1:10,], additionalFilename = "_example",height = 20,width = 10)
 plotFEA <- function(dataFEA,
                     topBP = 10,
                     additionalFilename = NULL,

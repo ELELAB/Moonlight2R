@@ -13,7 +13,7 @@
 #' data(DiseaseList)
 #' data(tabGrowBlock)
 #' data(knownDriverGenes)
-#' dataPRA <- PRA(dataURA = dataURA,
+#' dataPRA <- PRA(dataURA = dataURA[seq.int(2),],
 #' BPname = c("apoptosis","proliferation of cells"),
 #' thres.role = 0)
 PRA <- function(dataURA,
