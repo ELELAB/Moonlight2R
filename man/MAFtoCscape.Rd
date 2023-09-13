@@ -16,6 +16,6 @@ tibble of cscape-somatic input
 This function extracts columns from a MAF tibble to fit CScape input format
 }
 \examples{
-print(data(dataMAF))
-MAFtoCscape(dataMAF)
+data(dataMAF)
+MAFtoCscape(dataMAF[seq.int(2),])
 }

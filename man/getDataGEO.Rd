@@ -21,5 +21,5 @@ This function retrieves and prepares GEO data
 }
 \examples{
 data(GEO_TCGAtab)
-dataGEO <-  getDataGEO(GEOobject = "GSE20347", platform = "GPL571")
+dataGEO <-  getDataGEO(GEOobject = "GSE15641", platform = "GPL96")
 }

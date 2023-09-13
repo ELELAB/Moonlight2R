@@ -51,6 +51,6 @@ data(Oncogenic_mediators_mutation_summary)
 data(dataURA_plot)
 plotMoonlight(DEG_Mutations_Annotations,
               Oncogenic_mediators_mutation_summary,
-              dataURA_plot, gene_type = "drivers", n = 10,
+              dataURA_plot, genelist = c("AFAP1L1", "ABCG2"),
               additionalFilename = "myplot_")
 }

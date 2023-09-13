@@ -19,6 +19,6 @@ This function lifts a MAF file to a different genomic build.
 }
 \examples{
 data(dataMAF)
-dataMAF_example <- dataMAF[1:5,]
+dataMAF_example <- dataMAF[1,]
 LiftMAF(dataMAF_example, Current_Build = 'GRCh38')
 }

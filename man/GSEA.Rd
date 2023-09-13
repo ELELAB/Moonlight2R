@@ -21,6 +21,6 @@ This function carries out the GSEA enrichment analysis.
 }
 \examples{
 data("DEGsmatrix")
-DEGsmatrix_example <- DEGsmatrix[1:300,]
+DEGsmatrix_example <- DEGsmatrix[1:2,]
 dataFEA <- GSEA(DEGsmatrix = DEGsmatrix_example)
 }
