@@ -21,6 +21,6 @@ This function carries out the functional enrichment analysis (FEA)
 data(DEGsmatrix)
 data(DiseaseList)
 data(EAGenes)
-DEGsmatrix <- DEGsmatrix[seq.int(10), ]
-dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
+DEGsmatrix <- DEGsmatrix[seq.int(2), ]
+dataFEA <- FEA(DEGsmatrix = DEGsmatrix, BPname = "apoptosis")
 }

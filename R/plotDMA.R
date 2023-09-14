@@ -37,7 +37,7 @@
 #' data('Oncogenic_mediators_mutation_summary')
 #' plotDMA(DEG_Mutations_Annotations,
 #'         Oncogenic_mediators_mutation_summary,
-#'         type = "split", additionalFilename = "myplots_")
+#'         genelist = c("ACSS2", "AFAP1L1"), additionalFilename = "myplots_")
 plotDMA <- function(DEG_Mutations_Annotations,
                     Oncogenic_mediators_mutation_summary,
                     type = "split",

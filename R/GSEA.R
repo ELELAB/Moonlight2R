@@ -14,7 +14,8 @@
 #' @export
 #' @examples
 #' data("DEGsmatrix")
-#' dataFEA <- GSEA(DEGsmatrix = DEGsmatrix)
+#' DEGsmatrix_example <- DEGsmatrix[1:2,]
+#' dataFEA <- GSEA(DEGsmatrix = DEGsmatrix_example)
 GSEA <- function(DEGsmatrix,
                  top,
                  plot = FALSE) {
