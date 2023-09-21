@@ -13,12 +13,22 @@
 #' data(DiseaseList)
 #' data(tabGrowBlock)
 #' data(knownDriverGenes)
-#' dataPRA <- PRA(dataURA = dataURA,
+#' dataPRA <- PRA(dataURA = dataURA[seq.int(2),],
 #' BPname = c("apoptosis","proliferation of cells"),
 #' thres.role = 0)
 PRA <- function(dataURA,
                 BPname,
                 thres.role = 0) {
+
+  # List of variable names
+  variables_to_check <- c("DiseaseList", "tabGrowBlock", "knownDriverGenes")
+
+  # Check and load variables if they do not exist
+  for (variable_name in variables_to_check) {
+    if (! variable_name %in% names(.GlobalEnv)) {
+      data(list=c(variable_name))
+    }
+  }
 
   # Check user input
 

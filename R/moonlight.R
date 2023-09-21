@@ -41,6 +41,18 @@ moonlight <- function(dataDEGs,
 
   # Check user input
 
+  # List of variable names
+  variables_to_check <- c("LOC_transcription", "LOC_translation", "LOC_protein",
+                          "EncodePromoters", "NCG", "DiseaseList", "EAGenes",
+                          "tabGrowBlock", "knownDriverGenes")
+
+  # Check and load variables if they do not exist
+  for (variable_name in variables_to_check) {
+    if (! variable_name %in% names(.GlobalEnv)) {
+      data(list=c(variable_name))
+    }
+  }
+
   if (.row_names_info(dataDEGs) < 0) {
     stop("Row names were generated automatically. The input DEG table needs to
          have the gene names as rownames. Double check that genes are rownames.")

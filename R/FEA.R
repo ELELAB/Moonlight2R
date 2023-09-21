@@ -10,10 +10,20 @@
 #' data(DEGsmatrix)
 #' data(DiseaseList)
 #' data(EAGenes)
-#' DEGsmatrix <- DEGsmatrix[seq.int(10), ]
-#' dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
+#' DEGsmatrix <- DEGsmatrix[seq.int(2), ]
+#' dataFEA <- FEA(DEGsmatrix = DEGsmatrix, BPname = "apoptosis")
 FEA <- function(BPname = NULL,
                 DEGsmatrix) {
+
+  # List of variable names
+  variables_to_check <- c("DiseaseList", "EAGenes")
+
+  # Check and load variables if they do not exist
+  for (variable_name in variables_to_check) {
+    if (! variable_name %in% names(.GlobalEnv)) {
+      data(list=c(variable_name))
+    }
+  }
 
   DiseaseList <- get("DiseaseList")
   EAGenes <- get("EAGenes")

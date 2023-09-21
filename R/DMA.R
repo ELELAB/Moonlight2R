@@ -99,6 +99,17 @@ have the gene names as rownames. Double check that genes are rownames.")
 path to where DMA results should be stored")
   }
 
+  # List of variable names
+  variables_to_check <- c("LOC_transcription", "LOC_translation", 
+                        "LOC_protein", "EncodePromoters", "NCG")
+
+  # Check and load variables if they do not exist
+  for (variable_name in variables_to_check) {
+    if (! variable_name %in% names(.GlobalEnv)) {
+      data(list=c(variable_name))
+    }
+  }
+
   LOC_transcription <- get("LOC_transcription")
   LOC_translation <- get("LOC_translation")
   LOC_protein <- get("LOC_protein")

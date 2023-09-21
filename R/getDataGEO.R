@@ -10,10 +10,14 @@
 #' @return return GEO gset
 #' @examples
 #' data(GEO_TCGAtab)
-#' dataGEO <-  getDataGEO(GEOobject = "GSE20347", platform = "GPL571")
+#' dataGEO <-  getDataGEO(GEOobject = "GSE15641", platform = "GPL96")
 getDataGEO <- function(GEOobject = "GSE39004",
                        platform = "GPL6244",
                        TCGAtumor = NULL) {
+
+  if (! "GEO_TCGAtab" %in% names(.GlobalEnv)) {
+    data(list=c("GEO_TCGAtab"))
+  }
 
   GEO_TCGAtab <- get("GEO_TCGAtab")
 
