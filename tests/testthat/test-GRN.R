@@ -32,6 +32,12 @@ test_that("names of elements in GRN output are correct", {
 })
 
 # Test that output of GRN is as expected compared to reference / example data
-test_that("GRN output is identical to reference point", {
-  expect_equal(dataGRN_test, dataGRN_no_noise)
-})
+if (R.version[["arch"]] == "aarch64") {
+  test_that("GRN output is identical to reference point", {
+    expect_equal(dataGRN_test, dataGRN_no_noise, tolerance = 0.1)
+  })
+} else {
+  test_that("GRN output is identical to reference point", {
+    expect_equal(dataGRN_test, dataGRN_no_noise)
+  })
+}

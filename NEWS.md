@@ -1,3 +1,9 @@
+# Moonlight2R 0.99.14
+
+## Summary
+
+* made test for GRN and arm64 less stringent to account for architectural differences
+
 # Moonlight2R 0.99.13
 
 ## Summary
