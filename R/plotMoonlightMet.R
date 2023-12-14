@@ -2,9 +2,9 @@
 #' This function visualizes the effect of genes on biological processes
 #' and total number of hypo/hyper/dual methylated CpG sites in genes.
 #' @param DEG_Methylation_Annotations A tibble which is outputted
-#' from the EDA function.
+#' from the GMA function.
 #' @param Oncogenic_mediators_methylation_summary A tibble which
-#' is outputted from the EDA function.
+#' is outputted from the GMA function.
 #' @param dataURA Output of the URA function: a table containing
 #' the effect of oncogenic mediators on biological processes. This
 #' effect is quantified through Moonlight Gene Z-scores.
@@ -25,14 +25,14 @@
 #' @examples 
 #' data("DEG_Methylation_Annotations")
 #' data("Oncogenic_mediators_methylation_summary")
-#' data("dataURA")
+#' data("dataURA_plot")
 #' genes <- c("ABCG2", "ABHD6", "ACADL", "ACAN", "ACE2", "ACSS2",
 #'            "ACTG2", "ADAM19", "ADCK5", "ADHFE1", "ADRB1", "AFAP1L1")
 #' plotMoonlightMet(DEG_Methylation_Annotations = DEG_Methylation_Annotations, 
 #'                  Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary, 
-#'                  dataURA = dataURA, 
+#'                  dataURA = dataURA_plot, 
 #'                  genes = genes,
-#'                  additionalFilename = "./EDAresults/")
+#'                  additionalFilename = "./GMAresults/")
 plotMoonlightMet <- function(DEG_Methylation_Annotations,
                              Oncogenic_mediators_methylation_summary,
                              dataURA,

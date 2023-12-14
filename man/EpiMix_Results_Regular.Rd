@@ -3,7 +3,7 @@
 \docType{data}
 \name{EpiMix_Results_Regular}
 \alias{EpiMix_Results_Regular}
-\title{Output example from EDA function}
+\title{Output example from GMA function}
 \format{
 A list of length nine
 }
@@ -16,7 +16,7 @@ A list of length nine
 \description{
 The object, a list, that was returned from
 running the EpiMix function and is one of the outputs from the 
-EDA function.
+GMA function.
 }
 \details{
 The data is a list of nine elements which is outputted

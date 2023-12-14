@@ -3,7 +3,7 @@
 \docType{data}
 \name{Oncogenic_mediators_methylation_summary}
 \alias{Oncogenic_mediators_methylation_summary}
-\title{Output example from EDA function}
+\title{Output example from GMA function}
 \format{
 A 25x7 tibble
 }
@@ -14,7 +14,7 @@ data(Oncogenic_mediators_methylation_summary)
 A 25x7 tibble
 }
 \description{
-Output file from running the EDA function which
+Output file from running the GMA function which
 is a summary of the oncogenic mediators and their sum of
 methylated CpG probes together with the evidence level of
 their role as driver gene.

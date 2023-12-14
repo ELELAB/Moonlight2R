@@ -1,14 +1,14 @@
-#' plotEDA
-#' This function plots results of the epigenetic driver analysis.
+#' plotGMA
+#' This function plots results of the Gene Methylation Analysis.
 #' It visualizes the number of hypo/hyper/dual methylated CpG
 #' sites in oncogenic mediators or in a user-supplied gene list. 
 #' The results are visualized either in a single heatmap or split 
 #' into different ones which is specified in the function's three 
 #' modes: split, complete and genelist.
 #' @param DEG_Methylation_Annotations A tibble which is outputted
-#' from the EDA function.
+#' from the GMA function.
 #' @param Oncogenic_mediators_methylation_summary A tibble which
-#' is outputted from the EDA function.
+#' is outputted from the GMA function.
 #' @param type A character string which can either be split,
 #' complete or genelist. If type is set to split, the entire
 #' dataset is split into groups of 40 genes and individual
@@ -39,11 +39,11 @@
 #' data("DEG_Methylation_Annotations")
 #' data("Oncogenic_mediators_methylation_summary")
 #' genes <- c("ACAN", "ACE2", "ADAM19", "AFAP1L1")
-#' plotEDA(DEG_Methylation_Annotations = DEG_Methylation_Annotations, 
+#' plotGMA(DEG_Methylation_Annotations = DEG_Methylation_Annotations, 
 #'         Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary, 
 #'         genelist = genes, 
-#'         additionalFilename = "./EDAresults/")
-plotEDA <- function(DEG_Methylation_Annotations,
+#'         additionalFilename = "./GMAresults/")
+plotGMA <- function(DEG_Methylation_Annotations,
                     Oncogenic_mediators_methylation_summary,
                     type = "split",
                     genelist = NULL,

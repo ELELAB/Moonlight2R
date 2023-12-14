@@ -17,7 +17,7 @@ plotMetExp(
 \arguments{
 \item{EpiMix_results}{The object, a list, that was returned from
 running the EpiMix function and is one of the outputs from the 
-EDA function.}
+GMA function.}
 
 \item{probe_name}{A character string containing the name of the
 CpG probe that will be plotted.}
@@ -53,5 +53,5 @@ plotMetExp(EpiMix_results = EpiMix_Results_Regular,
            dataMET = dataMethyl,
            dataEXP = dataFiltCol,
            gene_of_interest = "ACVRL1",
-           additionalFilename = "./EDAresults/")
+           additionalFilename = "./GMAresults/")
 }

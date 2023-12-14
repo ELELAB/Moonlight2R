@@ -2,7 +2,7 @@
 #' This function visualizes results of EpiMix. 
 #' @param EpiMix_results The object, a list, that was returned from
 #' running the EpiMix function and is one of the outputs from the 
-#' EDA function.
+#' GMA function.
 #' @param probe_name A character string containing the name of the
 #' CpG probe that will be plotted. 
 #' @param dataMET A data matrix containing the methylation data
@@ -29,7 +29,7 @@
 #'            dataMET = dataMethyl,
 #'            dataEXP = dataFiltCol,
 #'            gene_of_interest = "ACVRL1",
-#'            additionalFilename = "./EDAresults/")
+#'            additionalFilename = "./GMAresults/")
 plotMetExp <- function(EpiMix_results,
                        probe_name,
                        dataMET,

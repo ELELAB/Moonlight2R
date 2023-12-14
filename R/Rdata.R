@@ -524,7 +524,7 @@
 "LUAD_sample_anno"
 
 
-#' Output example from EDA function 
+#' Output example from GMA function 
 #'
 #'@description  The predicted driver genes based on methylation
 #' evidence 
@@ -532,21 +532,21 @@
 #' element represents predicted oncogenes and tumor suppressors
 #'
 #'@docType data
-#'@usage data(dataEDA)
-#'@name dataEDA
-#'@aliases dataEDA
+#'@usage data(dataGMA)
+#'@name dataGMA
+#'@aliases dataGMA
 #'@return A list of length two
 #'
 #'@format A list of length two
 #'
-"dataEDA"
+"dataGMA"
 
 
-#' Output example from EDA function 
+#' Output example from GMA function 
 #'
 #'@description  The object, a list, that was returned from
 #' running the EpiMix function and is one of the outputs from the 
-#' EDA function. 
+#' GMA function. 
 #'@details The data is a list of nine elements which is outputted
 #' from the EpiMix function  
 #'
@@ -561,9 +561,9 @@
 "EpiMix_Results_Regular"
 
 
-#' Output example from EDA function 
+#' Output example from GMA function 
 #'
-#'@description  Output file from running the EDA function which
+#'@description  Output file from running the GMA function which
 #' is a summary of the oncogenic mediators and their sum of
 #' methylated CpG probes together with the evidence level of
 #' their role as driver gene. 
@@ -582,9 +582,9 @@
 "Oncogenic_mediators_methylation_summary"
 
 
-#' Output example from EDA function 
+#' Output example from GMA function 
 #'
-#'@description  Output file from running EDA function which
+#'@description  Output file from running GMA function which
 #' is a summary of DEGs and associated CpG probes 
 #'@details The data is a table where each row is a CpG probe
 #' in a DEG. Various annotations such as start/end site of

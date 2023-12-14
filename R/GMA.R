@@ -1,5 +1,5 @@
-#' EDA
-#' This function carries out epigenetic driver analysis
+#' GMA
+#' This function carries out Gene Methylation Analysis
 #' @param dataMET A data matrix containing the methylation data
 #' where the CpG probes are in the rows and samples are in the
 #' columns
@@ -37,7 +37,7 @@
 #' of the prevalences exceed 20, the dual state will be changed to NA.  
 #' @param output_dir Path to where the results will be stored.
 #' If this directory does not exist, it will be created by the 
-#' function. Default is ./EDAresults. 
+#' function. Default is ./GMAresults. 
 #' @param cores Number of cores to be used. Default is 1. 
 #' @param roadmap.epigenome.ids A character string representing
 #' the epigenome ID that will be used to select enhancers. 
@@ -73,20 +73,23 @@
 #' data("dataPRA")
 #' data("DEGsmatrix")
 #' data("LUAD_sample_anno")
-#' dataEDA <- EDA(dataMET = dataMethyl, dataEXP = dataFiltCol, 
+#' data("NCG")
+#' data("EncodePromoters")
+#' data("MetEvidenceDriver")
+#' dataGMA <- GMA(dataMET = dataMethyl, dataEXP = dataFiltCol, 
 #' dataPRA = dataPRA, dataDEGs = DEGsmatrix, 
 #' sample_info = LUAD_sample_anno, met_platform = "HM450",
 #' prevalence_filter = NULL,
-#' output_dir = "./EDAresults", cores = 1, roadmap.epigenome.ids = "E096", 
+#' output_dir = "./GMAresults", cores = 1, roadmap.epigenome.ids = "E096", 
 #' roadmap.epigenome.groups = NULL)
-EDA <- function(dataMET, 
+GMA <- function(dataMET, 
                 dataEXP, 
                 dataPRA, 
                 dataDEGs, 
                 sample_info, 
                 met_platform = "HM450", 
                 prevalence_filter = NULL,
-                output_dir = "./EDAresults",
+                output_dir = "./GMAresults",
                 cores = 1, 
                 roadmap.epigenome.ids = NULL, 
                 roadmap.epigenome.groups = NULL) {

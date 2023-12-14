@@ -3,7 +3,7 @@
 \docType{data}
 \name{DEG_Methylation_Annotations}
 \alias{DEG_Methylation_Annotations}
-\title{Output example from EDA function}
+\title{Output example from GMA function}
 \format{
 A 3435x35 tibble
 }
@@ -14,7 +14,7 @@ data(DEG_Methylation_Annotations.csv)
 A 3435x35 tibble
 }
 \description{
-Output file from running EDA function which
+Output file from running GMA function which
 is a summary of DEGs and associated CpG probes
 }
 \details{
