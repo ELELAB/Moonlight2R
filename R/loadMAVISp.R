@@ -1,15 +1,23 @@
+#' loadMAVISp
+#' 
+#' This function loads the MAVISp database depending on the user specifications
+#' 
+#' @param mavispDB path to the MAVISp database
+#' @param proteins_of_interest vector containing specific proteins of interest in HUGO format
+#' 
+#' @return returns a list of tibbles each containing the MAVISp entries of one protein
+#' @export
+#' @examples
+#' 
+#'mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023",
+#'           proteins_of_interest = c('NQO1','TP53'))
+#' 
+#'mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023") 
 
-
-# Input
-# Path to mavisp database
-# List of proteins to look for (HUGO)
 suppressPackageStartupMessages(library('tidyverse'))
 
-
-# Return tibble with data
-
-loadMAVISp <- function(proteins_of_interest = NULL,
-                       mavispDB =   NULL){
+loadMAVISp <- function(mavispDB =   NULL,
+                       proteins_of_interest = NULL){
     # Look in simple mode index.csv if the protein is in the database
     if (file.exists(str_c(mavispDB,'/simple_mode/index.csv')) == FALSE){
         stop("MAVISp database file not found at the provided path or does not contain 'simple mode'")
@@ -27,6 +35,8 @@ loadMAVISp <- function(proteins_of_interest = NULL,
                         map(function(x) read_csv(file = x,
                                                 progress = FALSE,
                                                 show_col_types = FALSE))
+        
+        return(mavispData)
 
     } else {
         proteins_of_interest <- str_c(proteins_of_interest,'-')
@@ -45,11 +55,10 @@ loadMAVISp <- function(proteins_of_interest = NULL,
                         map(function(x) read_csv(file = x,
                                                 progress = FALSE,
                                                 show_col_types = FALSE))
+        
+        return(mavispData)
     }
 
 }
 
-loadMAVISp(proteins_of_interest = c('NQO1','TP53'))
 
-
-# loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023")
