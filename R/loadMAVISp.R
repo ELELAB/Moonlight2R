@@ -27,7 +27,7 @@ loadMAVISp <- function(mavispDB =   NULL,
     if (is.null(proteins_of_interest)){
         rawFiles <- list.files(table_location,
                                full.names = TRUE)
-        print(rawFiles)
+
         mavispData <- rawFiles |>
                         set_names(str_split_i(basename(rawFiles), '-', 1)) |>
                         map(function(x) read_csv(file = x,
