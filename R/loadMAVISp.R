@@ -4,7 +4,7 @@
 #' 
 #' @param mavispDB path to the MAVISp database
 #' @param proteins_of_interest vector containing specific proteins of interest in HUGO format
-#' 
+#' @import tidyverse
 #' @return returns a list of tibbles each containing the MAVISp entries of one protein
 #' @export
 #' @examples
@@ -13,8 +13,6 @@
 #'           proteins_of_interest = c('NQO1','TP53'))
 #' 
 #'mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023") 
-
-suppressPackageStartupMessages(library('tidyverse'))
 
 loadMAVISp <- function(mavispDB =   NULL,
                        proteins_of_interest = NULL){
