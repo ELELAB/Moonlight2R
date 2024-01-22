@@ -14,7 +14,7 @@
 #' 
 #'mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023") 
 
-loadMAVISp <- function(mavispDB =   NULL,
+loadMAVISp <- function(mavispDB = NULL,
                        proteins_of_interest = NULL){
     # Look in simple mode index.csv if the protein is in the database
     if (file.exists(str_c(mavispDB,'/simple_mode/index.csv')) == FALSE){
