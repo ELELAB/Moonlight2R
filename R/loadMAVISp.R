@@ -1,18 +1,23 @@
 #' loadMAVISp
 #' 
-#' This function loads the MAVISp database depending on the user specifications
+#' This function loads the MAVISp database from the directory specified by the user. 
 #' 
 #' @param mavispDB path to the MAVISp database
 #' @param proteins_of_interest vector containing specific proteins of interest in HUGO format
-#' @import tidyverse
-#' @return returns a list of tibbles each containing the MAVISp entries of one protein
+#' @import stringr
+#' @import purrr
+#' @import readr
+#' @import tibble
+#' @import dplyr
+#' @importFrom rlang set_names
+#' @return returns a list of tibbles each containing the MAVISp entry of one protein
 #' @export
 #' @examples
 #' 
-#'mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023",
+#' mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023",
 #'           proteins_of_interest = c('NQO1','TP53'))
 #' 
-#'mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023") 
+#' mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023") 
 
 loadMAVISp <- function(mavispDB = NULL,
                        proteins_of_interest = NULL){
