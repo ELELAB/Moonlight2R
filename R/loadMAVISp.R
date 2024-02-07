@@ -10,6 +10,7 @@
 #' @importFrom tibble as_tibble_col
 #' @importFrom dplyr pull filter
 #' @importFrom rlang set_names
+#' @importFrom withr with_options
 #' @return returns a list of tibbles each containing the MAVISp entry of one protein
 #' @export
 #' @examples
@@ -36,11 +37,13 @@ loadMAVISp <- function(mavispDB = NULL,
         mavispData <- rawFiles |>
                         set_names(str_split_i(basename(rawFiles), '-', 1)) |>
                         # Supress non-fatal warnings
-                        map(function(x) suppressWarnings(
+                        map(function(x) withr::with_options(
+                                        list(rlib_name_repair_verbosity = "quiet"),
+                                        suppressWarnings(
                                         classes = 'vroom_parse_issue',
                                         read_csv(file = x,
                                                 progress = FALSE,
-                                                show_col_types = FALSE)))
+                                                show_col_types = FALSE))))
         
         return(mavispData)
 
@@ -59,11 +62,13 @@ loadMAVISp <- function(mavispDB = NULL,
         mavispData <- filtered_files |>
                         set_names(str_split_i(basename(filtered_files), '-', 1)) |>
                         # Supress non-fatal warnings
-                        map(function(x) suppressWarnings(
+                        map(function(x) withr::with_options(
+                                        list(rlib_name_repair_verbosity = "quiet"),
+                                        suppressWarnings(
                                         classes = 'vroom_parse_issue',
                                         read_csv(file = x,
                                                 progress = FALSE,
-                                                show_col_types = FALSE)))
+                                                show_col_types = FALSE))))
         
         return(mavispData)
     }
