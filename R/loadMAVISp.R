@@ -35,9 +35,12 @@ loadMAVISp <- function(mavispDB = NULL,
 
         mavispData <- rawFiles |>
                         set_names(str_split_i(basename(rawFiles), '-', 1)) |>
-                        map(function(x) read_csv(file = x,
+                        # Supress non-fatal warnings
+                        map(function(x) suppressWarnings(
+                                        classes = 'vroom_parse_issue',
+                                        read_csv(file = x,
                                                 progress = FALSE,
-                                                show_col_types = FALSE))
+                                                show_col_types = FALSE)))
         
         return(mavispData)
 
@@ -55,9 +58,12 @@ loadMAVISp <- function(mavispDB = NULL,
 
         mavispData <- filtered_files |>
                         set_names(str_split_i(basename(filtered_files), '-', 1)) |>
-                        map(function(x) read_csv(file = x,
+                        # Supress non-fatal warnings
+                        map(function(x) suppressWarnings(
+                                        classes = 'vroom_parse_issue',
+                                        read_csv(file = x,
                                                 progress = FALSE,
-                                                show_col_types = FALSE))
+                                                show_col_types = FALSE)))
         
         return(mavispData)
     }
