@@ -4,11 +4,11 @@
 #' 
 #' @param mavispDB path to the MAVISp database
 #' @param proteins_of_interest vector containing specific proteins of interest in HUGO format
-#' @import stringr
-#' @import purrr
-#' @import readr
-#' @import tibble
-#' @import dplyr
+#' @importFrom stringr str_c str_split_i
+#' @importFrom purrr map
+#' @importFrom readr read_csv
+#' @importFrom tibble as_tibble_col
+#' @importFrom dplyr pull filter
 #' @importFrom rlang set_names
 #' @return returns a list of tibbles each containing the MAVISp entry of one protein
 #' @export
