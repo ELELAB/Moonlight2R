@@ -20,7 +20,7 @@
 #' microarray type that was used to collect the methylation
 #' data. This can either be HM27, HM450 or EPIC. Default
 #' is HM450. 
-#' @param prevalence_filter An float or NULL representing if
+#' @param prevalence_filter A float or NULL representing if
 #' a prevalence filter should be applied or not. Default is NULL,
 #' meaning a prevalence filter will not be applied. If a float
 #' is specified, a prevalence filter will be applied where 
@@ -189,8 +189,8 @@ GMA <- function(dataMET,
   
   # Retrieve annotations of probes and select only chromosome, start and
   # end positions
-  probe_annotation <- EpiMix_getInfiniumAnnotation(plat = met_platform, 
-                                                   genome = "hg38") %>% 
+  probe_annotation <- EpiMix:::EpiMix_getInfiniumAnnotation(plat = met_platform, 
+							    genome = "hg38") %>% 
     BiocGenerics::as.data.frame() %>% 
     as_tibble(rownames = "Probe") %>% 
     dplyr::select(Probe,

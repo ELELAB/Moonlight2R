@@ -34,7 +34,7 @@ function}
 \item{dataDEGs}{A table containing the output of a DEA
 where gene names are rownames}
 
-\item{sample_info}{A table containing information of the
+\item{sample_info}{A table containing information on the
 samples. This table needs to contain two columns called
 primary and sample.type. The primary column contains 
 sample names which should be the same as the column names
@@ -46,9 +46,9 @@ microarray type that was used to collect the methylation
 data. This can either be HM27, HM450 or EPIC. Default
 is HM450.}
 
-\item{prevalence_filter}{An integer or NULL representing if
+\item{prevalence_filter}{A float or NULL representing if
 a prevalence filter should be applied or not. Default is NULL,
-meaning a prevalence filter will not be applied. If an integer
+meaning a prevalence filter will not be applied. If a float
 is specified, a prevalence filter will be applied where 
 methylation states of probes will be altered depending on the
 threshold of prevalence supplied as prevalence_filter. For 
