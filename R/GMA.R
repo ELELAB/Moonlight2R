@@ -93,6 +93,11 @@ GMA <- function(dataMET,
                 cores = 1, 
                 roadmap.epigenome.ids = NULL, 
                 roadmap.epigenome.groups = NULL) {
+
+  # Check met_platform input
+  if (!met_platform %in% c("HM27", "HM450", "EPIC")) {
+    stop("met_platform must be a character string of either HM27, HM450 or EPIC")
+  }
   
   if (dir.exists(output_dir)) {
     print("Output folder already exits")
