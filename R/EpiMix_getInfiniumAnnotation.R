@@ -29,6 +29,3 @@ EpiMix_getInfiniumAnnotation <- function(plat = "EPIC", genome = "hg38") {
   ProbeAnnotation <- ExperimentHub::ExperimentHub()[[hubID]]
   return(ProbeAnnotation)
 }
-
-
-
