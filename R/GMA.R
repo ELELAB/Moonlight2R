@@ -10,7 +10,7 @@
 #' function
 #' @param dataDEGs A table containing the output of a DEA
 #' where gene names are rownames
-#' @param sample_info A table containing information of the
+#' @param sample_info A table containing information on the
 #' samples. This table needs to contain two columns called
 #' primary and sample.type. The primary column contains 
 #' sample names which should be the same as the column names
