@@ -20,9 +20,9 @@
 #' microarray type that was used to collect the methylation
 #' data. This can either be HM27, HM450 or EPIC. Default
 #' is HM450. 
-#' @param prevalence_filter An integer or NULL representing if
+#' @param prevalence_filter An float or NULL representing if
 #' a prevalence filter should be applied or not. Default is NULL,
-#' meaning a prevalence filter will not be applied. If an integer
+#' meaning a prevalence filter will not be applied. If a float
 #' is specified, a prevalence filter will be applied where 
 #' methylation states of probes will be altered depending on the
 #' threshold of prevalence supplied as prevalence_filter. For 
