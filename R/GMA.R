@@ -268,48 +268,19 @@ GMA <- function(dataMET,
   
   ## Intersect oncogenic mediator results with EpiMix functional pairs results
   ## Create Oncogenic_mediators_methylation_summary
-  
-  # If prevalence filter is not selected
+
+  # Left join PRA data and functional pairs results from EpiMix
+  Oncogenic_mediators_methylation_summary <- PRA_tbl %>% 
+    left_join(x = ., 
+              y = EpiMix_regular_FP, 
+              by = "Hugo_Symbol")
+
+  # Update methylation state of probes based on prevalence
   if (is.null(prevalence_filter)) {
-    
-    # Left join PRA data and functional pairs results from EpiMix
-    # Count number of CpG probes that are hyper/hypo/dual methylated for 
-    # each oncogenic mediator
-    # Add oncogenic mediator role (putative TSG/OCG) for each oncogenic mediator
-    Oncogenic_mediators_methylation_summary <- PRA_tbl %>% 
-      left_join(x = ., 
-                y = EpiMix_regular_FP, 
-                by = "Hugo_Symbol") %>% 
-      group_by(Hugo_Symbol,
-               State) %>% 
-      dplyr::count() %>% 
-      pivot_wider(., 
-                  id_cols = "Hugo_Symbol",
-                  names_from = "State",
-                  values_from = "n") %>% 
-      dplyr::rename("No" = "NA") %>% 
-      full_join(x = .,
-                y = PRA_tbl,
-                by = "Hugo_Symbol") %>% 
-      dplyr::select(-"Moonlight_gene_z_score") %>% 
-      dplyr::relocate(.data = ., 
-                      "Moonlight_Oncogenic_Mediator",
-                      .after = "Hugo_Symbol") %>% 
-      replace(is.na(.), 0) %>% 
-      ungroup
-    
-    # If prevalence filter is selected 
+    state_status <- "State"
   } else {
     
-    # Left join PRA data and functional pairs results from EpiMix
-    # Update methylation state of probes based on prevalence
-    # Count number of CpG probes that are hyper/hypo/dual methylated for 
-    # each oncogenic mediator
-    # Add oncogenic mediator role (putative TSG/OCG) for each oncogenic mediator
-    Oncogenic_mediators_methylation_summary <- PRA_tbl %>% 
-      left_join(x = ., 
-                y = EpiMix_regular_FP, 
-                by = "Hugo_Symbol") %>% 
+    Oncogenic_mediators_methylation_summary <- Oncogenic_mediators_methylation_summary %>% 
       dplyr::select(Hugo_Symbol, Moonlight_Oncogenic_Mediator,
                     Probe, State, contains("Prevalence")) %>% 
       # Update methylation state of probes based on prevalence of
@@ -326,26 +297,33 @@ GMA <- function(dataMET,
                                             `Prevalence of hypo (%)` > prevalence_filter ~ "Hypo",
                                           State == "Dual" &
                                             `Prevalence of hyper (%)` > prevalence_filter &
-                                            `Prevalence of hypo (%)` < prevalence_filter ~ "Hyper")) %>% 
-      group_by(Hugo_Symbol,
-               State_upd) %>% 
-      dplyr::count() %>% 
-      pivot_wider(., 
-                  id_cols = "Hugo_Symbol",
-                  names_from = "State_upd",
-                  values_from = "n") %>% 
-      dplyr::rename("No" = "NA") %>% 
-      full_join(x = .,
-                y = PRA_tbl,
-                by = "Hugo_Symbol") %>% 
-      dplyr::select(-"Moonlight_gene_z_score") %>% 
-      dplyr::relocate(.data = ., 
-                      "Moonlight_Oncogenic_Mediator",
-                      .after = "Hugo_Symbol") %>% 
-      replace(is.na(.), 0) %>% 
-      ungroup
+                                            `Prevalence of hypo (%)` < prevalence_filter ~ "Hyper"))
+    
+    state_status <- "State_upd"
     
   }
+  
+  # Count number of CpG probes that are hyper/hypo/dual methylated for 
+  # each oncogenic mediator
+  # Add oncogenic mediator role (putative TSG/OCG) for each oncogenic mediator
+  Oncogenic_mediators_methylation_summary <- Oncogenic_mediators_methylation_summary %>% 
+    group_by(Hugo_Symbol,
+             !!sym(state_status)) %>% 
+    dplyr::count() %>% 
+    pivot_wider(., 
+                id_cols = "Hugo_Symbol",
+                names_from = !!sym(state_status),
+                values_from = "n") %>% 
+    dplyr::rename("No" = "NA") %>% 
+    full_join(x = .,
+              y = PRA_tbl,
+              by = "Hugo_Symbol") %>% 
+    dplyr::select(-"Moonlight_gene_z_score") %>% 
+    dplyr::relocate(.data = ., 
+                    "Moonlight_Oncogenic_Mediator",
+                    .after = "Hugo_Symbol") %>% 
+    replace(is.na(.), 0) %>% 
+    ungroup
   
   # If Hypo, Hyper, Dual or No columns do not exist, create them containing all 0s
   columns_to_check <- c("Hypo", "Hyper", "Dual", "No")
