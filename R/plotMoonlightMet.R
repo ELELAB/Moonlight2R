@@ -76,60 +76,43 @@ plotMoonlightMet <- function(DEG_Methylation_Annotations,
   driver_groups <- combined_data$Moonlight_Oncogenic_Mediator %>% 
     unique %>% 
     length
-  
+
+  met_heatmap <- combined_data
+
   # If data contains both oncogenic mediator gene types
   if (driver_groups == 2) {
-    
-    # Create heatmap of genes grouped by oncogenic mediator types
-    met_heatmap <- combined_data %>% 
-      group_by(Moonlight_Oncogenic_Mediator) %>% 
-      heatmap(.data = .,
-              .row = Biological_process,
-              .column = Hugo_Symbol, 
-              .value = Moonlight_gene_z_score,
-              scale = "none",
-              clustering_distance_columns = "euclidean",
-              clustering_method_columns = "complete",
-              cluster_rows = FALSE) %>%
+    met_heatmap <- met_heatmap %>% 
+      group_by(Moonlight_Oncogenic_Mediator)
+  }
+
+  # Create heatmap of genes 
+  met_heatmap <- met_heatmap %>% 
+    heatmap(.data = .,
+            .row = Biological_process,
+            .column = Hugo_Symbol, 
+            .value = Moonlight_gene_z_score,
+            scale = "none",
+            clustering_distance_columns = "euclidean",
+            clustering_method_columns = "complete",
+            cluster_rows = FALSE) %>%
+    add_tile(logFC, 
+             palette = c("chartreuse4",  "firebrick3")) %>% 
+    add_bar(Total_methyl_num) 
+  
+  # If data contains both oncogenic mediator gene types
+  # add gene type annotation to heatmap
+  if (driver_groups == 2) {
+    met_heatmap <- met_heatmap %>% 
       add_tile(Moonlight_Oncogenic_Mediator, 
-               palette = c("goldenrod2", "dodgerblue3")) %>% 
-      add_tile(logFC, 
-               palette = c("chartreuse4",  "firebrick3")) %>% 
-      add_bar(Total_methyl_num) 
-    save_pdf(met_heatmap, 
-             height = 15, 
-             width = 35, 
-             units = "cm", 
-             filename = paste(additionalFilename,
-                              "moonlight_heatmap_met.pdf", 
-                              sep = ""))
-    
-    # If data only contains one oncogenic mediator gene type
-  } else {
-    
-    # Create heatmap of genes 
-    met_heatmap <- combined_data %>% 
-      heatmap(.data = .,
-              .row = Biological_process,
-              .column = Hugo_Symbol, 
-              .value = Moonlight_gene_z_score,
-              scale = "none",
-              clustering_distance_columns = "euclidean",
-              clustering_method_columns = "complete",
-              cluster_rows = FALSE) %>% 
-      add_tile(logFC, 
-               palette = c("chartreuse4",  "firebrick3")) %>% 
-      add_bar(Total_methyl_num) 
-    save_pdf(met_heatmap, 
-             height = 15, 
-             width = 35, 
-             units = "cm", 
-             filename = paste(additionalFilename,
-                              "moonlight_heatmap_met.pdf", 
-                              sep = ""))
-    
+               palette = c("goldenrod2", "dodgerblue3"))
   }
   
+  # Save heatmap
+  save_pdf(met_heatmap, 
+           height = 15, 
+           width = 35, 
+           units = "cm", 
+           filename = paste(additionalFilename,
+                            "moonlight_heatmap_met.pdf", 
+                            sep = ""))
 }
-
-
