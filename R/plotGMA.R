@@ -41,7 +41,7 @@
 #' genes <- c("ACAN", "ACE2", "ADAM19", "AFAP1L1")
 #' plotGMA(DEG_Methylation_Annotations = DEG_Methylation_Annotations, 
 #'         Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary, 
-#'         genelist = genes, 
+#'         type = "genelist", genelist = genes, 
 #'         additionalFilename = "./GMAresults/")
 plotGMA <- function(DEG_Methylation_Annotations,
                     Oncogenic_mediators_methylation_summary,
@@ -96,65 +96,46 @@ plotGMA <- function(DEG_Methylation_Annotations,
     driver_groups <- summary_heatmap$Moonlight_Oncogenic_Mediator %>% 
       unique %>% 
       length
+
+    met_heatmap <- summary_heatmap
     
     # If genelist contain both oncogenic mediator gene types
     if (driver_groups == 2) {
-      
-      # Create heatmap of genes in genelist 
-      # grouped by oncogenic mediator types
-      met_heatmap <- summary_heatmap %>% 
-        group_by(Moonlight_Oncogenic_Mediator) %>% 
-        heatmap(.data = .,
-                .row = Met_type,
-                .column = Hugo_Symbol, 
-                .value = Met_count,
-                cluster_rows = FALSE,
-                cluster_columns = TRUE,
-                show_column_dend = FALSE,
-                show_column_names = TRUE,
-                scale = "none",
-                palette_value = c("white", "blue", "darkblue"),
-                column_title = "Heatmap of methylation state by EpiMix") %>% 
-        add_tile(Moonlight_Oncogenic_Mediator, 
-                 palette = c("goldenrod2", "dodgerblue3")) %>% 
-        add_tile(logFC, 
-                 palette = c("chartreuse4",  "firebrick3"))
-        save_pdf(met_heatmap, 
-                 height = 15, 
-                 width = 35, 
-                 units = "cm", 
-                 filename = paste(additionalFilename,
-                                  "heatmap_genelist_met.pdf", 
-                                  sep = ""))
-      
-      # If genelist only contain one oncogenic mediator gene type
-    } else {
-      
-      # Create heatmap of genes in genelist
-      met_heatmap <- summary_heatmap %>% 
-        heatmap(.data = .,
-                .row = Met_type,
-                .column = Hugo_Symbol, 
-                .value = Met_count,
-                cluster_rows = FALSE,
-                cluster_columns = TRUE,
-                show_column_dend = FALSE,
-                show_column_names = TRUE,
-                scale = "none",
-                palette_value = c("white", "blue", "darkblue"),
-                column_title = "Heatmap of methylation state by EpiMix")  %>% 
-        add_tile(logFC, 
-                 palette = c("chartreuse4",  "firebrick3")) 
-        save_pdf(met_heatmap, 
-                 height = 15, 
-                 width = 35, 
-                 units = "cm", 
-                 filename = paste(additionalFilename,
-                                  "heatmap_genelist_met.pdf", 
-                                  sep = ""))
-      
+       met_heatmap <- met_heatmap %>% group_by(Moonlight_Oncogenic_Mediator)
     }
-    
+
+   # Create heatmap of genes in genelist
+   met_heatmap <- met_heatmap %>% heatmap(.data = .,
+                                           .row = Met_type,
+                                           .column = Hugo_Symbol, 
+                                           .value = Met_count,
+                                           cluster_rows = FALSE,
+                                           cluster_columns = TRUE,
+                                           show_column_dend = FALSE,
+                                           show_column_names = TRUE,
+                                           scale = "none",
+                                           palette_value = c("white", "blue", "darkblue"),
+                                           column_title = "Heatmap of methylation state by EpiMix") %>% 
+      add_tile(logFC, 
+               palette = c("chartreuse4",  "firebrick3"))
+
+    # If genelist contain both oncogenic mediator gene types
+    # add gene type annotation to heatmap
+    if (driver_groups == 2) {
+      met_heatmap <- met_heatmap %>% 
+        add_tile(Moonlight_Oncogenic_Mediator, 
+                 palette = c("goldenrod2", "dodgerblue3")) 
+    }
+
+    # Save heatmap
+    save_pdf(met_heatmap, 
+             height = 15, 
+             width = 35, 
+             units = "cm", 
+             filename = paste(additionalFilename,
+                              "heatmap_genelist_met.pdf", 
+                              sep = ""))
+ 
   }
   
   ## Complete mode

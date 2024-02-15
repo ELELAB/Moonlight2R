@@ -63,6 +63,6 @@ data("Oncogenic_mediators_methylation_summary")
 genes <- c("ACAN", "ACE2", "ADAM19", "AFAP1L1")
 plotGMA(DEG_Methylation_Annotations = DEG_Methylation_Annotations, 
         Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary, 
-        genelist = genes, 
+        type = "genelist", genelist = genes, 
         additionalFilename = "./GMAresults/")
 }
