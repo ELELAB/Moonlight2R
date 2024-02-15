@@ -172,12 +172,12 @@ plotGMA <- function(DEG_Methylation_Annotations,
   ## Split mode
   else if(type == "split") {
     
-    if (dir.exists("./heatmaps")) {
+    if (dir.exists(paste(tempdir(), "/heatmaps", sep = ""))) {
       stop("'heatmaps' folder already exits. Please remove it.")
     }
     else {
       print("A temporary heatmaps folder is created. It will be removed before finalising.")
-      dir.create(path = "./heatmaps", 
+      dir.create(path = paste(tempdir(), "/heatmaps", sep = ""), 
                  showWarnings = TRUE, 
                  recursive = TRUE)
     }
@@ -231,7 +231,7 @@ plotGMA <- function(DEG_Methylation_Annotations,
                  height = 15, 
                  width = 35, 
                  units = "cm", 
-                 filename = paste("heatmaps/heatmap_", 
+                 filename = paste(tempdir(), "/heatmaps/heatmap_", 
                                   x, 
                                   ".pdf", 
                                   sep = ""))
@@ -243,7 +243,7 @@ plotGMA <- function(DEG_Methylation_Annotations,
     # Get names of saved pdfs containing individual heatmaps
     pdf_names <- map(1:nrow(grouped_data), 
                      function(x) {
-      pdf_names <- paste("heatmaps/heatmap_", 
+      pdf_names <- paste(tempdir(), "/heatmaps/heatmap_", 
                          x, 
                          ".pdf", 
                          sep="")
@@ -257,10 +257,8 @@ plotGMA <- function(DEG_Methylation_Annotations,
                                sep = ""))
     
     # Remove temporary directory
-    unlink("heatmaps", 
+    unlink(paste(tempdir(), "/heatmaps", sep = ""), 
            recursive = TRUE)
     
   }
 }
-
-
