@@ -48,6 +48,21 @@ plotGMA <- function(DEG_Methylation_Annotations,
                     type = "split",
                     genelist = NULL,
                     additionalFilename = "") {
+
+  # Check type input
+  if (!type %in% c("split", "complete", "genelist")) {
+    stop("type must be a character string of either split, complete or genelist")
+  }
+  
+  # Check genelist input
+  if (type == "genelist") {
+    if (class(genelist) != "character") {
+      stop("genelist must be a character string")
+    }
+    if (length(genelist) <= 0) {
+      stop("genelist must not be empty")
+    }
+  }
   
   # Get logFC of DEGs
   DEGs_logFC <- DEG_Methylation_Annotations %>% 
