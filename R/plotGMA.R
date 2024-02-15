@@ -85,8 +85,8 @@ plotGMA <- function(DEG_Methylation_Annotations,
   
   ## Genelist mode
   
-  # If genelist is supplied
-  if (length(genelist) > 0) {
+  # If genelist mode is chosen
+  if (type == "genelist") {
     
     # Subset data to contain only supplied genes in genelist
     summary_heatmap <- summary_heatmap %>% 
