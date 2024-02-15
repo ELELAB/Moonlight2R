@@ -348,25 +348,14 @@ GMA <- function(dataMET,
   }
   
   # If Hypo, Hyper, Dual or No columns do not exist, create them containing all 0s
-  if (!"Hypo" %in% colnames(Oncogenic_mediators_methylation_summary)) {
-    # Create the Hypo column and fill it with 0s
-    Oncogenic_mediators_methylation_summary <- Oncogenic_mediators_methylation_summary %>%
-      mutate(Hypo = 0)
-  }
-  if (!"Hyper" %in% colnames(Oncogenic_mediators_methylation_summary)) {
-    # Create the Hyper column and fill it with 0s
-    Oncogenic_mediators_methylation_summary <- Oncogenic_mediators_methylation_summary %>%
-      mutate(Hyper = 0)
-  }
-  if (!"Dual" %in% colnames(Oncogenic_mediators_methylation_summary)) {
-    # Create the Dual column and fill it with 0s
-    Oncogenic_mediators_methylation_summary <- Oncogenic_mediators_methylation_summary %>%
-      mutate(Dual = 0)
-  }
-  if (!"No" %in% colnames(Oncogenic_mediators_methylation_summary)) {
-    # Create the No column and fill it with 0s
-    Oncogenic_mediators_methylation_summary <- Oncogenic_mediators_methylation_summary %>%
-      mutate(No = 0)
+  columns_to_check <- c("Hypo", "Hyper", "Dual", "No")
+  
+  # Iterate over each column
+  for (col_name in columns_to_check) {
+    # If the column does not exist, create it and fill it with 0s
+    if (!(col_name %in% colnames(Oncogenic_mediators_methylation_summary))) {
+      Oncogenic_mediators_methylation_summary[[col_name]] <- 0
+    }
   }
   
   # Temporary copy of Oncogenic_mediators_methylation_summary where all values
