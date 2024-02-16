@@ -26,8 +26,7 @@
 #' data("DEG_Methylation_Annotations")
 #' data("Oncogenic_mediators_methylation_summary")
 #' data("dataURA_plot")
-#' genes <- c("ABCG2", "ABHD6", "ACADL", "ACAN", "ACE2", "ACSS2",
-#'            "ACTG2", "ADAM19", "ADCK5", "ADHFE1", "ADRB1", "AFAP1L1")
+#' genes <- c("ACAN", "ACE2", "ADAM19", "AFAP1L1")
 #' plotMoonlightMet(DEG_Methylation_Annotations = DEG_Methylation_Annotations, 
 #'                  Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary, 
 #'                  dataURA = dataURA_plot, 
