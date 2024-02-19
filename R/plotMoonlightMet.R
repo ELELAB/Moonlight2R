@@ -115,3 +115,5 @@ plotMoonlightMet <- function(DEG_Methylation_Annotations,
                             "moonlight_heatmap_met.pdf", 
                             sep = ""))
 }
+
+utils::globalVariables(c("No_methyl_num", "Biological_process", "Total_methyl_num"))

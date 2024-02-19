@@ -262,3 +262,5 @@ plotGMA <- function(DEG_Methylation_Annotations,
     
   }
 }
+
+utils::globalVariables(c("Met_type", "Met_count", "Met_type", "Met_count"))

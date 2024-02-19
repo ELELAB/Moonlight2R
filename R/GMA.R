@@ -194,8 +194,8 @@ GMA <- function(dataMET,
   
   # Retrieve annotations of probes and select only chromosome, start and
   # end positions
-  probe_annotation <- EpiMix:::EpiMix_getInfiniumAnnotation(plat = met_platform, 
-							    genome = "hg38") %>% 
+  probe_annotation <- EpiMix_getInfiniumAnnotation(plat = met_platform, 
+						   genome = "hg38") %>% 
     BiocGenerics::as.data.frame() %>% 
     as_tibble(rownames = "Probe") %>% 
     dplyr::select(Probe,
@@ -415,3 +415,7 @@ GMA <- function(dataMET,
   
 }
 
+utils::globalVariables(c("Probe_in_enhancer", "Probe_enhancer", "Probe",
+			 "start.x", "start.y", "end.x", "end.y", "chromosome",
+			 "Chromosome.x", "Chromosome.y", "NCG_driver", "State",
+			 "Evidence"))
