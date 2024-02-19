@@ -8,7 +8,7 @@
 A 3435x35 tibble
 }
 \usage{
-data(DEG_Methylation_Annotations.csv)
+data(DEG_Methylation_Annotations)
 }
 \value{
 A 3435x35 tibble

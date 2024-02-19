@@ -592,7 +592,7 @@
 #' are included in the table.
 #'
 #'@docType data
-#'@usage data(DEG_Methylation_Annotations.csv)
+#'@usage data(DEG_Methylation_Annotations)
 #'@name DEG_Methylation_Annotations
 #'@aliases DEG_Methylation_Annotations
 #'@return A 3435x35 tibble
