@@ -24,3 +24,10 @@ LOC_translation
 NCG
 Oncogenic_mediators_mutation_summary
 tabGrowBlock
+DEG_Methylation_Annotations
+EpiMix_Results_Regular
+LUAD_sample_anno
+MetEvidenceDriver
+Oncogenic_mediators_methylation_summary
+dataFiltCol
+dataMethyl
