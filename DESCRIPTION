@@ -29,7 +29,7 @@ Imports: parmigene, randomForest, gplots,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
         tibble, tidyHeatmap, tidyr, AnnotationHub, easyPubMed, org.Hs.eg.db, EpiMix,
-	BiocGenerics, ggplot2
+	BiocGenerics, ggplot2, ExperimentHub
 Description: The understanding of cancer mechanism requires
         the identification of genes playing a role in the development
         of the pathology and the characterization of their role
