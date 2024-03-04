@@ -423,14 +423,15 @@ of well-known biological processes with respect to the studied cancer. We then u
 to predict oncogenic mediators with two specific roles: genes that potentially act as tumor 
 suppressor genes (TSGs) and genes that potentially act as oncogenes (OCGs). This constitutes 
 Moonlight's primary layer. As gene expression data alone does not explain the cancer phenotypes, 
-a second layer of evidence is needed. We have integrated a secondary mutational and methylation
-layer for prediction of the driver genes. The mutational layer predicts driver mutations in the 
-oncogenic mediators and thereby allows for the prediction of cancer driver genes using the driver 
-mutation prediction tool CScape-somatic. The methylation layer investigates abnormal DNA methylation
-patterns and differentially methylated CpG sites in the oncogenic mediators using the tool EpiMix
-and uses patterns of hypo- and hypermethylation for prediction of the driver genes. Overall, 
-this methodology not only allows us to identify genes with dual role (TSG in one cancer 
-type and OCG in another) but also to elucidate the underlying biological processes. 
+a second layer of evidence is needed. We have integrated two secondary layers, one based on mutations,
+and one based on abnormal DNA methylation patterns, for prediction of the driver genes. 
+The mutational layer predicts driver mutations in the oncogenic mediators and thereby allows 
+for the prediction of cancer driver genes using the driver mutation prediction tool CScape-somatic. 
+The methylation layer investigates abnormal DNA methylation patterns and differentially methylated 
+CpG sites in the oncogenic mediators using the tool EpiMix and uses patterns of hypo- and 
+hypermethylation for prediction of the driver genes. Overall, this methodology not only allows us 
+to identify genes with dual role (TSG in one cancer type and OCG in another) but also to elucidate 
+the underlying biological processes. 
 
 # Introduction 
 
@@ -480,10 +481,10 @@ user defined biological processes or random forests.
 the driver mutation prediction tool, CScape-somatic.
 7. **GMA** Gene Methylation Analysis identifies abnormal DNA methylation patterns in the putative
 TSGs and OCGs through the tool, EpiMix.
-8. We applied the above procedure to multiple cancer types to obtain cancer-specific lists of TSGs 
-and OCGs. We compared the lists for each cancer: if a sDEG was TSG in a cancer and OCG in another we 
-defined it as dual-role TSG-OCG. Otherwise if we found a sDEG defined as OCG or TSG only in one tissue 
-we defined it as tissue specific biomarker.
+8. We apply the above procedure to multiple cancer types to obtain cancer-specific lists of TSGs 
+and OCGs. We compare the lists for each cancer: if a sDEG is TSG in a cancer and OCG in another we 
+define it as dual-role TSG-OCG. Otherwise if we find a sDEG defined as OCG or TSG only in one tissue 
+we define it as tissue specific biomarker.
 9. We use the COSMIC database to define a list of gold standard TSG and OCGs to assess the accuracy 
 of the proposed method.
 
@@ -548,7 +549,8 @@ library(dplyr)
 # `Obtain Input`
 
 The input to Moonlight is a set of differentially expressed genes and gene 
-expression. Mutation and/or methylation data are also needed. Gene expression data, mutation 
+expression data. Mutation and/or methylation data are also needed. These data
+should be available for the same sample sets. Gene expression data, mutation 
 data, methylation data and differentially expressed genes can for example be obtained from TCGA 
 using the R package TCGAbiolinks. Help documents on how to use TCGAbiolinks
 are available [here](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html).
