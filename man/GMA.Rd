@@ -96,14 +96,16 @@ This function carries out Gene Methylation Analysis
 }
 \examples{
 data("dataMethyl")
-data("dataFiltCol")
+data("dataFilt")
 data("dataPRA")
 data("DEGsmatrix")
 data("LUAD_sample_anno")
 data("NCG")
 data("EncodePromoters")
 data("MetEvidenceDriver")
-dataGMA <- GMA(dataMET = dataMethyl, dataEXP = dataFiltCol, 
+pattern <- "^(.{4}-.{2}-.{4}-.{2}).*"
+colnames(dataFilt) <- sub(pattern, "\\\\1", colnames(dataFilt))
+dataGMA <- GMA(dataMET = dataMethyl, dataEXP = dataFilt, 
 dataPRA = dataPRA, dataDEGs = DEGsmatrix, 
 sample_info = LUAD_sample_anno, met_platform = "HM450",
 prevalence_filter = NULL,

@@ -483,27 +483,6 @@
 "dataMethyl"
 
 
-#' Gene expression data from TCGA-LUAD
-#'
-#'@description  A matrix that provides processed gene expression 
-#' data (obtained from RNA seq) from the TCGA-LUAD project
-#'@details The matrix contains the genes in rows and samples in 
-#' columns. The data has been downloaded and processed using 
-#' TCGAbiolinks. dataFiltCol is identical to dataFilt with the
-#' exception that in dataFiltCol the sample barcodes have been 
-#' shortened to contain only patient barcodes.
-#'
-#'@docType data
-#'@usage data(dataFiltCol)
-#'@name dataFiltCol
-#'@aliases dataFiltCol
-#'@return A 3000x20 matrix
-#'
-#'@format A 3000x20 matrix
-#'
-"dataFiltCol"
-
-
 #' Sample annotations of TCGA-LUAD project 
 #'
 #'@description  A matrix that annotates LUAD samples as either

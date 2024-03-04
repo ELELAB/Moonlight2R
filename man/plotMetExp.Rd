@@ -47,11 +47,13 @@ This function visualizes results of EpiMix.
 \examples{
 data("EpiMix_Results_Regular")
 data("dataMethyl")
-data("dataFiltCol")
+data("dataFilt")
+pattern <- "^(.{4}-.{2}-.{4}-.{2}).*"
+colnames(dataFilt) <- sub(pattern, "\\\\1", colnames(dataFilt))
 plotMetExp(EpiMix_results = EpiMix_Results_Regular,
            probe_name = "cg03035704",
            dataMET = dataMethyl,
-           dataEXP = dataFiltCol,
+           dataEXP = dataFilt,
            gene_of_interest = "ACVRL1",
            additionalFilename = "./GMAresults/")
 }
