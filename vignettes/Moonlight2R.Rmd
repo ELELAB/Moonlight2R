@@ -653,7 +653,7 @@ The user can perform upstream regulator analysis using the function `URA`. This 
 applied to each DEG in the enriched gene set and its neighbors in the GRN.
 
 ```{r, eval = TRUE, echo = TRUE, results='hide'}
-data(dataGRN)
+data(dataGRN_no_noise)
 data(DEGsmatrix)
 data(DiseaseList)
 data(EAGenes)
@@ -661,7 +661,7 @@ data(EAGenes)
 dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
 
 BPselected <- dataFEA$Diseases.or.Functions.Annotation[1:5]
-dataURA <- URA(dataGRN = dataGRN,
+dataURA <- URA(dataGRN = dataGRN_no_noise,
                DEGsmatrix = DEGsmatrix,
                BPname = BPselected, 
                nCores=1)
@@ -795,8 +795,8 @@ known oncogenes (green) and the rest (gray).
 
 ```{r, eval = TRUE, echo = TRUE, results='hide', warning = FALSE, message = FALSE}
 data(knownDriverGenes)
-data(dataGRN)
-plotNetworkHive(dataGRN, knownDriverGenes, 0.55)
+data(dataGRN_no_noise)
+plotNetworkHive(dataGRN_no_noise, knownDriverGenes, 0.55)
 ```
 
 

@@ -23,6 +23,6 @@ This function visualizes the GRN as a hive plot
 }
 \examples{
 data(knownDriverGenes)
-data(dataGRN)
-plotNetworkHive(dataGRN = dataGRN, namesGenes = knownDriverGenes, thres = 0.55)
+data(dataGRN_no_noise)
+plotNetworkHive(dataGRN = dataGRN_no_noise, namesGenes = knownDriverGenes, thres = 0.55)
 }
