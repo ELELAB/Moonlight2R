@@ -24,11 +24,10 @@
 #' total of eight columns.
 #' @export
 #' @examples
-#' genes_query <- "TP53"
-#' query <-
-#' "AND cancer AND driver AND '1980/01/01'[Date - Publication] : '1980/01/01'[Date - Publication]"
+#' genes_query <- "BRCA1"
 #' dataGLS <- GLS(genes = genes_query,
-#'                query_string = query)
+#'                query_string = "AND cancer AND driver",
+#'		  max_records = 2)
 GLS <- function(genes,
                 query_string = "AND cancer AND driver",
                 max_records = 20) {
