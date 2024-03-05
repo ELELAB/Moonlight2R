@@ -14,8 +14,8 @@
 #' @return no results Hive plot is executed
 #' @examples
 #' data(knownDriverGenes)
-#' data(dataGRN)
-#' plotNetworkHive(dataGRN = dataGRN, namesGenes = knownDriverGenes, thres = 0.55)
+#' data(dataGRN_no_noise)
+#' plotNetworkHive(dataGRN = dataGRN_no_noise, namesGenes = knownDriverGenes, thres = 0.55)
 plotNetworkHive <- function(dataGRN,
                             namesGenes,
                             thres,
@@ -23,20 +23,20 @@ plotNetworkHive <- function(dataGRN,
 
   # Check user input
 
-  if (is(namesGenes, "list") == FALSE) {
+  if (!is(namesGenes, "list")) {
     stop("namesGenes must be a list containing genes")
   }
 
-  if (!is.numeric(thres)) {
+  if (!is(thres, "numeric")) {
     stop("thres must be numeric defining threshold of edges to be included")
   }
 
-  if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
+  if (!is(additionalFilename, "NULL") & !is(additionalFilename, "character")) {
     stop("additionalFilename must be either NULL or a character vector
 containing part of the filename of plot")
   }
 
-  if (is(dataGRN, "list") == FALSE) {
+  if (!is(dataGRN, "list")) {
     stop("dataGRN must be a list")
   }
 
@@ -86,7 +86,7 @@ containing part of the filename of plot")
   ind.tsg <- which(rownames(tmp)[myadj$edges$id2] %in% namesGenes$TSG)
   myadj$edges$color[ind.tsg] <- "goldenrod"
 
-  if (!is.null(additionalFilename)) {
+  if (!is(additionalFilename, "NULL")) {
     pdf(paste0("networkHive", additionalFilename, ".pdf"))
   }
 
@@ -95,7 +95,7 @@ containing part of the filename of plot")
                   bkgnd = "white",
                   anNode.gpar = gpar(fontsize = 10, col = "black", lwd = 0.5))
 
-  if (!is.null(additionalFilename)) {
+  if (!is(additionalFilename, "NULL")) {
     dev.off()
   }
 }

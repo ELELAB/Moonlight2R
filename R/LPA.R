@@ -34,7 +34,7 @@ LPA <- function(dataDEGs,
          among possible BPs stored in the DiseaseList object.")
   }
 
-  if (!is.character(BPlist)) {
+  if (!is(BPlist, "character")) {
     stop("BPlist must be a character vector of genes")
   }
 

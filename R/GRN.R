@@ -32,7 +32,7 @@ GRN <- function(TFs,
 
   # Check user input
 
-  if (!is.character(TFs) | length(TFs) == 0) {
+  if (!is(TFs, "character") | length(TFs) == 0) {
     stop("TFs must be a non-empty character vector containing gene names")
   }
 
@@ -41,16 +41,16 @@ GRN <- function(TFs,
 have the gene names as rownames. Double check that genes are rowname")
   }
 
-  if (!is.logical(DiffGenes)) {
+  if (!is(DiffGenes, "logical")) {
     stop("DiffGenes must be either TRUE or FALSE")
   }
 
-  if (is.null(dim(normCounts))) {
+  if (is(dim(normCounts), "NULL")) {
     stop("The expression data must be non-empty with genes in rows and samples 
 in columns")
   }
 
-  if (!is.numeric(kNearest) | !is.numeric(nGenesPerm) | !is.numeric(nBoot) | !is.numeric(noise_mi)) {
+  if (!is(kNearest, "numeric") | !is(nGenesPerm, "numeric") | !is(nBoot, "numeric") | !is(noise_mi, "numeric")) {
     stop("kNearest, nGenesPerm, nBoot and noise_mi must be numeric values")
   }
 

@@ -58,32 +58,32 @@ moonlight <- function(dataDEGs,
          have the gene names as rownames. Double check that genes are rownames.")
   }
 
-  if (is.null(dim(dataFilt))) {
+  if (is(dim(dataFilt), "NULL")) {
     stop("The expression data must be non-empty with genes in rows and samples in columns")
   }
 
-  if (!is.null(BPname) && all(BPname %in% names(DiseaseList)) == FALSE) {
+  if (!is(BPname, "NULL") && all(BPname %in% names(DiseaseList)) == FALSE) {
     stop("BPname should be NULL or a character vector containing one or more BP(s)
 			   among possible BPs stored in the DiseaseList object.")
   }
 
-  if (!is.null(Genelist) && !is.character(Genelist)) {
+  if (!is(Genelist, "NULL") && !is(Genelist, "character")) {
     stop("Genelist must be NULL or a character vector containing gene names")
   }
 
-  if (!is.numeric(kNearest) | !is.numeric(nGenesPerm) | !is.numeric(nBoot) | !is.numeric(thres.role)) {
+  if (!is(kNearest, "numeric") | !is(nGenesPerm, "numeric") | !is(nBoot, "numeric") | !is(thres.role, "numeric")) {
     stop("kNearest, nGenesPerm, nBoot, and thres.role must be numeric values")
   }
 
-  if (!is.logical(DiffGenes)) {
+  if (!is(DiffGenes, "logical")) {
     stop("DiffGenes must be either TRUE or FALSE")
   }
 
-  if (is.null(dim(dataMAF))) {
+  if (is(dim(dataMAF), "NULL")) {
     stop("The mutation data must be a non-empty table")
   }
 
-  if (!is.character(path_cscape_coding) | !is.character(path_cscape_noncoding)) {
+  if (!is(path_cscape_coding, "character") | !is(path_cscape_noncoding, "character")) {
     stop("Paths to cscape coding and non-coding files must be character vectors")
   }
 
@@ -95,11 +95,11 @@ moonlight <- function(dataDEGs,
   print("-----------------------------------------")
 
   #### Parameter nTF for testing purposes
-  if (is.null(nTF)) {
+  if (is(nTF, "NULL")) {
     nTF <- nrow(dataDEGs)
   }
 
-  if (is.null(Genelist)) {
+  if (is(Genelist, "NULL")) {
     Genelist <- rownames(dataDEGs)[seq.int(nTF)]
   }
 

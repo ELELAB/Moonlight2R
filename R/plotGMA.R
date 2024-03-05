@@ -56,7 +56,7 @@ plotGMA <- function(DEG_Methylation_Annotations,
   
   # Check genelist input
   if (type == "genelist") {
-    if (class(genelist) != "character") {
+    if (!is(genelist, "character")) {
       stop("genelist must be a character string")
     }
     if (length(genelist) <= 0) {

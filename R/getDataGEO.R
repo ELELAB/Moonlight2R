@@ -23,15 +23,15 @@ getDataGEO <- function(GEOobject = "GSE39004",
 
   # Check user input
 
-  if (!is.character(GEOobject)) {
+  if (!is(GEOobject, "character")) {
     stop("GEOobject must be a character vector")
   }
 
-  if (!is.character(platform)) {
+  if (!is(platform, "character")) {
     stop("Platform must be a character vector")
   }
 
-  if (!is.null(TCGAtumor) & !is.character(TCGAtumor)) {
+  if (!is(TCGAtumor, "NULL") & !is(TCGAtumor, "character")) {
     stop("TCGA tumor must either be NULL or a character vector")
   }
 
