@@ -1,3 +1,14 @@
+# Moonlight2R 1.2.0
+
+## Summary
+
+* added new functionality called GMA (Gene Methylation Analysis)
+* added three new visualization functions in connection with GMA:
+plotGMA, plotMoonlightMet, plotMetExp
+* updated vignette to contain new functionalities related to GMA
+* updated class testing in all functions
+* resized figures
+
 # Moonlight2R 0.99.14
 
 ## Summary
