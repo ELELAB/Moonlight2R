@@ -14,8 +14,8 @@
 #' @return no results Hive plot is executed
 #' @examples
 #' data(knownDriverGenes)
-#' data(dataGRN_no_noise)
-#' plotNetworkHive(dataGRN = dataGRN_no_noise, namesGenes = knownDriverGenes, thres = 0.55)
+#' data(dataGRN)
+#' plotNetworkHive(dataGRN = dataGRN, namesGenes = knownDriverGenes, thres = 0.55)
 plotNetworkHive <- function(dataGRN,
                             namesGenes,
                             thres,

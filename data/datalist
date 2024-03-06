@@ -4,6 +4,7 @@ dataFEA
 dataFilt
 dataGLS
 dataGRN_no_noise
+dataGRN
 dataMAF
 dataPRA
 dataURA_plot

@@ -24,10 +24,10 @@ This function carries out the upstream regulator analysis
 \examples{
 data(DEGsmatrix)
 dataDEGs <- DEGsmatrix
-data(dataGRN_no_noise)
+data(dataGRN)
 data(DiseaseList)
 data(EAGenes)
-dataURA <- URA(dataGRN = dataGRN_no_noise,
+dataURA <- URA(dataGRN = dataGRN,
 DEGsmatrix = dataDEGs,
 BPname = c("apoptosis",
 "proliferation of cells"))

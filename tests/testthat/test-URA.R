@@ -5,8 +5,8 @@ data(DEGsmatrix)
 data(DiseaseList)
 data(EAGenes)
 dataDEGs <- DEGsmatrix
-data(dataGRN_no_noise)
-dataURA_test <- URA(dataGRN = dataGRN_no_noise,
+data(dataGRN)
+dataURA_test <- URA(dataGRN = dataGRN,
                     DEGsmatrix = dataDEGs,
                     BPname = c("apoptosis",
                                "proliferation of cells"))

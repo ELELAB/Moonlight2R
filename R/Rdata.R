@@ -101,6 +101,23 @@
 #'
 "dataFEA"
 
+#' Gene regulatory network
+#'
+#'@description  The output of the GRN function which finds connections 
+#' between genes.
+#'@details The input to the GRN is the differentially expressed genes and the gene expression data.
+#'
+#'@docType data
+#'@usage data(dataGRN)
+#'@name dataGRN
+#'@aliases dataGRN
+#'@return A list of 2 elements where the first element is a 23x613 matrix and the second element is a vector of length 23
+#'
+#'@format A list of 2 elements where the first element is a 23x613 matrix 
+#' and the second element is a vector of length 23
+#'
+"dataGRN"
+
 
 #' Gene regulatory network
 #'
