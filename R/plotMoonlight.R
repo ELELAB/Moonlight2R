@@ -58,23 +58,23 @@ Moonlight_gene_z_score, and logFC as column names")
 as column name")
   }
 
-  if (is.null(dim(dataURA))) {
+  if (is(dim(dataURA), "NULL")) {
     stop("The URA data must be non-empty with genes in rows and BPs in columns")
   }
 
-  if (!is.null(gene_type) && (gene_type %in% c("mediators", "drivers")) == FALSE) {
+  if (!is(gene_type, "NULL") && (gene_type %in% c("mediators", "drivers")) == FALSE) {
     stop("Gene type must either be NULL, mediators or drivers")
   }
 
-  if (!is.null(genelist) & !is.character(genelist)) {
+  if (!is(genelist, "NULL") & !is(genelist, "character")) {
     stop("Genelist must be either NULL or a character vector containing gene names")
   }
 
-  if (!is.null(BPlist) & !is.character(BPlist)) {
+  if (!is(BPlist, "NULL") & !is(BPlist, "character")) {
     stop("BPlist must be either NULL or a character vector containing BP names")
   }
 
-  if (!is.character(additionalFilename)) {
+  if (!is(additionalFilename, "character")) {
     stop("additionalFilename must be a character vector adding a prefix or
 filepath to the filename of the pdf")
   }

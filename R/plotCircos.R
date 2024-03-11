@@ -36,15 +36,15 @@ plotCircos <- function(listMoonlight,
     stop("listMoonlight must be a list")
   }
 
-  if (!is(listMutation, "list") & !is.null(listMutation)) {
+  if (!is(listMutation, "list") & !is(listMutation, "NULL")) {
     stop("listMutation must be either NULL or a list")
   }
 
-  if (!is.numeric(intensityColOCG) | !is.numeric(intensityColTSG) | !is.numeric(intensityColDual) | !is.numeric(fontSize)) {
+  if (!is(intensityColOCG, "numeric") | !is(intensityColTSG, "numeric") | !is(intensityColDual, "numeric") | !is(fontSize, "numeric")) {
     stop("intensityColOCG, intensityColTSG, intensityColDual, and fontSize must be numeric")
   }
 
-  if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
+  if (!is(additionalFilename, "NULL") & !is(additionalFilename, "character")) {
     stop("additionalFilename must be either NULL or a character vector containing
 filename of plot")
   }
@@ -78,7 +78,7 @@ filename of plot")
   ntsg <- vapply(mytsg, length, integer(1))
   nocg <- vapply(myocg, length, integer(1))
 
-  if (!is.null(additionalFilename)) {
+  if (!is(additionalFilename, "NULL")) {
     pdf(paste0("circos_ocg_tsg", additionalFilename, ".pdf"), width = 16, height = 16)
   }
 
@@ -169,7 +169,7 @@ filename of plot")
                                    # panel.fun for each sector
                                    panel.fun = plot_settings)
 
-  if (!is.null(listMutation)) {
+  if (!is(listMutation, "NULL")) {
 
     mycols.mut <- c("white", "darkviolet", "tomato3")
 
@@ -364,7 +364,7 @@ filename of plot")
     }
   }
 
-  if (!is.null(additionalFilename)) {
+  if (!is(additionalFilename, "NULL")) {
     dev.off()
   }
 }

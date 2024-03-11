@@ -43,14 +43,14 @@ URA <- function(dataGRN,
 have the gene names as rownames. Double check that genes are rownames.")
   }
 
-  if (!is.null(BPname) && all(BPname %in% names(DiseaseList)) == FALSE) {
+  if (!is(BPname, "NULL") && all(BPname %in% names(DiseaseList)) == FALSE) {
     stop("BPname should be NULL or a character vector containing one or more
 BP(s) among possible BPs stored in the DiseaseList object.")
   }
 
   doParallel::registerDoParallel(cores = nCores)
 
-  if (is.null(BPname)) {
+  if (is(BPname, "NULL")) {
     BPname <- names(DiseaseList)
   }
 

@@ -381,6 +381,28 @@ references:
   DOI: "10.1093/bib/bbad274"
   issued:
    year: 2023
+
+- id: ref28
+  title: "EpiMix is an integrative tool for epigenomic subtyping using DNA methylation"
+  author:
+  - family:  Zheng, Yuanning and Jun, John and Brennan, Kevin and Gevaert, Olivier  
+  given:
+  journal: Cell Reports Methods
+  URL: "https://doi.org/10.1016/j.crmeth.2023.100515"
+  DOI: "10.1016/j.crmeth.2023.100515"
+  issued:
+   year: 2023
+
+- id: ref29
+  title: "CScape-somatic: distinguishing driver and passenger point mutations in the cancer genome"
+  author:
+  - family:  Rogers, Mark F and Gaunt, Tom R and Campbell, Colin
+  given:
+  journal: Bioinformatics
+  URL: "https://doi.org/10.1093/bioinformatics/btaa242"
+  DOI: "10.1093/bioinformatics/btaa242"
+  issued:
+   year: 2020
 ---
   
 ```{r setup, include=FALSE}
@@ -401,38 +423,42 @@ of well-known biological processes with respect to the studied cancer. We then u
 to predict oncogenic mediators with two specific roles: genes that potentially act as tumor 
 suppressor genes (TSGs) and genes that potentially act as oncogenes (OCGs). This constitutes 
 Moonlight's primary layer. As gene expression data alone does not explain the cancer phenotypes, 
-a second layer of evidence is needed. We have automated the integration of a secondary mutational 
-layer that predicts driver mutations in the oncogenic mediators and thereby allows for the 
-prediction of cancer driver genes using the driver mutation prediction tool CScape-somatic. 
-These new functionalities are provided in the updated version of Moonlight, namely Moonlight2. 
-Overall, this methodology not only allows us to identify genes with dual role (TSG in one cancer 
-type and OCG in another) but also to elucidate the underlying biological processes. 
+a second layer of evidence is needed. We have integrated two secondary layers, one based on mutations,
+and one based on abnormal DNA methylation patterns, for prediction of the driver genes. 
+The mutational layer predicts driver mutations in the oncogenic mediators and thereby allows 
+for the prediction of cancer driver genes using the driver mutation prediction tool CScape-somatic. 
+The methylation layer investigates abnormal DNA methylation patterns and differentially methylated 
+CpG sites in the oncogenic mediators using the tool EpiMix and uses patterns of hypo- and 
+hypermethylation for prediction of the driver genes. Overall, this methodology not only allows us 
+to identify genes with dual role (TSG in one cancer type and OCG in another) but also to elucidate 
+the underlying biological processes. 
 
 # Introduction 
 
-Cancer development is influenced by mutations in two distinctly different categories of genes, 
-known as  tumor suppressor genes (TSG) and oncogenes (OCG). The occurrence of mutations in genes 
-of the first category leads to faster cell proliferation while mutations in genes of second 
+Cancer development is influenced by (epi)genetic alterations in two distinctly different categories of genes, 
+known as  tumor suppressor genes (TSG) and oncogenes (OCG). The occurrence of these alterations in genes 
+of the first category leads to faster cell proliferation while alterations in genes of second 
 category increases or changes their function.
 In 2020, we developed the Moonlight framework that allows for prediction of cancer driver genes 
 [@ref26]. Here, gene expression data are integrated together with 
 biological processes and gene regulatory networks to score the importance of well-known biological 
 processes with respect to the studied cancer. These scores are used to predict oncogenic mediators: 
 putative TSGs and putative OCGs. As gene expression data alone is not enough to explain the 
-deregulation of the genes, a second layer of evidence is needed. For this reason, we automated the 
-integration of a secondary mutational layer which predicts driver mutations and passenger mutations 
-in the oncogenic mediators. These new functionalities are released in the updated version of 
-Moonlight to produce Moonlight2R. The prediction of the driver mutations are carried out using 
-the CScape-somatic driver mutation prediction tool. Moreover, the new functionalities estimate 
-the potential effect of a mutation on the transcriptional, translational, or protein 
-structure/function level. Those oncogenic mediators with at least one driver mutation are retained
-as the final set of driver genes [@ref27]. 
+deregulation of the genes, a second layer of evidence is needed. For this reason, we integrated a 
+secondary mutational layer which predicts driver mutations and passenger mutations 
+in the oncogenic mediators. The prediction of the driver mutations are carried out using the
+CScape-somatic [@ref29] driver mutation prediction tool. Those oncogenic mediators with at least one
+driver mutation are retained as the final set of driver genes [@ref27]. Moreover, we have integrated 
+a secondary methylation layer that investigates abnormal DNA methylation patterns in the oncogenic 
+mediators using the tool EpiMix [@ref28]. Those oncogenic mediators demonstrating hypo- and hypermethylation 
+patterns are predicted as OCGs and TSGs, respectively. These new functionalities are released in the 
+updated version of Moonlight to produce Moonlight2R. 
 
 # Moonlight's pipeline
 
 Moonlight's pipeline is shown below:
 ```{r, fig.width=3, echo = FALSE, fig.align="center",hide=TRUE, message=FALSE,warning=FALSE}
-knitr::include_graphics("Moonlight2_pipeline.gif")
+knitr::include_graphics("Moonlight2_pipeline_upd.png")
 ```
 
 # Moonlight's proposed workflow
@@ -441,7 +467,7 @@ The proposed pipeline consists of following eight steps:
 
 1. The input to Moonlight is a set of differentially expressed genes between two biological conditions 
 such as cancer and healthy samples or two cancer subtyoes. Besides differentially expressed genes,
-gene expression and mutation data are also needed. 
+gene expression data is also needed. Mutation data and/or methylation data are also needed. 
 2. **FEA** Functional Enrichment Analysis, using Fisher's test, to identify gene sets (with biological 
 functions linked to cancer) significantly enriched by regulated genes (RG).
 3. **GRN** Gene Regulatory Network inferred between each single DEG (sDEG) and all genes by means of 
@@ -453,11 +479,13 @@ and the square-root of the number of all genes.
 user defined biological processes or random forests.
 6. **DMA** Driver Mutation Analysis identifies driver mutations in the putative TSGs and OCGs through 
 the driver mutation prediction tool, CScape-somatic.
-7. We applied the above procedure to multiple cancer types to obtain cancer-specific lists of TSGs 
-and OCGs. We compared the lists for each cancer: if a sDEG was TSG in a cancer and OCG in another we 
-defined it as dual-role TSG-OCG. Otherwise if we found a sDEG defined as OCG or TSG only in one tissue 
-we defined it as tissue specific biomarker.
-8. We use the COSMIC database to define a list of gold standard TSG and OCGs to assess the accuracy 
+7. **GMA** Gene Methylation Analysis identifies abnormal DNA methylation patterns in the putative
+TSGs and OCGs through the tool, EpiMix.
+8. We apply the above procedure to multiple cancer types to obtain cancer-specific lists of TSGs 
+and OCGs. We compare the lists for each cancer: if a sDEG is TSG in a cancer and OCG in another we 
+define it as dual-role TSG-OCG. Otherwise if we find a sDEG defined as OCG or TSG only in one tissue 
+we define it as tissue specific biomarker.
+9. We use the COSMIC database to define a list of gold standard TSG and OCGs to assess the accuracy 
 of the proposed method.
 
 
@@ -521,14 +549,15 @@ library(dplyr)
 # `Obtain Input`
 
 The input to Moonlight is a set of differentially expressed genes and gene 
-expression and mutation data are also needed. Gene expression data, mutation 
-data and differentially expressed genes can for example be obtained from TCGA 
+expression data. Mutation and/or methylation data are also needed. These data
+should be available for the same sample sets. Gene expression data, mutation 
+data, methylation data and differentially expressed genes can for example be obtained from TCGA 
 using the R package TCGAbiolinks. Help documents on how to use TCGAbiolinks
 are available [here](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html).
 To find other examples of usage of TCGAbiolinks on TCGA cancer types see our
 [GitHub repository](https://github.com/ELELAB/LUAD_LUSC_TCGA_comparison).
 Example data of the input (differentially expressed genes, gene expression data, 
-and mutation data) are stored in the Moonlight2R package:
+mutation data, and methylation data) are stored in the Moonlight2R package:
 
 ```{r, eval = TRUE}
 data(DEGsmatrix)
@@ -540,6 +569,11 @@ data(LOC_translation)
 data(LOC_protein)
 data(Oncogenic_mediators_mutation_summary)
 data(DEG_Mutations_Annotations)
+data(dataMethyl)
+data(DEG_Methylation_Annotations)
+data(Oncogenic_mediators_methylation_summary)
+data(MetEvidenceDriver)
+data(LUAD_sample_anno)
 ```
 
 
@@ -634,8 +668,11 @@ dataURA <- URA(dataGRN = dataGRN,
 ```
 
 ## `PRA`: Pattern Regognition Analysis
-The user can retrieve TSG/OCG candidates using either selected biological processes or a 
-random forest classifier trained on known COSMIC OCGs/TSGs.  
+The user can retrieve putative TSG/OCG using either selected biological processes in
+the expert-based approach or a random forest classifier trained on known COSMIC OCGs/TSGs
+in the machine learning approach. The user must enter the chosen biological processes 
+in the `BPname` argument to use the expert-based approach or set `BPname = NULL` to
+use the machine learning approach.
 
 ```{r, eval = TRUE}
 data(dataURA)
@@ -648,7 +685,7 @@ dataPRA <- PRA(dataURA = dataURA,
 
 ## `DMA`: Driver Mutation Analysis
 The user can identify driver mutations with `DMA` in the oncogenic mediators established by `PRA`. 
-The passenger or driver status is estimated with CScape-somatic.  
+The passenger or driver status is estimated with CScape-somatic [@ref29].  
 This function will further generate three files: DEG_Mutations_Annotations.rda, 
 Oncogenic_mediators_mutation_summary.rda and cscape_somatic_output.rda. These will be placed 
 in the specified results-folder. 
@@ -675,8 +712,41 @@ dataDMA <- DMA(dataMAF = dataMAF,
                noncoding_file = "css_noncoding.vcf.gz")
 ```
 
+## `GMA`: Gene Methylation Analysis
+The user can predict driver genes with `GMA` following prediction of the 
+oncogenic mediators established by `PRA`. `GMA` predicts driver genes by 
+investigating abnormal DNA methylation patterns in the oncogenic mediators 
+using the tool EpiMix [@ref28]. Oncogenic mediators with hypo- and hypermethylation
+patterns are predicted as OCGs and TSGs, respectively. This function will 
+generate these files: DEG_Methylation_Annotations.rda, 
+Oncogenic_mediators_methylation_summary.rda, EpiMix_Results_Enhancer.rds, 
+EpiMix_Results_Regular.rds, FunctionalPairs_Enhancer.csv, FunctionalPairs_Regular.csv, 
+and FunctionalProbes_Regular.rds. These will be placed in the specified results-folder. 
+
+```{r, eval = TRUE}
+data("dataMethyl")
+data("dataFilt")
+data("dataPRA")
+data("DEGsmatrix")
+data("LUAD_sample_anno")
+data("NCG")
+data("EncodePromoters")
+data("MetEvidenceDriver")
+
+# Subset column names (sample names) in expression data to patient level
+pattern <- "^(.{4}-.{2}-.{4}-.{2}).*"
+colnames(dataFilt) <- sub(pattern, "\\1", colnames(dataFilt))
+
+dataGMA <- GMA(dataMET = dataMethyl, dataEXP = dataFilt, 
+               dataPRA = dataPRA, dataDEGs = DEGsmatrix, 
+               sample_info = LUAD_sample_anno, met_platform = "HM450",
+               prevalence_filter = NULL,
+               output_dir = "./GMAresults", cores = 1, roadmap.epigenome.ids = "E096", 
+               roadmap.epigenome.groups = NULL)
+```
+
 ## `GLS`: Gene Literature Search
-The user can perform a literature search on driver genes predicted from `DMA` 
+The user can perform a literature search on driver genes  
 using the `GLS` function. This function takes as input driver genes, 
 a query and maximum number of records to retrieve from PubMed. 
 Standard PubMed syntax can be used in the query. For example, Boolean 
@@ -688,8 +758,7 @@ keywords, and total number of PubMed publications. This is done for each
 of the genes supplied in the input.
 
 ```{r, eval = TRUE}
-data(dataDMA)
-genes_query <- Reduce(c, dataDMA)
+genes_query <- "BRCA1"
 dataGLS <- GLS(genes = genes_query, 
 	       query_string = "AND cancer AND driver",
 	       max_records = 20)
@@ -750,7 +819,7 @@ knitr::include_graphics("heatmap_complete.gif")
 ```
 
 
-## `plotMoonlight`: Heatmap of Moonlight gene z-score for the TSGs/OCGs
+## `plotMoonlight`: Heatmap of Moonlight Gene Z-scores for mutation-driven TSGs/OCGs
 In the following plot the top 50 genes with the most driver mutations are visualised.
 The values are the moonlight gene z-score for the two biological processes
 
@@ -767,16 +836,89 @@ plotMoonlight(DEG_Mutations_Annotations,
 knitr::include_graphics("moonlight_heatmap.gif")
 ```
 
+## `plotGMA`: Heatmap of hypo/hyper/dual methylated CpG sites in TSGs/OCGs
+
+This function plots results of the `GMA`. It visualizes the 
+number of hypo/hyper/dual methylated CpG sites in oncogenic 
+mediators or in a user-supplied gene list. The results are 
+visualized either in a single heatmap or split into different 
+ones which is specified in the function's three modes: 
+split, complete and genelist.
+
+```{r, eval = TRUE, warning = FALSE, message = FALSE, include = TRUE}
+data("DEG_Methylation_Annotations")
+data("Oncogenic_mediators_methylation_summary")
+genes <- c("ACAN", "ACE2", "ADAM19", "AFAP1L1")
+plotGMA(DEG_Methylation_Annotations = DEG_Methylation_Annotations,
+        Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary,
+        type = "genelist", genelist = genes,
+        additionalFilename = "./GMAresults/")
+```
+
+```{r, fig.width=3, fig.height=4, echo = FALSE, fig.align="center",hide=TRUE, message=FALSE,warning=FALSE}
+knitr::include_graphics("heatmap_genelist_met.png")
+```
+
+## `plotMoonlightMet`: Heatmap of Moonlight Gene Z-scores for methylation-driven TSGs/OCGs
+
+This function visualizes the effect of genes on biological processes
+and total number of hypo/hyper/dual methylated CpG sites in genes.
+
+```{r, eval = TRUE, warning = FALSE, message = FALSE, include = TRUE}
+data("DEG_Methylation_Annotations")
+data("Oncogenic_mediators_methylation_summary")
+data("dataURA_plot")
+genes <- c("ACAN", "ACE2", "ADAM19", "AFAP1L1")
+plotMoonlightMet(DEG_Methylation_Annotations = DEG_Methylation_Annotations,
+                 Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary,
+                 dataURA = dataURA_plot,
+                 genes = genes,
+                 additionalFilename = "./GMAresults/")
+```
+
+```{r, fig.width=3, fig.height=4, echo = FALSE, fig.align="center",hide=TRUE, message=FALSE,warning=FALSE}
+knitr::include_graphics("moonlight_heatmap_met.png")
+```
+
+## `plotMetExp`: Visualize results from EpiMix of expression and methylation in genes 
+
+This function visualizes results of EpiMix [@ref28] in three plots: one that
+visualizes the distribution of DNA methylation data (MixtureModelPlot), one 
+that visualizes gene expression levels (ViolinPlot) and one that visualizes
+relationship between DNA methylation and gene expression (CorrelationPlot).
+
+```{r, eval = TRUE, warning = FALSE, message = FALSE, include = TRUE}
+data("EpiMix_Results_Regular")
+data("dataMethyl")
+data("dataFilt")
+
+# Subset column names (sample names) in expression data to patient level
+pattern <- "^(.{4}-.{2}-.{4}-.{2}).*"
+colnames(dataFilt) <- sub(pattern, "\\1", colnames(dataFilt))
+
+plotMetExp(EpiMix_results = EpiMix_Results_Regular,
+           probe_name = "cg03035704",
+           dataMET = dataMethyl,
+           dataEXP = dataFilt,
+           gene_of_interest = "ACVRL1",
+           additionalFilename = "./GMAresults/")
+```
+
+```{r, fig.width=3, fig.height=4, echo = FALSE, fig.align="center",hide=TRUE, message=FALSE,warning=FALSE}
+knitr::include_graphics("plotMetExp.png")
+```
+
 
 # Moonlight Analysis: Case Studies
 
 ### Introduction 
 This vignette shows a complete workflow of the 'Moonlight2R' package.
-The code is divided into three case studies:
+The code is divided into the following case studies:
 
 * 1. Predicting oncogenic mediators using Moonlight's primary layer 
 * 2. Moonlight pipeline in one function
 * 3. Moonlight with driver mutation analysis
+* 4. Moonlight with gene methylation analysis
 
 ## Case study n. 1: Predicting oncogenic mediators using Moonlight's primary layer
 
@@ -835,7 +977,7 @@ knitr::include_graphics("URAplot.gif")
 ## Case study n. 2: Moonlight pipeline in one function
 
 For illustrative purposes and to decrease runtime, we have set `nGenesPerm = 5` and `nBoot = 5`
-in the example below, however, we recommend setting these parameters to
+in the following code block, however, we recommend setting these parameters to
 `nGenesPerm = 2000` and `nBoot = 400` to achieve optimal results, as they are
 set by default in the function arguments.
 
@@ -887,7 +1029,7 @@ knitr::include_graphics("circos_ocg_tsg_ncancer5.gif")
 ## Case study n. 3: Moonlight with driver mutation analysis  
 
 For illustrative purposes and to decrease runtime, we have set `nGenesPerm = 5` and `nBoot = 5`
-in the example below, however, we recommend setting these parameters to
+in the call of `GRN` in the following code block, however, we recommend setting these parameters to
 `nGenesPerm = 2000` and `nBoot = 400` to achieve optimal results, as they are
 set by default in the function arguments.
 
@@ -967,6 +1109,70 @@ promoters <- DEG_Mutations_Annotations %>%
          CScape_Mut_Class == "Driver",
          Potential_Effect_on_Transcription == 1,
          Annotation == 'Promoter')
+```
+
+
+## Case study n. 4: Moonlight with gene methylation analysis 
+
+For illustrative purposes and to decrease runtime, we have set `nGenesPerm = 5` and `nBoot = 5`
+in the call of `GRN` in the following code block, however, we recommend setting these parameters to
+`nGenesPerm = 2000` and `nBoot = 400` to achieve optimal results, as they are
+set by default in the function arguments.
+
+```{r,eval = TRUE,echo=TRUE,message=FALSE,warning=FALSE,results='hide'}
+
+data(DEGsmatrix)
+data(dataFilt)
+data(dataMAF)
+data(DiseaseList)
+data(EAGenes)
+data(tabGrowBlock)
+data(knownDriverGenes)
+data(LOC_transcription)
+data(LOC_translation)
+data(LOC_protein)
+data(NCG)
+data(EncodePromoters)
+data(dataMethyl)
+data(LUAD_sample_anno)
+data(MetEvidenceDriver)
+
+# Perform gene regulatory network analysis
+dataGRN <- GRN(TFs = rownames(DEGsmatrix), 
+               DEGsmatrix = DEGsmatrix,
+               DiffGenes = TRUE,
+               normCounts = dataFilt,
+               nGenesPerm = 5, 
+               kNearest = 3, 
+               nBoot = 5)
+
+# Perform upstream regulatory analysis
+# As example, we use apoptosis and proliferation of cells as the biological processes
+dataURA <- URA(dataGRN = dataGRN,
+               DEGsmatrix = DEGsmatrix,
+               BPname = c("apoptosis", 
+                          "proliferation of cells"), 
+               nCores = 1)
+
+# Perform pattern recognition analysis
+dataPRA <- PRA(dataURA = dataURA,
+               BPname = c("apoptosis", 
+                          "proliferation of cells"),
+               thres.role = 0)
+
+# Subset column names (sample names) in expression data to patient level
+pattern <- "^(.{4}-.{2}-.{4}-.{2}).*"
+colnames(dataFilt) <- sub(pattern, "\\1", colnames(dataFilt))
+
+# Perform gene methylation analysis
+dataGMA <- GMA(dataMET = dataMethyl, dataEXP = dataFilt, 
+               dataPRA = dataPRA, dataDEGs = DEGsmatrix, 
+               sample_info = LUAD_sample_anno, met_platform = "HM450",
+               prevalence_filter = NULL,
+               output_dir = "./GMAresults", cores = 1, 
+               roadmap.epigenome.ids = "E096", 
+               roadmap.epigenome.groups = NULL)
+
 ```
 
 
