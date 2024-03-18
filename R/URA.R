@@ -48,7 +48,8 @@ have the gene names as rownames. Double check that genes are rownames.")
 BP(s) among possible BPs stored in the DiseaseList object.")
   }
 
-  doParallel::registerDoParallel(cores = nCores)
+  cl <- makeCluster(nCores)
+  doParallel::registerDoParallel(cl)
 
   if (is(BPname, "NULL")) {
     BPname <- names(DiseaseList)
@@ -75,7 +76,7 @@ BP(s) among possible BPs stored in the DiseaseList object.")
 
   dimnames(TableDiseases) <- list(tRlist, BPname)
 
-  stopImplicitCluster()
+  stopImplicitCluster(cl)
 
   close(pb)
 
