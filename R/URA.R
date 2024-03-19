@@ -76,7 +76,7 @@ BP(s) among possible BPs stored in the DiseaseList object.")
 
   dimnames(TableDiseases) <- list(tRlist, BPname)
 
-  stopImplicitCluster(cl)
+  stopImplicitCluster()
 
   close(pb)
 
