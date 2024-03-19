@@ -1,3 +1,9 @@
+# Moonlight2R 1.1.2
+
+## Summary
+
+* fixed issue with parallelization in URA
+
 # Moonlight2R 1.1.1
 
 ## Summary
