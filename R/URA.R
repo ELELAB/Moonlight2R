@@ -6,6 +6,7 @@
 #' @param BPname biological processes
 #' @param nCores number of cores to use
 #' @importFrom stats fisher.test
+#' @import parallel
 #' @import doParallel
 #' @import foreach
 #' @export
@@ -48,8 +49,10 @@ have the gene names as rownames. Double check that genes are rownames.")
 BP(s) among possible BPs stored in the DiseaseList object.")
   }
 
-  cl <- makeCluster(nCores)
-  doParallel::registerDoParallel(cl)
+  if (nCores > 1) {
+    cl <- parallel::makeCluster(nCores)
+    doParallel::registerDoParallel(cl)
+  }
 
   if (is(BPname, "NULL")) {
     BPname <- names(DiseaseList)
@@ -76,7 +79,9 @@ BP(s) among possible BPs stored in the DiseaseList object.")
 
   dimnames(TableDiseases) <- list(tRlist, BPname)
 
-  stopImplicitCluster()
+  if (nCores > 1 ) {
+    doParallel::stopImplicitCluster()
+  }
 
   close(pb)
 
