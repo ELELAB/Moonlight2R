@@ -139,13 +139,3 @@ mavispFiltering <- function(dataMAVISp){
                     as_tibble()
     return(dataMAVISpFiltered)
 }
-
-
-
-
-
-
-
-
-
-

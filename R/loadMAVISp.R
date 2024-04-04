@@ -74,5 +74,3 @@ loadMAVISp <- function(mavispDB = NULL,
     }
 
 }
-
-
