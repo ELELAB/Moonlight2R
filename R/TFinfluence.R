@@ -49,6 +49,12 @@ TFinfluence <- function(dataTRRUST,
         stop("The transcription factor data must be a non-empty table")
     }
 
+    trrust_columns <- c('TF', 'Target', 'InteractionType')
+
+    if (all(trrust_columns %in% names(dataTRRUST)) == FALSE) {
+        stop("TRRUST dataframe does not contain the correct columns")
+    }
+
     # dataMAF
     if (is.null(dim(dataMAF))) {
         stop("The mutation data must be a non-empty table")
@@ -93,7 +99,7 @@ TFinfluence <- function(dataTRRUST,
     # join DEGs with TF
     DEG_TF <- dataDEGs |>
         left_join(dataTRRUST,
-                  by = join_by(GENE == GENE)) |>
+                  by = join_by(GENE == Target)) |>
         drop_na() |>
         rename('logFC_gene' = logFC)
 
