@@ -21,7 +21,16 @@
 #' \item GENE (HUGO symbol of DEG)
 #' \item logFC (The log fold change of DEG)
 #'}
-#' @param dataMAVISp Output loadMAVISp function
+#' @param dataMAVISp Output loadMAVISp function. List of tibbles, one for each protein.
+#' The tibbles must contain at least
+#' \itemize{
+#' \item (First column must contain the mutation (e.g. A54W). It is assumed that the column name is empty)
+#'}
+#' Then the tibbles must contain columns mathing either of the following names(or they will be excluded) 
+#' \itemize{
+#' \item (Stability classification, [A-Za-z0-9]+, \\(Rosetta, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
+#' \item (Stability classification, [A-Za-z0-9]+, \\(RaSP, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
+#'}
 #' 
 #' @import dplyr
 #' @importFrom tibble rownames_to_column
