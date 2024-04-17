@@ -95,13 +95,17 @@ TFinfluence <- function(dataTRRUST,
     # Filter MAVISp data 
     # Keep only the stability classification
     dataMAVISpFiltered <- dataMAVISp |>
-                    map(function(x) rename(x, 'stab_class' = matches('(Stability classification, [A-Za-z0-9]+, \\(Rosetta, FoldX\\))'))) |>
-                    keep(function(x) 'stab_class' %in% colnames(x)) |>
-                    map(function(x) select(x, 1, stab_class) |>
+                    map(function(x) rename(x, 'stab_class_ros' = matches('(Stability classification, [A-Za-z0-9]+, \\(Rosetta, FoldX\\))'),
+                                              'stab_class_rasp' = matches('(Stability classification, [A-Za-z0-9]+, \\(RaSP, FoldX\\))'))) |>
+                    keep(function(x) 'stab_class_ros' %in% colnames(x) | 'stab_class_rasp' %in% colnames(x)) |>
+                    # Choose rosetta consensus, if it is there
+                    map(function(x) mutate(x, 'stab_class' = ifelse(test = !('stab_class_ros' %in% colnames(x)),
+                                                                 yes = stab_class_rasp,
+                                                                 no = stab_class_ros)) |>
+                                    select(1, stab_class) |>
                                     rename('mutation' = 1)) |>
                     rbindlist(idcol = 'protein') |>
                     as_tibble()
-
 
     # Analysis -------------------
     # convert rownames to column for DEGs
