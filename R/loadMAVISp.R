@@ -34,43 +34,29 @@ loadMAVISp <- function(mavispDB = NULL,
         rawFiles <- list.files(table_location,
                                full.names = TRUE)
 
-        mavispData <- rawFiles |>
-                        set_names(str_split_i(basename(rawFiles), '-', 1)) |>
-                        # Supress non-fatal warnings
-                        map(function(x) withr::with_options(
-                                        list(rlib_name_repair_verbosity = "quiet"),
-                                        suppressWarnings(
-                                        classes = 'vroom_parse_issue',
-                                        read_csv(file = x,
-                                                progress = FALSE,
-                                                show_col_types = FALSE))))
-        
-        return(mavispData)
-
     } else {
         proteins_of_interest <- str_c(proteins_of_interest,'-')
         rawFiles <- list.files(table_location,
                                full.names = TRUE) |>
-                               as_tibble_col(column_name = 'filepath')
-        
-        filtered_files <- rawFiles |>
-                            filter(grepl(paste(proteins_of_interest, 
-                                               collapse = '|'),
-                                         filepath)) |>
-                            pull(filepath)
-
-        mavispData <- filtered_files |>
-                        set_names(str_split_i(basename(filtered_files), '-', 1)) |>
-                        # Supress non-fatal warnings
-                        map(function(x) withr::with_options(
-                                        list(rlib_name_repair_verbosity = "quiet"),
-                                        suppressWarnings(
-                                        classes = 'vroom_parse_issue',
-                                        read_csv(file = x,
-                                                progress = FALSE,
-                                                show_col_types = FALSE))))
-        
-        return(mavispData)
+                               as_tibble_col(column_name = 'filepath') |>
+                    filter(grepl(paste(proteins_of_interest, 
+                                        collapse = '|'),
+                                        filepath)) |>
+                    pull(filepath)
+                    
     }
+
+    mavispData <- rawFiles |>
+        set_names(str_split_i(basename(rawFiles), '-', 1)) |>
+        # Supress non-fatal warnings
+        map(function(x) withr::with_options(
+                        list(rlib_name_repair_verbosity = "quiet"),
+                        suppressWarnings(
+                        classes = 'vroom_parse_issue',
+                        read_csv(file = x,
+                                progress = FALSE,
+                                show_col_types = FALSE))))
+
+    return(mavispData)
 
 }
