@@ -2,19 +2,25 @@
 #' 
 #' This function finds mutations in the transcription factors (TF) of the DEGs that have a TF in the database.
 #' 
-#' @param dataTRRUST RDA object of gene-TF pairs
+#' @param dataTRRUST Tibble containing gene-TF pairs and type of interaction
 #' Must contain the following columns:
 #' \itemize{
 #' \item TF (HUGO symbol of TF)
-#' \item GENE (HUGO symbol of gene)
+#' \item Target (HUGO symbol of target gene of TF)
+#' \item InteractionType (The effect the TF has on the target gene (Activation, Repression))
 #' }
-#' @param dataMAF A MAF file RDA object
-#' The MAF file must at least contain the following columns:
+#' @param dataMAF Tibble containing mutation info from MAF
+#' Must at least contain the following columns:
 #' \itemize{
 #' \item Hugo_Symbol eg. BRCA1
 #' \item HGVSp_Short eg. p.V83F
 #' }
 #' @param dataDEGs Output DEA function
+#' Must contain the following columns
+#' \itemize{
+#' \item GENE (HUGO symbol of DEG)
+#' \item logFC (The log fold change of DEG)
+#'}
 #' @param dataMAVISp Output loadMAVISp function
 #' 
 #' @import dplyr
@@ -45,7 +51,7 @@ TFinfluence <- function(dataTRRUST,
                          dataTFexpr = FALSE){ 
     # Control user input -------------
     # dataTRRUST
-    if (is.null(dim(dataTRRUST))) {
+    if (is.null(dim(dataTRRUST)) | nrow(dataTRRUST) == 0) {
         stop("The transcription factor data must be a non-empty table")
     }
 
@@ -56,7 +62,7 @@ TFinfluence <- function(dataTRRUST,
     }
 
     # dataMAF
-    if (is.null(dim(dataMAF))) {
+    if (is.null(dim(dataMAF)) | nrow(dataMAF) == 0) {
         stop("The mutation data must be a non-empty table")
     }
 
@@ -68,7 +74,7 @@ TFinfluence <- function(dataTRRUST,
     }
 
     # dataDEGs
-    if (is.null(dim(dataDEGs))) {
+    if (is.null(dim(dataDEGs)) | nrow(dataDEGs) == 0) {
         stop("The DEG data must be a non-empty table")
     }
 
@@ -87,7 +93,14 @@ TFinfluence <- function(dataTRRUST,
         rename(mutation = HGVSp_Short)
 
     # Filter MAVISp data 
-    dataMAVISpFiltered <- mavispFiltering(dataMAVISp)
+    # Keep only the stability classification
+    dataMAVISpFiltered <- dataMAVISp |>
+                    map(function(x) rename(x, 'stab_class' = matches('(Stability classification, [A-Za-z0-9]+, \\(Rosetta, FoldX\\))'))) |>
+                    keep(function(x) 'stab_class' %in% colnames(x)) |>
+                    map(function(x) select(x, 1, stab_class) |>
+                                    rename('mutation' = 1)) |>
+                    rbindlist(idcol = 'protein') |>
+                    as_tibble()
 
 
     # Analysis -------------------
@@ -134,14 +147,3 @@ TFinfluence <- function(dataTRRUST,
     return(mavisp_mut_DEG_TF)
 }
 
-mavispFiltering <- function(dataMAVISp){
-    # Keep only the stability classification
-    dataMAVISpFiltered <- dataMAVISp |>
-                    map(function(x) rename(x, 'stab_class' = matches('(Stability classification, [A-Za-z0-9]+, \\(Rosetta, FoldX\\))'))) |>
-                    keep(function(x) 'stab_class' %in% colnames(x)) |>
-                    map(function(x) select(x, 1, stab_class) |>
-                                    rename('mutation' = 1)) |>
-                    rbindlist(idcol = 'protein') |>
-                    as_tibble()
-    return(dataMAVISpFiltered)
-}
