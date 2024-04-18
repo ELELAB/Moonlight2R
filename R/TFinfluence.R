@@ -119,7 +119,7 @@ TFinfluence <- function(dataPRA,
     # Keep only the stability classification
     dataMAVISpFiltered <- dataMAVISp |>
                     map(function(x) rename(x, 'stab_class_ros' = matches('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)( \\[md\\])?'),
-                                              'stab_class_rasp' = matches('Stability classification, [A-Za-z0-9, ]*\\(RasP, FoldX\\)( \\[md\\])?'))) |>
+                                              'stab_class_rasp' = matches('Stability classification, [A-Za-z0-9, ]*\\(RaSP, FoldX\\)( \\[md\\])?'))) |>
                     keep(function(x) 'stab_class_ros' %in% colnames(x) | 'stab_class_rasp' %in% colnames(x)) |>
                     # Choose rosetta consensus, if it is there
                     map(function(x) mutate(x, 'stab_class' = ifelse(test = !('stab_class_ros' %in% colnames(x)),
