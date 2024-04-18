@@ -11,7 +11,7 @@ loadMAVISp(mavispDB = NULL, proteins_of_interest = NULL, mode = "simple")
 
 \item{proteins_of_interest}{vector containing specific proteins of interest in HUGO format}
 
-\item{mode}{string determining whether to use simple or ensemble mode of mavisp
+\item{mode}{string determining whether to use simple or ensemble mode of mavisp. Default is simple mode.
 Takes values: 
 \itemize{
 \item simple
@@ -27,7 +27,8 @@ This function loads the MAVISp database from the directory specified by the user
 \examples{
 
 mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023",
-          proteins_of_interest = c('NQO1','TP53'))
+          proteins_of_interest = c('NQO1','TP53'),
+          mode = 'ensemble')
 
 mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023") 
 }

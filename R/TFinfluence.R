@@ -54,7 +54,15 @@
 #' \item tf_mutation
 #' \item stab_class (the effect on stability as classified by MAVISp)
 #' }
-#' 
+#'
+#' @examples
+#'
+#' TFinfluence(dataTRRUST = dataTRRUST,
+#'            dataMAF = dataMAF,
+#'            dataDEGs = dataDEGs,
+#'            dataPRA = data_PRA,
+#'            dataMAVISp = mavisp_data)
+#'
 #' @export
 
 TFinfluence <- function(dataPRA,
@@ -110,8 +118,8 @@ TFinfluence <- function(dataPRA,
     # Filter MAVISp data 
     # Keep only the stability classification
     dataMAVISpFiltered <- dataMAVISp |>
-                    map(function(x) rename(x, 'stab_class_ros' = matches('Stability classification, [A-Za-z0-9, ]?\\(Rosetta, FoldX\\)( \\[md\\])?'),
-                                              'stab_class_rasp' = matches('Stability classification, [A-Za-z0-9, ]?\\(RasP, FoldX\\)( \\[md\\])?'))) |>
+                    map(function(x) rename(x, 'stab_class_ros' = matches('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)( \\[md\\])?'),
+                                              'stab_class_rasp' = matches('Stability classification, [A-Za-z0-9, ]*\\(RasP, FoldX\\)( \\[md\\])?'))) |>
                     keep(function(x) 'stab_class_ros' %in% colnames(x) | 'stab_class_rasp' %in% colnames(x)) |>
                     # Choose rosetta consensus, if it is there
                     map(function(x) mutate(x, 'stab_class' = ifelse(test = !('stab_class_ros' %in% colnames(x)),
@@ -121,7 +129,7 @@ TFinfluence <- function(dataPRA,
                                     rename('mutation' = 1)) |>
                     rbindlist(idcol = 'protein') |>
                     as_tibble()
-
+    write_csv(dataMAVISpFiltered, '/data/user/kame/devel/moonlight_LumA/data/mavisp_filter.csv')
     # Analysis -------------------
     # Convert rownames to column for DEGs
     dataDEGs <- dataDEGs |>

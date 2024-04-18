@@ -61,3 +61,12 @@ returns a tibble containing:
 \description{
 This function finds mutations in the transcription factors (TF) of the DEGs that have a TF in the database.
 }
+\examples{
+
+TFinfluence(dataTRRUST = dataTRRUST,
+           dataMAF = dataMAF,
+           dataDEGs = dataDEGs,
+           dataPRA = data_PRA,
+           dataMAVISp = mavisp_data)
+
+}
