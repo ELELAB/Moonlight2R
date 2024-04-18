@@ -59,12 +59,22 @@
 
 
 
-TFinfluence <- function(dataTRRUST,
-                         dataMAF,
-                         dataDEGs,
-                         dataPRA,
-                         dataMAVISp){ 
+TFinfluence <- function(dataPRA,
+                        dataDEGs,
+                        dataTRRUST,
+                        dataMAF,
+                        dataMAVISp){ 
     # Control user input -------------
+    # dataPRA
+    if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
+        stop("The two list elements in PRA data must be named TSG and OCG")
+    }
+
+    # dataDEGs
+    if (is.null(dim(dataDEGs)) | nrow(dataDEGs) == 0) {
+        stop("The DEG data must be a non-empty table")
+    }
+
     # dataTRRUST
     if (is.null(dim(dataTRRUST)) | nrow(dataTRRUST) == 0) {
         stop("The transcription factor data must be a non-empty table")
@@ -86,16 +96,6 @@ TFinfluence <- function(dataTRRUST,
 
     if (all(maf_columns %in% names(dataMAF)) == FALSE) {
         stop("MAF file does not contain the correct columns")
-    }
-
-    # dataDEGs
-    if (is.null(dim(dataDEGs)) | nrow(dataDEGs) == 0) {
-        stop("The DEG data must be a non-empty table")
-    }
-
-    # dataPRA
-    if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
-        stop("The two list elements in PRA data must be named TSG and OCG")
     }
 
     # Load data --------------------------------
