@@ -4,26 +4,55 @@
 \alias{TFinfluence}
 \title{TFinfluence}
 \usage{
-TFinfluence(dataTRRUST, dataMAF, dataDEGs, dataMAVISp, dataTFexpr = FALSE)
+TFinfluence(
+  dataTRRUST,
+  dataMAF,
+  dataDEGs,
+  dataPRA,
+  dataMAVISp,
+  dataTFexpr = FALSE
+)
 }
 \arguments{
-\item{dataTRRUST}{RDA object of gene-TF pairs
+\item{dataTRRUST}{Tibble containing gene-TF pairs and type of interaction
 Must contain the following columns:
 \itemize{
 \item TF (HUGO symbol of TF)
-\item GENE (HUGO symbol of gene)
+\item Target (HUGO symbol of target gene of TF)
+\item InteractionType (The effect the TF has on the target gene (Activation, Repression))
 }}
 
-\item{dataMAF}{A MAF file RDA object
-The MAF file must at least contain the following columns:
+\item{dataMAF}{Tibble containing mutation info from MAF
+Must at least contain the following columns:
 \itemize{
 \item Hugo_Symbol eg. BRCA1
 \item HGVSp_Short eg. p.V83F
 }}
 
-\item{dataDEGs}{Output DEA function}
+\item{dataDEGs}{Output DEA function. Tibble containing differentially expressed genes.
+Must contain the following columns
+\itemize{
+\item GENE (HUGO symbol of DEG)
+\item logFC (The log fold change of DEG)
+}}
 
-\item{dataMAVISp}{Output loadMAVISp function}
+\item{dataPRA}{Output PRA function. List of TSG and OCG
+Must contain the following elements
+\itemize{
+\item TSG (The TSGs identified by moonlight along with the moonlight score)
+\item OCG (The OCGs identified by moonlight along with the moonlight score)
+}}
+
+\item{dataMAVISp}{Output loadMAVISp function. List of tibbles, one for each protein.
+The tibbles must contain at least
+\itemize{
+\item (First column must contain the mutation (e.g. A54W). It is assumed that the column name is empty)
+}
+Then the tibbles must contain columns mathing either of the following names(or they will be excluded) 
+\itemize{
+\item (Stability classification, [A-Za-z0-9]+, \\(Rosetta, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
+\item (Stability classification, [A-Za-z0-9]+, \\(RaSP, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
+}}
 }
 \value{
 returns a tibble containing:

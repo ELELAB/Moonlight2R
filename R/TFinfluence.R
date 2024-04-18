@@ -15,11 +15,17 @@
 #' \item Hugo_Symbol eg. BRCA1
 #' \item HGVSp_Short eg. p.V83F
 #' }
-#' @param dataDEGs Output DEA function
+#' @param dataDEGs Output DEA function. Tibble containing differentially expressed genes.
 #' Must contain the following columns
 #' \itemize{
 #' \item GENE (HUGO symbol of DEG)
 #' \item logFC (The log fold change of DEG)
+#'}
+#' @param dataPRA Output PRA function. List of TSG and OCG
+#' Must contain the following elements
+#' \itemize{
+#' \item TSG (The TSGs identified by moonlight along with the moonlight score)
+#' \item OCG (The OCGs identified by moonlight along with the moonlight score)
 #'}
 #' @param dataMAVISp Output loadMAVISp function. List of tibbles, one for each protein.
 #' The tibbles must contain at least
@@ -56,6 +62,7 @@
 TFinfluence <- function(dataTRRUST,
                          dataMAF,
                          dataDEGs,
+                         dataPRA,
                          dataMAVISp,
                          dataTFexpr = FALSE){ 
     # Control user input -------------
@@ -87,6 +94,11 @@ TFinfluence <- function(dataTRRUST,
         stop("The DEG data must be a non-empty table")
     }
 
+    # dataPRA
+    if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
+        stop("The two list elements in PRA data must be named TSG and OCG")
+    }
+
     # dataTFexpr
     if (!(dataTFexpr == FALSE) & is.null(dim(dataTFexpr))) {
         stop("The TF expression data must be a non-empty table")
@@ -94,12 +106,15 @@ TFinfluence <- function(dataTRRUST,
     
 
     # Load data --------------------------------
+    drivers <- PRAtoTibble(dataPRA)
+
     # Read maf and add ID number to each mutation
     dataMAFFiltered <- dataMAF |> 
         select(c("Hugo_Symbol",
                 "HGVSp_Short")) |>
         mutate(HGVSp_Short = str_extract(HGVSp_Short, pattern = "[A-Z]\\d+[A-Z]")) |>
-        rename(mutation = HGVSp_Short)
+        rename(mutation = HGVSp_Short) |>
+        drop_na()
 
     # Filter MAVISp data 
     # Keep only the stability classification
@@ -117,46 +132,43 @@ TFinfluence <- function(dataTRRUST,
                     as_tibble()
 
     # Analysis -------------------
-    # convert rownames to column for DEGs
+    # Convert rownames to column for DEGs
     dataDEGs <- dataDEGs |>
         rownames_to_column(var = "GENE") |>
         select(GENE, logFC) 
 
-    # join DEGs with TF
-    DEG_TF <- dataDEGs |>
-        left_join(dataTRRUST,
-                  by = join_by(GENE == Target)) |>
-        drop_na() |>
-        rename('logFC_gene' = logFC)
+    # Join drivers with expression
+    drivers_expr <- drivers |>
+        left_join(dataDEGs, 
+                  by = join_by(Hugo_Symbol == GENE))
 
-    # Map TF to mutation file
-    mut_DEG_TF <- DEG_TF |>
+    # Join drivers with TF
+    drivers_expr_tf <- drivers_expr |>
+        left_join(dataTRRUST,
+                  by = join_by(Hugo_Symbol == Target)) |>
+        rename('logFC_target' = logFC)
+
+    # Map mutation file to TF
+    drivers_TF_mut <- drivers_expr_tf |>
         left_join(dataMAFFiltered,
                   by = join_by(TF == Hugo_Symbol),
                   relationship = "many-to-many") |>
         rename('tf_mutation' = mutation)
 
     # Match TF-mut with mavisp to see the effect
-    mavisp_mut_DEG_TF <- mut_DEG_TF |>
+    drivers_mut_mavisp <- drivers_TF_mut |>
         left_join(dataMAVISpFiltered, 
                   by = join_by(TF == protein, tf_mutation == mutation))
-
-    
     
     # Check biological implications
     # Activation -> destabilising mutation -> decrease
     # Repression -> destabilising mutation -> increase
-    filtered_effect <- mavisp_mut_DEG_TF |>
-        filter((InteractionType == 'Activation' & stab_class == 'Destabilizing' & logFC_gene < 0) |
-                (InteractionType == 'Repression' & stab_class == 'Destabilizing' & logFC_gene > 0) |
+    filtered_effect <- drivers_mut_mavisp |>
+        filter((InteractionType == 'Activation' & stab_class == 'Destabilizing' & logFC_target < 0) |
+                (InteractionType == 'Repression' & stab_class == 'Destabilizing' & logFC_target > 0) |
                 (stab_class == 'Uncertain'))
 
-    if (!(dataTFexpr == FALSE)){
-        filtered_effect <- filtered_effect |>
-            left_join(dataTFexpr, 
-                  by = join_by(TF == GENE))
-    }
     
-    return(mavisp_mut_DEG_TF)
+    return(drivers_mut_mavisp)
 }
 
