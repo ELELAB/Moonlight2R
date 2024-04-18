@@ -4,16 +4,23 @@
 \alias{TFinfluence}
 \title{TFinfluence}
 \usage{
-TFinfluence(
-  dataTRRUST,
-  dataMAF,
-  dataDEGs,
-  dataPRA,
-  dataMAVISp,
-  dataTFexpr = FALSE
-)
+TFinfluence(dataPRA, dataDEGs, dataTRRUST, dataMAF, dataMAVISp)
 }
 \arguments{
+\item{dataPRA}{Output PRA function. List of TSG and OCG
+Must contain the following elements
+\itemize{
+\item TSG (The TSGs identified by moonlight along with the moonlight score)
+\item OCG (The OCGs identified by moonlight along with the moonlight score)
+}}
+
+\item{dataDEGs}{Output DEA function. Tibble containing differentially expressed genes.
+Must contain the following columns
+\itemize{
+\item GENE (HUGO symbol of DEG)
+\item logFC (The log fold change of DEG)
+}}
+
 \item{dataTRRUST}{Tibble containing gene-TF pairs and type of interaction
 Must contain the following columns:
 \itemize{
@@ -27,20 +34,6 @@ Must at least contain the following columns:
 \itemize{
 \item Hugo_Symbol eg. BRCA1
 \item HGVSp_Short eg. p.V83F
-}}
-
-\item{dataDEGs}{Output DEA function. Tibble containing differentially expressed genes.
-Must contain the following columns
-\itemize{
-\item GENE (HUGO symbol of DEG)
-\item logFC (The log fold change of DEG)
-}}
-
-\item{dataPRA}{Output PRA function. List of TSG and OCG
-Must contain the following elements
-\itemize{
-\item TSG (The TSGs identified by moonlight along with the moonlight score)
-\item OCG (The OCGs identified by moonlight along with the moonlight score)
 }}
 
 \item{dataMAVISp}{Output loadMAVISp function. List of tibbles, one for each protein.

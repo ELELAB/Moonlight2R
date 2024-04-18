@@ -4,12 +4,19 @@
 \alias{loadMAVISp}
 \title{loadMAVISp}
 \usage{
-loadMAVISp(mavispDB = NULL, proteins_of_interest = NULL)
+loadMAVISp(mavispDB = NULL, proteins_of_interest = NULL, mode = "simple")
 }
 \arguments{
-\item{mavispDB}{path to the MAVISp database}
+\item{mavispDB}{path to the MAVISp database as a string}
 
 \item{proteins_of_interest}{vector containing specific proteins of interest in HUGO format}
+
+\item{mode}{string determining whether to use simple or ensemble mode of mavisp
+Takes values: 
+\itemize{
+\item simple
+\item ensemble
+}}
 }
 \value{
 returns a list of tibbles each containing the MAVISp entry of one protein
