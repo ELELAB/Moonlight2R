@@ -57,8 +57,6 @@
 #' 
 #' @export
 
-
-
 TFinfluence <- function(dataPRA,
                         dataDEGs,
                         dataTRRUST,
