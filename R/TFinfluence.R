@@ -63,8 +63,7 @@ TFinfluence <- function(dataTRRUST,
                          dataMAF,
                          dataDEGs,
                          dataPRA,
-                         dataMAVISp,
-                         dataTFexpr = FALSE){ 
+                         dataMAVISp){ 
     # Control user input -------------
     # dataTRRUST
     if (is.null(dim(dataTRRUST)) | nrow(dataTRRUST) == 0) {
@@ -98,12 +97,6 @@ TFinfluence <- function(dataTRRUST,
     if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
         stop("The two list elements in PRA data must be named TSG and OCG")
     }
-
-    # dataTFexpr
-    if (!(dataTFexpr == FALSE) & is.null(dim(dataTFexpr))) {
-        stop("The TF expression data must be a non-empty table")
-    }
-    
 
     # Load data --------------------------------
     drivers <- PRAtoTibble(dataPRA)
@@ -168,7 +161,6 @@ TFinfluence <- function(dataTRRUST,
                 (InteractionType == 'Repression' & stab_class == 'Destabilizing' & logFC_target > 0) |
                 (stab_class == 'Uncertain'))
 
-    
     return(drivers_mut_mavisp)
 }
 
