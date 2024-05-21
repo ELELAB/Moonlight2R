@@ -8,7 +8,7 @@ loadMAVISp(
   mavispDB = NULL,
   proteins_of_interest = NULL,
   mode = "simple",
-  simulation = NULL
+  simulation = "md"
 )
 }
 \arguments{

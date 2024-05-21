@@ -32,16 +32,14 @@
 loadMAVISp <- function(mavispDB = NULL,
                        proteins_of_interest = NULL,
                        mode = 'simple',
-                       simulation = NULL){
+                       simulation = 'md'){
     # Look in simple mode index.csv if the protein is in the database
     if (file.exists(str_c(mavispDB,'/dataset_info.csv')) == FALSE){
         stop('MAVISp database file not found at the provided path, or the database_info.csv file is missing.')
     } else if (mode == 'simple'){
         table_location <- str_c(mavispDB,'/simple_mode/dataset_tables/')
     } else if (mode == 'ensemble'){
-        if (is.null(simulation)){
-            stop('The type of simulation to use must be specified for ensemble mode. Please consult the documentation.')
-        } else if (length(simulation) > 1){
+        if (length(simulation) > 1){
             stop('Only one simulation can be specified for ensemble mode.')
         }
         table_location <- str_c(mavispDB,'/ensemble_mode/dataset_tables/')
