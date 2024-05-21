@@ -118,8 +118,8 @@ TFinfluence <- function(dataPRA,
     # Filter MAVISp data 
     # Keep only the stability classification
     dataMAVISpFiltered <- dataMAVISp |>
-                    map(function(x) rename(x, 'stab_class_ros' = matches('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)( \\[md\\])?'),
-                                              'stab_class_rasp' = matches('Stability classification, [A-Za-z0-9, ]*\\(RaSP, FoldX\\)( \\[md\\])?'))) |>
+                    map(function(x) rename(x, 'stab_class_ros' = matches('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)'),
+                                              'stab_class_rasp' = matches('Stability classification, [A-Za-z0-9, ]*\\(RaSP, FoldX\\)'))) |>
                     keep(function(x) 'stab_class_ros' %in% colnames(x) | 'stab_class_rasp' %in% colnames(x)) |>
                     # Choose rosetta consensus, if it is there
                     map(function(x) mutate(x, 'stab_class' = ifelse(test = !('stab_class_ros' %in% colnames(x)),
@@ -145,7 +145,8 @@ TFinfluence <- function(dataPRA,
     drivers_expr_tf <- drivers_expr |>
         left_join(dataTRRUST,
                   by = join_by(Hugo_Symbol == Target)) |>
-        rename('logFC_target' = logFC)
+        rename('logFC_target' = logFC,
+               'Target' = Hugo_Symbol)
 
     # Map mutation file to TF
     drivers_TF_mut <- drivers_expr_tf |>
@@ -165,7 +166,8 @@ TFinfluence <- function(dataPRA,
     filtered_effect <- drivers_mut_mavisp |>
         filter((InteractionType == 'Activation' & stab_class == 'Destabilizing' & logFC_target < 0) |
                 (InteractionType == 'Repression' & stab_class == 'Destabilizing' & logFC_target > 0) |
-                (stab_class == 'Uncertain'))
+                (stab_class == 'Uncertain') |
+                (stab_class == 'Neutral'))
 
     return(drivers_mut_mavisp)
 }
