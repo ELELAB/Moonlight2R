@@ -4,7 +4,12 @@
 \alias{loadMAVISp}
 \title{loadMAVISp}
 \usage{
-loadMAVISp(mavispDB = NULL, proteins_of_interest = NULL, mode = "simple")
+loadMAVISp(
+  mavispDB = NULL,
+  proteins_of_interest = NULL,
+  mode = "simple",
+  simulation = NULL
+)
 }
 \arguments{
 \item{mavispDB}{path to the MAVISp database as a string}
@@ -17,9 +22,12 @@ Takes values:
 \item simple
 \item ensemble
 }}
+
+\item{simulations}{string specifying the simulation to use. The simulations possible can be found in the MAVISp database.}
 }
 \value{
-returns a list of tibbles each containing the MAVISp entry of one protein
+returns a list of tibbles each containing the MAVISp entry of one protein. Each entry will contain an extra column specifying what data
+the stability classification is based on.
 }
 \description{
 This function loads the MAVISp database from the directory specified by the user.

@@ -10,6 +10,7 @@
 #' \item simple
 #' \item ensemble
 #'} 
+#' @param simulations string specifying the simulation to use. The simulations possible can be found in the MAVISp database.
 #' @importFrom stringr str_c str_split_i
 #' @importFrom purrr map
 #' @importFrom readr read_csv
@@ -17,7 +18,8 @@
 #' @importFrom dplyr pull filter
 #' @importFrom rlang set_names
 #' @importFrom withr with_options
-#' @return returns a list of tibbles each containing the MAVISp entry of one protein
+#' @return returns a list of tibbles each containing the MAVISp entry of one protein. Each entry will contain an extra column specifying what data
+#' the stability classification is based on.
 #' @export
 #' @examples
 #' 
@@ -29,13 +31,19 @@
 
 loadMAVISp <- function(mavispDB = NULL,
                        proteins_of_interest = NULL,
-                       mode = 'simple'){
+                       mode = 'simple',
+                       simulation = NULL){
     # Look in simple mode index.csv if the protein is in the database
     if (file.exists(str_c(mavispDB,'/dataset_info.csv')) == FALSE){
-        stop('MAVISp database file not found at the provided path')
+        stop('MAVISp database file not found at the provided path, or the database_info.csv file is missing.')
     } else if (mode == 'simple'){
         table_location <- str_c(mavispDB,'/simple_mode/dataset_tables/')
     } else if (mode == 'ensemble'){
+        if (is.null(simulation)){
+            stop('The type of simulation to use must be specified for ensemble mode. Please consult the documentation.')
+        } else if (length(simulation) > 1){
+            stop('Only one simulation can be specified for ensemble mode.')
+        }
         table_location <- str_c(mavispDB,'/ensemble_mode/dataset_tables/')
     } else {
         stop('Mode not specified correctly. Takes values "simple" or "ensemble"')
@@ -54,7 +62,12 @@ loadMAVISp <- function(mavispDB = NULL,
                     filter(grepl(paste(proteins_of_interest, 
                                         collapse = '|'),
                                         filepath)) |>
-                    pull(filepath)      
+                    pull(filepath)
+    }
+
+    # Double check there are files
+    if (length(rawFiles) == 0){
+        stop('No MAVISp files matching the criteria were found.')
     }
 
     mavispData <- rawFiles |>
@@ -67,6 +80,19 @@ loadMAVISp <- function(mavispDB = NULL,
                         read_csv(file = x,
                                 progress = FALSE,
                                 show_col_types = FALSE))))
+    
+    # Combine stability results based on user specification
+    if (mode == 'ensemble' & length(simulation) == 1){
+        mavispData <- mavispData |>
+            map(function(x) rename(x, 'Stability classification, (Rosetta, FoldX)' = matches(paste0('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)( \\[',simulation,'\\])?')),
+                                    'Stability classification, (RaSP, FoldX)' = matches(paste0('Stability classification, [A-Za-z0-9, ]*\\(RaSP, FoldX\\)( \\[',simulation,'\\])?'))) |>
+                            mutate(stab_class_ros_source = paste0('ensemble_mode_',simulation),
+                                   stab_class_rasp_source = paste0('ensemble_mode_',simulation)))
+    } else if (mode == 'simple'){
+        mavispData <- mavispData |>
+            map(function(x) mutate(stab_class_data_type = 'simple_mode'))
+    }
+
 
     return(mavispData)
 }
