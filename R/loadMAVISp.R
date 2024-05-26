@@ -88,7 +88,7 @@ loadMAVISp <- function(mavispDB = NULL,
                                    stab_class_rasp_source = paste0('ensemble_mode_',simulation)))
     } else if (mode == 'simple'){
         mavispData <- mavispData |>
-            map(function(x) mutate(stab_class_data_type = 'simple_mode'))
+            map(function(x) mutate(x, stab_class_data_type = 'simple_mode'))
     }
 
 
