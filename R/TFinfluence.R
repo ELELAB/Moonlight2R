@@ -129,7 +129,7 @@ TFinfluence <- function(dataPRA,
                                     rename('mutation' = 1)) |>
                     rbindlist(idcol = 'protein') |>
                     as_tibble()
-    write_csv(dataMAVISpFiltered, '/data/user/kame/devel/moonlight_LumA/data/mavisp_filter.csv')
+
     # Analysis -------------------
     # Convert rownames to column for DEGs
     dataDEGs <- dataDEGs |>
