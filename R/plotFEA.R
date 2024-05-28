@@ -51,12 +51,12 @@ plotFEA <- function(dataFEA,
 must be column names in dataFEA")
   }
 
-  if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
+  if (!is(additionalFilename, "NULL") & !is(additionalFilename, "character")) {
     stop("additionalFilename must be either NULL or a character vector adding
 a prefix or filepath to the filename of the pdf")
   }
 
-  if (!is.null(additionalFilename)) {
+  if (!is(additionalFilename, "NULL")) {
     pdf(additionalFilename, width, height)
   }
 
@@ -109,7 +109,7 @@ a prefix or filepath to the filename of the pdf")
                       sep = ""),
        cex = 1)
 
-  if (!is.null(additionalFilename)) {
+  if (!is(additionalFilename, "NULL")) {
     dev.off()
   }
 }

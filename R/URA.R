@@ -6,6 +6,7 @@
 #' @param BPname biological processes
 #' @param nCores number of cores to use
 #' @importFrom stats fisher.test
+#' @import parallel
 #' @import doParallel
 #' @import foreach
 #' @export
@@ -43,14 +44,17 @@ URA <- function(dataGRN,
 have the gene names as rownames. Double check that genes are rownames.")
   }
 
-  if (!is.null(BPname) && all(BPname %in% names(DiseaseList)) == FALSE) {
+  if (!is(BPname, "NULL") && all(BPname %in% names(DiseaseList)) == FALSE) {
     stop("BPname should be NULL or a character vector containing one or more
 BP(s) among possible BPs stored in the DiseaseList object.")
   }
 
-  doParallel::registerDoParallel(cores = nCores)
+  if (nCores > 1) {
+    cl <- parallel::makeCluster(nCores)
+    doParallel::registerDoParallel(cl)
+  }
 
-  if (is.null(BPname)) {
+  if (is(BPname, "NULL")) {
     BPname <- names(DiseaseList)
   }
 
@@ -75,7 +79,9 @@ BP(s) among possible BPs stored in the DiseaseList object.")
 
   dimnames(TableDiseases) <- list(tRlist, BPname)
 
-  stopImplicitCluster()
+  if (nCores > 1 ) {
+    doParallel::stopImplicitCluster()
+  }
 
   close(pb)
 

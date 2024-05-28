@@ -1,3 +1,26 @@
+# Moonlight2R 1.3.0
+
+## Summary
+
+* version bump due to release of Bioconductor 3.19
+
+# Moonlight2R 1.1.2
+
+## Summary
+
+* fixed issue with parallelization in URA
+
+# Moonlight2R 1.1.1
+
+## Summary
+
+* added new functionality called GMA (Gene Methylation Analysis)
+* added three new visualization functions in connection with GMA:
+plotGMA, plotMoonlightMet, plotMetExp
+* updated vignette to contain new functionalities related to GMA
+* updated class testing in all functions
+* resized figures
+
 # Moonlight2R 0.99.14
 
 ## Summary

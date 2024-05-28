@@ -25,7 +25,7 @@ plotURA <- function(dataURA,
 
   # Check user input
 
-  if (!is.matrix(dataURA)) {
+  if (!is(dataURA, "matrix")) {
     stop("dataURA must be a numeric matrix")
   }
 
@@ -33,7 +33,7 @@ plotURA <- function(dataURA,
     stop("dataURA must have at least two rows and two columns")
   }
 
-  if (!is.null(additionalFilename) & !is.character(additionalFilename)) {
+  if (!is(additionalFilename, "NULL") & !is(additionalFilename, "character")) {
     stop("additionalFilename must be either NULL or a character vector 
 containing part of the filename of plot")
   }
@@ -44,7 +44,7 @@ containing part of the filename of plot")
     cexRow <- 0.2 + 1 / (10 * log10(nrow(dataURA)))
   }
 
-  if (!is.null(additionalFilename)) {
+  if (!is(additionalFilename, "NULL")) {
     pdf(file = paste0("plotURA", additionalFilename, ".pdf"))
   }
 
@@ -63,7 +63,7 @@ containing part of the filename of plot")
             key = TRUE,
             keysize = 2)
 
-  if (!is.null(additionalFilename)) {
+  if (!is(additionalFilename, "NULL")) {
     dev.off()
   }
 }

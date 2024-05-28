@@ -34,12 +34,12 @@ PRA <- function(dataURA,
 
   DiseaseList <- get("DiseaseList")
 
-  if (!is.null(BPname) && all(BPname %in% names(DiseaseList)) == FALSE) {
+  if (!is(BPname, "NULL") && all(BPname %in% names(DiseaseList)) == FALSE) {
     stop("BPname should be NULL or a character vector containing one or more BP(s)
 among possible BPs stored in the DiseaseList object.")
   }
 
-  if (is.null(dim(dataURA))) {
+  if (is(dim(dataURA), "NULL")) {
     stop("The URA data must be non-empty with genes in rows and BPs in columns")
   }
 
@@ -47,7 +47,7 @@ among possible BPs stored in the DiseaseList object.")
     stop("The columns in the URA data must be BPs among possible BPs stored in the DiseaseList")
   }
 
-  if (!is.numeric(thres.role)) {
+  if (!is(thres.role, "numeric")) {
     stop("Thres.role must be numeric")
   }
 
@@ -57,7 +57,7 @@ among possible BPs stored in the DiseaseList object.")
   names.blocking <- tabGrowBlock[which(tabGrowBlock$Cancer.blocking == "Increasing"), "Disease"]
   names.growing <- tabGrowBlock[which(tabGrowBlock$Cancer.growing == "Increasing"), "Disease"]
 
-  if (is.null(BPname)) {
+  if (is(BPname, "NULL")) {
 
     common.genes.tsg <- intersect(knownDriverGenes$TSG, rownames(dataURA))
     common.genes.ocg <- intersect(knownDriverGenes$OCG, rownames(dataURA))

@@ -21,7 +21,7 @@ PRAtoTibble <- function(dataPRA) {
 
   # Wrangle data
 
-  if (!is.null(dataPRA$TSG)) {
+  if (!is(dataPRA$TSG, "NULL")) {
     TSG <- as_tibble(dataPRA$TSG, rownames = NA) %>%
       rownames_to_column(var = "Hugo_Symbol") %>%
       mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = "both"),
@@ -31,7 +31,7 @@ PRAtoTibble <- function(dataPRA) {
     TSG <- NULL
   }
 
-  if (!is.null(dataPRA$OCG)) {
+  if (!is(dataPRA$OCG, "NULL")) {
     OCG <- as_tibble(dataPRA$OCG, rownames = NA) %>%
       rownames_to_column(var = "Hugo_Symbol") %>%
       mutate(Hugo_Symbol = str_trim(Hugo_Symbol, side = "both"),
@@ -41,13 +41,13 @@ PRAtoTibble <- function(dataPRA) {
     OCG <- NULL
   }
 
-  if (!is.null(TSG) & !is.null(OCG)) {
+  if (!is(TSG, "NULL") & !is(OCG, "NULL")) {
     drivers <- full_join(TSG, OCG, by = c("Hugo_Symbol",
                                           "Moonlight_gene_z_score",
                                           "Moonlight_Oncogenic_Mediator"))
-  } else if (is.null(TSG)) {
+  } else if (is(TSG, "NULL")) {
     drivers <- OCG
-  } else if (is.null(OCG)) {
+  } else if (is(OCG, "NULL")) {
     drivers <- TSG
   }
 

@@ -77,7 +77,7 @@ DMA <- function(dataMAF,
 
   # Check user input
 
-  if (is.null(dim(dataMAF))) {
+  if (is(dim(dataMAF), "NULL")) {
     stop("The mutation data must be a non-empty table")
   }
 
@@ -90,13 +90,14 @@ have the gene names as rownames. Double check that genes are rownames.")
     stop("The two list elements in PRA data must be named TSG and OCG")
   }
 
-  if (!is.logical(runCscape)) {
+
+  if (!is(runCscape, "logical")) {
     stop("runCscape must be either TRUE or FALSE")
   }
 
-  if (!is.character(results_folder)) {
+  if (!is(results_folder, "character")) {
     stop("The results folder must be a character vector containing the
-path to where DMA results should be stored")
+    path to where DMA results should be stored")
   }
 
   # List of variable names

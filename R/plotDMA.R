@@ -55,15 +55,15 @@ plotDMA <- function(DEG_Mutations_Annotations,
 CScape_Passenger, CScape_Unclassified, and Moonlight_Oncogenic_Mediator as column names")
   }
 
-  if (!is.null(type) && (type %in% c("split", "complete")) == FALSE) {
+  if (!is(type, "NULL") && (type %in% c("split", "complete")) == FALSE) {
     stop("Type must either be NULL, split or complete")
   }
 
-  if (!is.null(genelist) & !is.character(genelist)) {
+  if (!is(genelist, "NULL") & !is(genelist, "character")) {
     stop("Genelist must be either NULL or a character vector containing gene names")
   }
 
-  if (!is.character(additionalFilename)) {
+  if (!is(additionalFilename, "character")) {
     stop("additionalFilename must be a character vector adding a prefix or filepath to the filename of the pdf")
   }
 
