@@ -81,7 +81,7 @@ loadMAVISp <- function(mavispDB = NULL,
                                 show_col_types = FALSE))))
     
     # Combine stability results based on user specification
-    if (mode == 'ensemble' & length(ensemble) == 1){
+    if (mode == 'ensemble'){
         mavispData <- mavispData |>
             map(function(x) rename(x, 'Stability classification, (Rosetta, FoldX)' = matches(paste0('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)( \\[',ensemble,'\\])?')),
                                     'Stability classification, (RaSP, FoldX)' = matches(paste0('Stability classification, [A-Za-z0-9, ]*\\(RaSP, FoldX\\)( \\[',ensemble,'\\])?'))) |>
