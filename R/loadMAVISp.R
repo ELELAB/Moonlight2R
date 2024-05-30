@@ -45,7 +45,7 @@ loadMAVISp <- function(mavispDB = NULL,
         }
         table_location <- str_c(mavispDB,'/ensemble_mode/dataset_tables/')
     } else {
-        stop('Mode not specified correctly. Takes values "simple" or "ensemble"')
+        stop('Mode not specified correctly. Accepts strings "simple" or "ensemble"')
     }
 
     # Load data for proteins of interest or all proteins
