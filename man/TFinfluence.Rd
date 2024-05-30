@@ -4,7 +4,14 @@
 \alias{TFinfluence}
 \title{TFinfluence}
 \usage{
-TFinfluence(dataPRA, dataDEGs, dataTRRUST, dataMAF, dataMAVISp)
+TFinfluence(
+  dataPRA,
+  dataDEGs,
+  dataTRRUST,
+  dataMAF,
+  dataMAVISp,
+  stabClassMAVISp
+)
 }
 \arguments{
 \item{dataPRA}{Output PRA function. List of TSG and OCG
@@ -45,6 +52,13 @@ Then the tibbles must contain columns mathing either of the following names(or t
 \itemize{
 \item (Stability classification, [A-Za-z0-9]+, \\(Rosetta, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
 \item (Stability classification, [A-Za-z0-9]+, \\(RaSP, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
+}}
+
+\item{stabClassMAVISp}{The protocol to use for mutation stability classification.
+Accepts one of the following strings
+\itemize{
+\item rasp (uses the FoldX/Rosetta protocol)
+\item rasp (uses the FoldX/RaSP protocol)
 }}
 }
 \value{

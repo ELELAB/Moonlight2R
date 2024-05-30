@@ -37,6 +37,12 @@
 #' \item (Stability classification, [A-Za-z0-9]+, \\(Rosetta, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
 #' \item (Stability classification, [A-Za-z0-9]+, \\(RaSP, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
 #'}
+#' @param stabClassMAVISp The protocol to use for mutation stability classification.
+#' Accepts one of the following strings
+#' \itemize{
+#' \item rasp (uses the FoldX/Rosetta protocol)
+#' \item rasp (uses the FoldX/RaSP protocol)
+#' }
 #' 
 #' @import dplyr
 #' @importFrom tibble rownames_to_column
@@ -69,7 +75,8 @@ TFinfluence <- function(dataPRA,
                         dataDEGs,
                         dataTRRUST,
                         dataMAF,
-                        dataMAVISp){ 
+                        dataMAVISp,
+                        stabClassMAVISp){ 
     # Control user input -------------
     # dataPRA
     if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
@@ -104,6 +111,13 @@ TFinfluence <- function(dataPRA,
         stop("MAF file does not contain the correct columns")
     }
 
+    # stabClassMAVISp
+    if (!(stabClassMAVISp %in% c('rasp', 'rosetta'))){
+        stop("The protocol for stability classification is not specified correctly. Accepts strings 'rasp' or 'rosetta'")
+    } else {
+        stabClassMAVISp <- paste0('stab_class_', stabClassMAVISp)
+    }
+
     # Load data --------------------------------
     drivers <- PRAtoTibble(dataPRA)
 
@@ -118,15 +132,13 @@ TFinfluence <- function(dataPRA,
     # Filter MAVISp data 
     # Keep only the stability classification
     dataMAVISpFiltered <- dataMAVISp |>
-                    map(function(x) rename(x, 'stab_class_ros' = matches('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)'),
+                    map(function(x) rename(x, 'stab_class_rosetta' = matches('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)'),
                                               'stab_class_rasp' = matches('Stability classification, [A-Za-z0-9, ]*\\(RaSP, FoldX\\)'))) |>
-                    keep(function(x) 'stab_class_ros' %in% colnames(x) | 'stab_class_rasp' %in% colnames(x)) |>
-                    # Choose rosetta consensus, if it is there
-                    map(function(x) mutate(x, 'stab_class' = ifelse(test = !('stab_class_ros' %in% colnames(x)),
-                                                                 yes = stab_class_rasp,
-                                                                 no = stab_class_ros)) |>
-                                    select(1, stab_class) |>
-                                    rename('mutation' = 1)) |>
+                    keep(function(x) stabClassMAVISp %in% colnames(x)) |>
+                    map(function(x) rename(x, 
+                                           'mutation' = 1,
+                                           'stab_class' = stabClassMAVISp) |>
+                                    select(mutation, stab_class)) |>
                     rbindlist(idcol = 'protein') |>
                     as_tibble()
 
