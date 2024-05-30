@@ -8,7 +8,7 @@ loadMAVISp(
   mavispDB = NULL,
   proteins_of_interest = NULL,
   mode = "simple",
-  simulation = "md"
+  ensemble = "md"
 )
 }
 \arguments{
@@ -23,7 +23,7 @@ Takes values:
 \item ensemble
 }}
 
-\item{simulations}{string specifying the simulation to use. The simulations possible can be found in the MAVISp database.}
+\item{ensemble}{string specifying the ensemble to use. The available ensembles  can be found in the MAVISp database. This is ignored for simple mode.}
 }
 \value{
 returns a list of tibbles each containing the MAVISp entry of one protein. Each entry will contain an extra column specifying what data
