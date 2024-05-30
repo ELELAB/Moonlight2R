@@ -66,8 +66,8 @@
 #' TFinfluence(dataTRRUST = dataTRRUST,
 #'            dataMAF = dataMAF,
 #'            dataDEGs = dataDEGs,
-#'            dataPRA = data_PRA,
-#'            dataMAVISp = mavisp_data)
+#'            dataPRA = dataPRA,
+#'            dataMAVISp = dataMAVISp)
 #'
 #' @export
 

@@ -12,7 +12,7 @@ loadMAVISp(
 )
 }
 \arguments{
-\item{mavispDB}{path to the MAVISp database as a string}
+\item{mavispDB}{path to the MAVISp database as a string. The database can be downloaded from an OSF repository (https://osf.io/ufpzm/) and has the following structure.}
 
 \item{proteins_of_interest}{vector containing specific proteins of interest in HUGO format}
 

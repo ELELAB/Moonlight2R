@@ -2,7 +2,7 @@
 #' 
 #' This function loads the MAVISp database from the directory specified by the user. 
 #' 
-#' @param mavispDB path to the MAVISp database as a string
+#' @param mavispDB path to the MAVISp database as a string. The database can be downloaded from an OSF repository (https://osf.io/ufpzm/) and has the following structure.
 #' @param proteins_of_interest vector containing specific proteins of interest in HUGO format
 #' @param mode string determining whether to use simple or ensemble mode of mavisp. Default is simple mode.
 #' Takes values: 
