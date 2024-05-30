@@ -7,6 +7,8 @@ data(dataTRRUST)
 data(dataMAF)
 data(dataMAVISp)
 
+dataDEGs <- DEGsmatrix
+
 TFresults <- TFinfluence(dataTRRUST = dataTRRUST,
             dataMAF = dataMAF,
             dataDEGs = dataDEGs,
