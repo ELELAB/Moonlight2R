@@ -696,6 +696,48 @@ dataGLS <- GLS(genes = genes_query,
 head(dataGLS)
 ``` 
 
+## `loadMAVISp`: Helper function for loading the MAVISp database
+loadMAVISp is used to load the files in the MAVISp database. The user will 
+need to decide on whether they want to import the simple or ensemble mode and
+in the case of ensemble mode, choose the ensemble they want to import. Furthermore,
+the user can specify specific proteins to load. The output is a list of tibbles, 
+each one correponding to a file in the MAVISp database. The output is used directly 
+in the function TFinfluence.
+
+```{r, eval = TRUE}
+specific_protein <- loadMAVISp(mavispDB = 'data/mavisp_db', 
+                               mode = 'simple',
+                               proteins_of_interest = c('RUNX1'))
+
+all_proteins <- loadMAVISp(mavispDB = 'data/mavisp_db', 
+                           mode = 'simple')
+
+ensemble <- loadMAVISp(mavispDB = 'data/mavisp_db', 
+                       mode = 'ensemble',
+                       ensemble = 'cabsflex')
+``` 
+
+## `TFinfluence`: Effect of mutations on transcription factors
+The TFinfluence function can be used as after the PRA function, to identify
+if there are mutations in the transcription factors to the DEGs. The function 
+uses data from TRRUST to couple the DEGs with their transcription factor (TF). 
+The mutations in the TFs come from the MAF file, and the effect of the mutation
+is obtained from the MAVISp database, available at an OSF repository (https://osf.io/ufpzm/).
+
+```{r, eval = TRUE}
+data(dataPRA)
+data(DEGsmatrix)
+data(dataTRRUST)
+data(dataMAF)
+data(dataMAVISp)
+
+TFresults <- TFinfluence(dataTRRUST = dataTRRUST,
+            dataMAF = dataMAF,
+            dataDEGs = DEGsmatrix,
+            dataPRA = dataPRA,
+            dataMAVISp = dataMAVISp,
+            stabClassMAVISp = 'rosetta')
+``` 
 
 ## `Level of consequence`: Effect of mutations on three different levels
 The user can investigate the predicted effect of different mutation types on the transcriptional 
