@@ -1,14 +1,14 @@
 # Test TFinfluence function
 
 # Run example of TFinfluence function
-specific_protein <- loadMAVISp(mavispDB = '/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023', 
+specific_protein <- loadMAVISp(mavispDB = 'data/mavisp_db', 
                                mode = 'simple',
                                proteins_of_interest = c('RUNX1'))
 
-all_proteins <- loadMAVISp(mavispDB = '/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023', 
+all_proteins <- loadMAVISp(mavispDB = 'data/mavisp_db', 
                            mode = 'simple')
 
-ensemble <- loadMAVISp(mavispDB = '/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023', 
+ensemble <- loadMAVISp(mavispDB = 'data/mavisp_db', 
                        mode = 'ensemble',
                        ensemble = 'cabsflex')
 

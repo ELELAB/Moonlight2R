@@ -24,11 +24,11 @@
 #' @export
 #' @examples
 #' 
-#' mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023",
-#'           proteins_of_interest = c('NQO1','TP53'),
+#' mavisp_data <- loadMAVISp(mavispDB = "data/mavisp_db",
+#'           proteins_of_interest = c('TP53'),
 #'           mode = 'ensemble')
 #' 
-#' mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023") 
+#' mavisp_data <- loadMAVISp(mavispDB = "data/mavisp_db") 
 
 loadMAVISp <- function(mavispDB = NULL,
                        proteins_of_interest = NULL,
