@@ -86,7 +86,7 @@ SystemRequirements: CScapeSomatic
 VignetteBuilder: knitr
 URL: https://github.com/ELELAB/Moonlight2R
 BugReports: https://github.com/ELELAB/Moonlight2R/issues
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 LazyData: false
 Encoding: UTF-8
 Config/testthat/edition: 3

@@ -28,7 +28,7 @@
 #'           proteins_of_interest = c('TP53'),
 #'           mode = 'ensemble')
 #' 
-#' mavisp_data <- loadMAVISp(mavispDB = "data/mavisp_db") 
+#' mavisp_data <- loadMAVISp(mavispDB = "data/mavisp_db")
 
 loadMAVISp <- function(mavispDB = NULL,
                        proteins_of_interest = NULL,

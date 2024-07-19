@@ -80,7 +80,7 @@ This function finds mutations in the transcription factors (TF) of the DEGs that
 TFinfluence(dataTRRUST = dataTRRUST,
            dataMAF = dataMAF,
            dataDEGs = dataDEGs,
-           dataPRA = data_PRA,
-           dataMAVISp = mavisp_data)
+           dataPRA = dataPRA,
+           dataMAVISp = dataMAVISp)
 
 }
