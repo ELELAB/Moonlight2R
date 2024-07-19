@@ -774,14 +774,17 @@ each one correponding to a file in the MAVISp database. The output is used direc
 in the function TFinfluence.
 
 ```{r, eval = TRUE}
-specific_protein <- loadMAVISp(mavispDB = 'data/mavisp_db', 
+
+mavisp_db_location <- system.file('extdata', 'mavisp_db', package='Moonlight2R')
+
+specific_protein <- loadMAVISp(mavispDB = mavisp_db_location, 
                                mode = 'simple',
                                proteins_of_interest = c('RUNX1'))
 
-all_proteins <- loadMAVISp(mavispDB = 'data/mavisp_db', 
+all_proteins <- loadMAVISp(mavispDB = mavisp_db_location, 
                            mode = 'simple')
 
-ensemble <- loadMAVISp(mavispDB = 'data/mavisp_db', 
+ensemble <- loadMAVISp(mavispDB = mavisp_db_location, 
                        mode = 'ensemble',
                        ensemble = 'cabsflex')
 ``` 
