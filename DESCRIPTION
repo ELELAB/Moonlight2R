@@ -65,7 +65,10 @@ Description: The understanding of cancer mechanism requires
         in answering the question whether some genes change role
         between early stages (I, II) and late stages (III, IV). In the future, 
 	this analysis could be useful to determine the causes of different 
-	resistances to chemotherapeutic treatments.
+	resistances to chemotherapeutic treatments. An additional mechanistic 
+        layer evaluates if there are mutations affecting the protein stability 
+        of the transcription factors (TFs) of the TSGs and OCGs, as that may 
+        have an effect on the expression of the genes.
 License: GPL-3
 biocViews: DNAMethylation, DifferentialMethylation, GeneRegulation,
         GeneExpression, MethylationArray, DifferentialExpression,

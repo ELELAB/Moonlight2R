@@ -2,7 +2,7 @@
 #' 
 #' This function loads the MAVISp database from the directory specified by the user. 
 #' 
-#' @param mavispDB path to the MAVISp database as a string
+#' @param mavispDB path to the MAVISp database as a string. The database can be downloaded from an OSF repository (https://osf.io/ufpzm/) and has the following structure.
 #' @param proteins_of_interest vector containing specific proteins of interest in HUGO format
 #' @param mode string determining whether to use simple or ensemble mode of mavisp. Default is simple mode.
 #' Takes values: 
@@ -10,7 +10,8 @@
 #' \item simple
 #' \item ensemble
 #'} 
-#' @param simulations string specifying the simulation to use. The simulations possible can be found in the MAVISp database.
+#' @param ensemble string specifying the ensemble to use. The available ensembles  can be found in the MAVISp database. This is ignored for simple mode.
+#'
 #' @importFrom stringr str_c str_split_i
 #' @importFrom purrr map
 #' @importFrom readr read_csv
@@ -23,28 +24,28 @@
 #' @export
 #' @examples
 #' 
-#' mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023",
-#'           proteins_of_interest = c('NQO1','TP53'),
+#' mavisp_data <- loadMAVISp(mavispDB = "data/mavisp_db",
+#'           proteins_of_interest = c('TP53'),
 #'           mode = 'ensemble')
 #' 
-#' mavisp_data <- loadMAVISp(mavispDB = "/data/raw_data/computational_data/mavisp_database/biorxiv_v4_17112023") 
+#' mavisp_data <- loadMAVISp(mavispDB = "data/mavisp_db") 
 
 loadMAVISp <- function(mavispDB = NULL,
                        proteins_of_interest = NULL,
                        mode = 'simple',
-                       simulation = 'md'){
+                       ensemble = 'md'){
     # Look in simple mode index.csv if the protein is in the database
     if (file.exists(str_c(mavispDB,'/dataset_info.csv')) == FALSE){
         stop('MAVISp database file not found at the provided path, or the database_info.csv file is missing.')
     } else if (mode == 'simple'){
         table_location <- str_c(mavispDB,'/simple_mode/dataset_tables/')
     } else if (mode == 'ensemble'){
-        if (length(simulation) > 1){
-            stop('Only one simulation can be specified for ensemble mode.')
+        if (length(ensemble) > 1){
+            stop('Only one ensemble can be specified for ensemble mode.')
         }
         table_location <- str_c(mavispDB,'/ensemble_mode/dataset_tables/')
     } else {
-        stop('Mode not specified correctly. Takes values "simple" or "ensemble"')
+        stop('Mode not specified correctly. Accepts strings "simple" or "ensemble"')
     }
 
     # Load data for proteins of interest or all proteins
@@ -80,12 +81,12 @@ loadMAVISp <- function(mavispDB = NULL,
                                 show_col_types = FALSE))))
     
     # Combine stability results based on user specification
-    if (mode == 'ensemble' & length(simulation) == 1){
+    if (mode == 'ensemble'){
         mavispData <- mavispData |>
-            map(function(x) rename(x, 'Stability classification, (Rosetta, FoldX)' = matches(paste0('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)( \\[',simulation,'\\])?')),
-                                    'Stability classification, (RaSP, FoldX)' = matches(paste0('Stability classification, [A-Za-z0-9, ]*\\(RaSP, FoldX\\)( \\[',simulation,'\\])?'))) |>
-                            mutate(stab_class_ros_source = paste0('ensemble_mode_',simulation),
-                                   stab_class_rasp_source = paste0('ensemble_mode_',simulation)))
+            map(function(x) rename(x, 'Stability classification, (Rosetta, FoldX)' = matches(paste0('Stability classification, [A-Za-z0-9, ]*\\(Rosetta, FoldX\\)( \\[',ensemble,'\\])?')),
+                                    'Stability classification, (RaSP, FoldX)' = matches(paste0('Stability classification, [A-Za-z0-9, ]*\\(RaSP, FoldX\\)( \\[',ensemble,'\\])?'))) |>
+                            mutate(stab_class_ros_source = paste0('ensemble_mode_',ensemble),
+                                   stab_class_rasp_source = paste0('ensemble_mode_',ensemble)))
     } else if (mode == 'simple'){
         mavispData <- mavispData |>
             map(function(x) mutate(x, stab_class_data_type = 'simple_mode'))
