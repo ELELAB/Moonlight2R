@@ -77,10 +77,17 @@ This function finds mutations in the transcription factors (TF) of the DEGs that
 }
 \examples{
 
+data('dataPRA')
+data('DEGsmatrix')
+data('dataTRRUST')
+data('dataMAF')
+data('dataMAVISp')
+
 TFinfluence(dataTRRUST = dataTRRUST,
            dataMAF = dataMAF,
-           dataDEGs = dataDEGs,
+           dataDEGs = DEGsmatrix,
            dataPRA = dataPRA,
-           dataMAVISp = dataMAVISp)
+           dataMAVISp = dataMAVISp,
+           stabClassMAVISp = 'rosetta')
 
 }

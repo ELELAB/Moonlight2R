@@ -34,9 +34,10 @@ This function loads the MAVISp database from the directory specified by the user
 }
 \examples{
 
-mavisp_data <- loadMAVISp(mavispDB = "data/mavisp_db",
-          proteins_of_interest = c('TP53'),
-          mode = 'ensemble')
+mavisp_db_location <- system.file('extdata', 'mavisp_db', package='Moonlight2R')
 
-mavisp_data <- loadMAVISp(mavispDB = "data/mavisp_db")
+mavisp_data <- loadMAVISp(mavispDB = mavisp_db_location,
+                          proteins_of_interest = c('TP53'),
+                          mode = 'ensemble')
+
 }
