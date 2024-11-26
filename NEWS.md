@@ -1,3 +1,11 @@
+# Moonlight2R 1.5.1
+
+## Summary
+
+* Added TFinfluence function, that implements a secondary layer that checks
+the influence of destabilizing mutations on transcription factors as
+mechanistic explanation for expression changes
+
 # Moonlight2R 1.5.0
 
 ## Summary
