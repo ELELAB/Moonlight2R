@@ -432,8 +432,8 @@ The methylation layer investigates abnormal DNA methylation patterns and differe
 CpG sites in the oncogenic mediators using the tool EpiMix and uses patterns of hypo- and 
 hypermethylation for prediction of the driver genes. The transcription factor layer
 checks which transcription factors are important for determining the transcription
-of possible driver genes, and if any mutation available in a cancer mutation dataset
-is able to destabilize them and therefore likely affect transcription.
+of possible driver genes, and identifies mutations on such transcription factors 
+from a cancer mutation dataset that are able to destabilize them and therefore likely affect transcription.
 Overall, this methodology not only allows us to identify genes with dual role (TSG in one
 cancer type and OCG in another) but also to elucidate the underlying biological processes.
 
@@ -783,8 +783,8 @@ that stability changes due to mutations on transcription factors can influence
 transcription. Here, we use data on change of stability upon mutation available in the
 MAVISp database, as well as data from the [TRRUST database](https://www.grnpedia.org/trrust/)
 and MAF files from TCGA to i) identify transcription factors that have an effect
-on the transcription of genes of interest ii) identify mutations of interest on them from
-MAF files iii) use MAVISp data to assess the affect of such mutations, whether they
+on the transcription of genes of interest ii) identify potentially damaging mutations on them from
+MAF files and iii) use MAVISp data to assess the affect of such mutations, whether they
 might destabilizing or not. We release the TRRUST-derived data within the Moonlight2R
 package with a Creative Commons Attribution-ShareAlike 4.0 International license.
 
@@ -795,14 +795,14 @@ Notice that we have included a very small portion of the MAVISp database with Mo
 for testing purposes; we recommend using the full database available at 
 the [MAVISp OSF repository](https://osf.io/ufpzm/). Also see the 
 [MAVISp preprint](https://www.biorxiv.org/content/10.1101/2022.10.22.513328v5) for specifics
-on what datasets are available in MAVISp
+on what datasets are available in MAVISp.
 
-The loadMAVISp function is used to load the files available from the
+The `loadMAVISp` function is used to load the files available from the
 MAVISp database. The user will need to decide on whether they want to import the simple or ensemble mode and
 in the case of ensemble mode, choose the ensemble they want to import. Furthermore,
 the user can specify specific proteins to load. The output is a list of tibbles, 
 each one correponding to a file in the MAVISp database. The output is used directly 
-in the TFinfluence function.
+in the `TFinfluence` function.
 
 ```{r, eval = TRUE}
 
@@ -821,7 +821,7 @@ ensemble <- loadMAVISp(mavispDB = mavisp_db_location,
 ``` 
 
 ## `TFinfluence`: Effect of mutations on transcription factors
-As previosuly introduceed, the TFinfluence function can be used as after the PRA
+As previosuly introduceed, the `TFinfluence` function can be used as after the PRA
 function, to identify if there are mutations in the transcription factors of the DEGs. The function 
 uses data from TRRUST to couple the DEGs with their transcription factor (TF). 
 The mutations in the TFs come from a MAF file, and the effect of the mutation
