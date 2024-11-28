@@ -581,3 +581,21 @@
 #'
 "DEG_Methylation_Annotations"
 
+
+#' MAVISp dataset example
+#'
+#'@description MAVISp results for proteins TP53 and RUNX1, simple mode. They are used
+#' for testing and vignettes. They are stored as a list of tibbles.
+#'@details The dataframes contain the full available MAVISp data for simple mode at
+#' present time.
+#'
+#'@docType data
+#'@usage data(dataMAVISp)
+#'@name dataMAVISp
+#'@aliases dataMAVISp
+#'@return A list of tibbles (183 x 43 and 1180 x 46).
+#'
+#'@format A list of data frames (183 x 43 and 1180 x 46).
+#'
+"dataMAVISp"
+
