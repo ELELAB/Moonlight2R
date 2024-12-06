@@ -147,7 +147,8 @@ TFinfluence <- function(dataPRA,
                                            'stab_class' = stabClassMAVISp) |>
                                     select(mutation, stab_class)) |>
                     rbindlist(idcol = 'protein') |>
-                    as_tibble()
+                    as_tibble()|>
+                    mutate(in_MAVISp = TRUE)
 
     # Analysis -------------------
     # Convert rownames to column for DEGs
@@ -176,8 +177,10 @@ TFinfluence <- function(dataPRA,
 
     # Match TF-mut with mavisp to see the effect
     drivers_mut_mavisp <- drivers_TF_mut |>
-        left_join(dataMAVISpFiltered, 
-                  by = join_by(TF == protein, tf_mutation == mutation))
+      left_join(dataMAVISpFiltered, 
+                by = join_by(TF == protein, tf_mutation == mutation)) |> 
+      mutate(in_MAVISp = TF %in% unique(dataMAVISpFiltered$protein)) |> 
+      mutate(mutation_available = ifelse(in_MAVISp & !is.na(tf_mutation), TRUE, FALSE))
     
     # Check biological implications
     # Activation -> destabilising mutation -> decrease

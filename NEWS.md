@@ -1,3 +1,9 @@
+# Moonlight2R 1.3.2
+
+## Summary
+
+* additional columns in TFinfluence output
+
 # Moonlight2R 1.3.0
 
 ## Summary
