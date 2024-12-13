@@ -1,3 +1,9 @@
+# Moonlight2R 1.5.2
+
+## Summary
+
+* Added additional columns in TFinfluence output that describe the availabilty of the TF and its mutation in MAVISp
+
 # Moonlight2R 1.5.1
 
 ## Summary
