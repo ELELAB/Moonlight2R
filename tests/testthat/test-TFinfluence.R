@@ -7,7 +7,6 @@ data(dataTRRUST)
 data(dataMAF)
 data(dataMAVISp)
 
-dataDEGs <- DEGsmatrix
 
 reference_TFresults <- data.frame(
     Target = c("CHST1", "GEN1", "TAP1", "TAP1"),
@@ -19,14 +18,14 @@ reference_TFresults <- data.frame(
     PMID = c(NA, NA, "18694960", "15778351"),
     tf_mutation = as.character(c(NA, NA, NA, NA)),
     stab_class = as.character(c(NA, NA, NA, NA)),
-    stringsAsFactors = FALSE, # Ensure non-character columns are not treated as factors
     in_MAVISp = c(FALSE,FALSE,FALSE,FALSE),
-    mutation_available = c(FALSE,FALSE,FALSE,FALSE)
+    mutation_available = c(FALSE,FALSE,FALSE,FALSE),
+    stringsAsFactors = FALSE
 )
 
 TFresults <- TFinfluence(dataTRRUST = dataTRRUST,
             dataMAF = dataMAF,
-            dataDEGs = dataDEGs,
+            dataDEGs = DEGsmatrix,
             dataPRA = dataPRA,
             dataMAVISp = dataMAVISp,
             stabClassMAVISp = 'rosetta')
