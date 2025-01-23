@@ -1,6 +1,7 @@
 # Moonlight2R 1.5.3
 
 ## Summary
+* Filter only missense mutations of MAF in TFinfluence.
 * Switched to RaSp/FoldX consensus as a default of MAVISp in TFinfluence.
 * Corrected the code of 'mutation_available' column of TFinfluence output to correctly check the presence of the mutation in MAVISp data.
 
