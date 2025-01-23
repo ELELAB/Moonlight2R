@@ -1,3 +1,9 @@
+# Moonlight2R 1.5.3
+
+## Summary
+
+* Corrected the code of 'mutation_available' column of TFinfluence output to correctly check the presence of the mutation in MAVISp data.
+
 # Moonlight2R 1.5.2
 
 ## Summary

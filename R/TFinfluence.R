@@ -180,8 +180,8 @@ TFinfluence <- function(dataPRA,
       left_join(dataMAVISpFiltered, 
                 by = join_by(TF == protein, tf_mutation == mutation)) |> 
       mutate(in_MAVISp = TF %in% unique(dataMAVISpFiltered$protein)) |> 
-      mutate(mutation_available = ifelse(in_MAVISp & !is.na(tf_mutation), TRUE, FALSE))
-    
+      mutate(mutation_available = ifelse(paste(TF, tf_mutation) %in%
+                                         paste(dataMAVISpFiltered$protein, dataMAVISpFiltered$mutation), TRUE, FALSE))
     # Check biological implications
     # Activation -> destabilising mutation -> decrease
     # Repression -> destabilising mutation -> increase
