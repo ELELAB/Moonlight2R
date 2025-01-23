@@ -28,7 +28,7 @@ TFresults <- TFinfluence(dataTRRUST = dataTRRUST,
             dataDEGs = DEGsmatrix,
             dataPRA = dataPRA,
             dataMAVISp = dataMAVISp,
-            stabClassMAVISp = 'rosetta')
+            stabClassMAVISp = 'rasp')
 
 character_columns <- c('Target','Moonlight_Oncogenic_Mediator','TF','InteractionType','PMID','tf_mutation','stab_class')
 numeric_columns <- c('Moonlight_gene_z_score','logFC_target')
