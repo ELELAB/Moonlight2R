@@ -1,3 +1,9 @@
+# Moonlight2R 1.5.4
+
+## Summary
+
+* added missing documentation file
+
 # Moonlight2R 1.5.3
 
 ## Summary
