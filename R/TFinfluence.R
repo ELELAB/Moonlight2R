@@ -40,7 +40,7 @@
 #' @param stabClassMAVISp The protocol to use for mutation stability classification. Default is rosetta.
 #' Accepts one of the following strings
 #' \itemize{
-#' \item rasp (uses the FoldX/Rosetta protocol)
+#' \item rosetta (uses the FoldX/Rosetta protocol)
 #' \item rasp (uses the FoldX/RaSP protocol)
 #' }
 #' 
@@ -74,7 +74,7 @@
 #'            dataDEGs = DEGsmatrix,
 #'            dataPRA = dataPRA,
 #'            dataMAVISp = dataMAVISp,
-#'            stabClassMAVISp = 'rosetta')
+#'            stabClassMAVISp = 'rasp')
 #'
 #' @export
 
@@ -83,7 +83,7 @@ TFinfluence <- function(dataPRA,
                         dataTRRUST,
                         dataMAF,
                         dataMAVISp,
-                        stabClassMAVISp = 'rosetta'){ 
+                        stabClassMAVISp = 'rasp'){ 
     # Control user input -------------
     # dataPRA
     if (all(names(dataPRA) %in% c("TSG", "OCG")) == FALSE) {
