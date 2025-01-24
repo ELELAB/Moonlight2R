@@ -130,6 +130,7 @@ TFinfluence <- function(dataPRA,
 
     # Read maf and add ID number to each mutation
     dataMAFFiltered <- dataMAF |> 
+        filter(Variant_Classification == "Missense_Mutation") |> 
         select(c("Hugo_Symbol",
                 "HGVSp_Short")) |>
         mutate(HGVSp_Short = str_extract(HGVSp_Short, pattern = "[A-Z]\\d+[A-Z]")) |>
