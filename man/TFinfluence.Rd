@@ -10,7 +10,7 @@ TFinfluence(
   dataTRRUST,
   dataMAF,
   dataMAVISp,
-  stabClassMAVISp = "rosetta"
+  stabClassMAVISp = "rasp"
 )
 }
 \arguments{
@@ -57,7 +57,7 @@ Then the tibbles must contain columns mathing either of the following names(or t
 \item{stabClassMAVISp}{The protocol to use for mutation stability classification. Default is rosetta.
 Accepts one of the following strings
 \itemize{
-\item rasp (uses the FoldX/Rosetta protocol)
+\item rosetta (uses the FoldX/Rosetta protocol)
 \item rasp (uses the FoldX/RaSP protocol)
 }}
 }
@@ -88,6 +88,6 @@ TFinfluence(dataTRRUST = dataTRRUST,
            dataDEGs = DEGsmatrix,
            dataPRA = dataPRA,
            dataMAVISp = dataMAVISp,
-           stabClassMAVISp = 'rosetta')
+           stabClassMAVISp = 'rasp')
 
 }
