@@ -37,7 +37,7 @@
 #' \item (Stability classification, [A-Za-z0-9]+, \\(Rosetta, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
 #' \item (Stability classification, [A-Za-z0-9]+, \\(RaSP, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
 #'}
-#' @param stabClassMAVISp The protocol to use for mutation stability classification. Default is rosetta.
+#' @param stabClassMAVISp The protocol to use for mutation stability classification. Default is rasp.
 #' Accepts one of the following strings
 #' \itemize{
 #' \item rosetta (uses the FoldX/Rosetta protocol)
