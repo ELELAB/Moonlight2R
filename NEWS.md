@@ -1,3 +1,9 @@
+# Moonlight2R 1.5.5
+
+## Summary
+
+* fixed mistake in the documentation of the `TFinfluence` function
+
 # Moonlight2R 1.5.4
 
 ## Summary
