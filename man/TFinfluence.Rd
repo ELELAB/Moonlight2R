@@ -54,7 +54,7 @@ Then the tibbles must contain columns mathing either of the following names(or t
 \item (Stability classification, [A-Za-z0-9]+, \\(RaSP, FoldX\\)) (Values: Stabilizing, Neutral, Destabilizing, Uncertain)
 }}
 
-\item{stabClassMAVISp}{The protocol to use for mutation stability classification. Default is rosetta.
+\item{stabClassMAVISp}{The protocol to use for mutation stability classification. Default is rasp.
 Accepts one of the following strings
 \itemize{
 \item rosetta (uses the FoldX/Rosetta protocol)
