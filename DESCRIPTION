@@ -1,7 +1,7 @@
 Package: Moonlight2R
 Type: Package
 Title: Identify oncogenes and tumor suppressor genes from omics data
-Version: 1.5.5
+Version: 1.7.0
 Date:
 Authors@R:
   c(person("Mona", "Nourbakhsh",
@@ -26,7 +26,7 @@ Authors@R:
     person("Elena", "Papaleo",
 	   role="aut",
     	   ))
-Depends: R (>= 4.4), doParallel, foreach
+Depends: R (>= 4.5), doParallel, foreach
 Imports: parmigene, randomForest, gplots,
         circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
         grDevices, graphics, GEOquery, stats, purrr,

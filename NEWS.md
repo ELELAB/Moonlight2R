@@ -1,3 +1,7 @@
+# Moonlight2R 1.7.0
+
+* version bump due to release of Bioconductor 3.21
+
 # Moonlight2R 1.5.5
 
 ## Summary
