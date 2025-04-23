@@ -26,7 +26,7 @@ Authors@R:
     person("Elena", "Papaleo",
 	   role="aut",
     	   ))
-Depends: R (>= 4.4), doParallel, foreach
+Depends: R (>= 4.5), doParallel, foreach
 Imports: parmigene, randomForest, gplots,
         circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
         grDevices, graphics, GEOquery, stats, purrr,
