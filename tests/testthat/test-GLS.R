@@ -17,7 +17,7 @@ test_that("Number of columns in GLS output are equal to 8", {
 })
 
 dataGLS_colnames <- c("pmid", "gene", "doi", "title", "abstract", "year",
-                      "keywords", "pubmed_count")
+                      "mesh_terms", "pubmed_count")
 
 # Test correct column names
 test_that("Column names in GLS output are correct", {
@@ -25,13 +25,13 @@ test_that("Column names in GLS output are correct", {
 })
 
 # Test expected class of values in output
-test_that("pmid, gene, doi, title, abstract, year, and keywords are characters", {
+test_that("pmid, gene, doi, title, abstract, year, and mesh_terms are characters", {
   expect_type(dataGLS_test$pmid, "character")
   expect_type(dataGLS_test$gene, "character")
   expect_type(dataGLS_test$doi, "character")
   expect_type(dataGLS_test$title, "character")
   expect_type(dataGLS_test$abstract, "character")
-  expect_type(dataGLS_test$year, "character")
+  expect_type(dataGLS_test$year, "double")
 })
 
 test_that("pubmed_count is double", {

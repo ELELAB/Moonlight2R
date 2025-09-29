@@ -1,3 +1,9 @@
+# Moonlight2R 1.6.1
+
+## Summary
+
+* fixed error in GLS function due to updates in easyPubMed package
+
 # Moonlight2R 1.5.5
 
 ## Summary
@@ -78,7 +84,7 @@ plotGMA, plotMoonlightMet, plotMetExp
 
 ## Summary
 
-* added data loadings in functions 
+* added data loadings in functions
 
 # Moonlight2R 0.99.11
 
@@ -91,7 +97,7 @@ plotGMA, plotMoonlightMet, plotMetExp
 
 ## Summary
 
-* updated code style in all functions 
+* updated code style in all functions
 
 # Moonlight2R 0.99.9
 
@@ -143,7 +149,7 @@ plotGMA, plotMoonlightMet, plotMetExp
 
 * updated following example data: dataFEA, dataGRN, dataURA, dataPRA and cscape_somatic_output
 
-* added following example data: dataURA_plot, dataGRN_no_noise 
+* added following example data: dataURA_plot, dataGRN_no_noise
 
 # Moonlight2R 0.99.2
 
@@ -189,11 +195,10 @@ plotGMA, plotMoonlightMet, plotMetExp
 
 * `dataDMA`		Output from DMA function
 
-* `cscape_somatic_output`	Cscape-somatic annotations of TCGA-LUAD 
+* `cscape_somatic_output`	Cscape-somatic annotations of TCGA-LUAD
 
-* `DEG_Mutations_Annotations`	Differentially expressed genes's Mutations 
+* `DEG_Mutations_Annotations`	Differentially expressed genes's Mutations
 
-* `Oncogenic_mediators_mutation_summary`	Oncogenic Mediators Mutation Summary  
+* `Oncogenic_mediators_mutation_summary`	Oncogenic Mediators Mutation Summary
 
 * `moonlight`		Function to run moonlight pipeline
-
