@@ -9,8 +9,6 @@
 #' can be used in the query. For example Boolean operators
 #' AND, OR, NOT can be applied and tags such as [AU],
 #' [TITLE/ABSTRACT], [Affiliation] can be used.
-#' @param max_records An integer containing the maximum
-#' number of records to be fetched from PubMed.
 #' @import easyPubMed
 #' @import tibble
 #' @import dplyr
@@ -19,18 +17,16 @@
 #' @return A tibble containing results of literature search
 #' where PubMed was queried for information of input genes.
 #' Each row in the tibble contains a PubMed ID matching the
-#' query, doi, title, abstract, year of publication, keywords,
+#' query, doi, title, abstract, year of publication, mesh_terms,
 #' and total number of PubMed publications, resulting in a
 #' total of eight columns.
 #' @export
 #' @examples
 #' genes_query <- "BRCA1"
 #' dataGLS <- GLS(genes = genes_query,
-#'                query_string = "AND cancer AND driver",
-#'		  max_records = 2)
+#'                query_string = "AND cancer AND driver")
 GLS <- function(genes,
-                query_string = "AND cancer AND driver",
-                max_records = 20) {
+                query_string = "AND cancer AND driver") {
 
   # Check user input
 
@@ -41,10 +37,6 @@ in PubMed")
 
   if (!is(query_string, "character")) {
     stop("The query string must be a character vector")
-  }
-
-  if (!is(max_records, "numeric")) {
-    stop("The maximum number of records to retrieve must be numeric")
   }
 
   # Initialize empty tibble to store results
@@ -58,31 +50,28 @@ in PubMed")
     pubmed_query <- paste(x, query_string)
 
     # Search and retrieve results from PubMed
-    gene_pubmed <- get_pubmed_ids(pubmed_query)
+    gene_pubmed <- epm_query(pubmed_query)
 
     # Retrieve number of publications
-    count_pubmed <- gene_pubmed$Count %>%
+    count_pubmed <- gene_pubmed@meta$exp_count %>%
       as.numeric()
 
     # If query matches any pubmed records
     if (count_pubmed > 0) {
 
       # Fetch data of PubMed records searched via above query
-      top_results <- fetch_pubmed_data(gene_pubmed,
-                                       retstart = 0,
-                                       retmax = max_records)
+      top_results <- epm_fetch(gene_pubmed)
 
+      # Extract information from PubMed records into a an easyPubMed object
+      record_info <- epm_parse(top_results, max_authors = 1)
       # Extract information from PubMed records into a table
-      record_info <- table_articles_byAuth(top_results,
-                                           included_authors = "first",
-                                           max_chars = -1,
-                                           getKeywords = TRUE)
+      record_info_data <- get_epm_data(record_info)
 
-      # Select only PubMed id, doi, title, abstract, year, and keywords of
+      # Select only PubMed id, doi, title, abstract, year, and mesh terms of
       # PubMed records
-      record_info_wrangled <- record_info %>%
+      record_info_wrangled <- record_info_data %>%
         as_tibble() %>%
-        dplyr::select(c(pmid, doi, title, abstract, year, keywords)) %>%
+        dplyr::select(c(pmid, doi, title, abstract, year, mesh_terms)) %>%
         mutate(gene = x, pubmed_count = count_pubmed) %>%
         dplyr::relocate(gene, .after = pmid)
 
@@ -96,7 +85,7 @@ in PubMed")
       # Create tibble of one row of gene that did not have any PubMed results
       no_results_tbl <- tibble(pmid = NA, gene = x, doi = NA,
                                title = NA, abstract = NA, year = NA,
-                               keywords = NA, pubmed_count = count_pubmed)
+                               mesh_terms = NA, pubmed_count = count_pubmed)
 
       # Bind tibble of gene without PubMed information to table containing
       # results of previous gene(s)
@@ -115,4 +104,4 @@ in PubMed")
 }
 
 utils::globalVariables(c("pmid", "doi", "title", "abstract", "year",
-                         "keywords", "gene"))
+                         "mesh_terms", "gene"))

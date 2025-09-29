@@ -5,7 +5,7 @@
 \title{GLS
 This function carries out gene literature search.}
 \usage{
-GLS(genes, query_string = "AND cancer AND driver", max_records = 20)
+GLS(genes, query_string = "AND cancer AND driver")
 }
 \arguments{
 \item{genes}{A character string containing the genes
@@ -18,9 +18,6 @@ in query to follow the gene of interest. Default is
 can be used in the query. For example Boolean operators
 AND, OR, NOT can be applied and tags such as [AU],
 [TITLE/ABSTRACT], [Affiliation] can be used.}
-
-\item{max_records}{An integer containing the maximum
-number of records to be fetched from PubMed.}
 }
 \value{
 A tibble containing results of literature search
@@ -37,6 +34,5 @@ This function carries out gene literature search.
 \examples{
 genes_query <- "BRCA1"
 dataGLS <- GLS(genes = genes_query,
-               query_string = "AND cancer AND driver",
-	  max_records = 2)
+               query_string = "AND cancer AND driver")
 }
