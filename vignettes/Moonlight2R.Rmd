@@ -942,7 +942,6 @@ and total number of hypo/hyper/dual methylated CpG sites in genes.
 ```{r, eval = TRUE, warning = FALSE, message = FALSE, include = TRUE}
 data("DEG_Methylation_Annotations")
 data("Oncogenic_mediators_methylation_summary")
-print(class(Oncogenic_mediators_methylation_summary))
 data("dataURA_plot")
 genes <- c("ACAN", "ACE2", "ADAM19", "AFAP1L1")
 plotMoonlightMet(DEG_Methylation_Annotations = DEG_Methylation_Annotations,
