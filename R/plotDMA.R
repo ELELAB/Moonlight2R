@@ -105,9 +105,9 @@ CScape_Passenger, CScape_Unclassified, and Moonlight_Oncogenic_Mediator as colum
                 palette_value = c("white", "blue", "darkblue"),
                 column_title = paste("Heatmap Driver annotation by CScape-Somatic",
                                      "\n Hugo_Symbol")) %>%
-        add_tile(Moonlight_Oncogenic_Mediator, palette = c("goldenrod2", "dodgerblue3")) %>%
-        add_bar(Total_Mutations) %>%
-        add_tile(logFC, palette = c("chartreuse4", "firebrick3"))
+        annotation_tile(Moonlight_Oncogenic_Mediator, palette = c("goldenrod2", "dodgerblue3")) %>%
+        annotation_bar(Total_Mutations) %>%
+        annotation_tile(logFC, palette = c("chartreuse4", "firebrick3"))
 
       # Save plot
       save_pdf(driver_mut_heatmap, height = 15, width = 35, units = "cm",
@@ -131,9 +131,9 @@ CScape_Passenger, CScape_Unclassified, and Moonlight_Oncogenic_Mediator as colum
               palette_value = c("white", "blue", "darkblue"),
               column_title = paste("Heatmap Driver annotation by CScape-Somatic",
                                    "\n Hugo_Symbol")) %>%
-      add_tile(Moonlight_Oncogenic_Mediator, palette = c("goldenrod2", "dodgerblue3")) %>%
-      add_bar(Total_Mutations) %>%
-      add_tile(logFC, palette = c("chartreuse4", "firebrick3"))
+      annotation_tile(Moonlight_Oncogenic_Mediator, palette = c("goldenrod2", "dodgerblue3")) %>%
+      annotation_bar(Total_Mutations) %>%
+      annotation_tile(logFC, palette = c("chartreuse4", "firebrick3"))
 
     # Save plot
     save_pdf(driver_mut_heatmap, height = 15, width = 35, units = "cm",
@@ -183,4 +183,3 @@ utils::globalVariables(c("Hugo_Symbol", "logFC", "CScape_Driver", "CScape_Passen
                          "CScape_Unclassified", "Moonlight_Oncogenic_Mediator",
                          "Mutation_type", "Count", "Total_Mutations", "gr",
                          "heatmaps", "First_gene"))
-
