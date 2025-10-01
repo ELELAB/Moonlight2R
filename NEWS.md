@@ -1,4 +1,11 @@
+# Moonlight2R 1.7.2
+
+## Summary
+
+* fixed error in plotDMA and other plotting functions due to updates in tidyHeatmap package
+
 # Moonlight2R 1.7.1
+
 ## Summary
 
 * fixed error in GLS function due to updates in easyPubMed package
