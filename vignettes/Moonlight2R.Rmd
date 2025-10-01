@@ -931,7 +931,7 @@ plotGMA(DEG_Methylation_Annotations = DEG_Methylation_Annotations,
 ```
 
 ```{r, fig.width=3, fig.height=4, echo = FALSE, fig.align="center",hide=TRUE, message=FALSE,warning=FALSE}
-knitr::include_graphics("heatmap_genelist_met.png")
+knitr::include_graphics("heatmap_genelist_met.gif")
 ```
 
 ## `plotMoonlightMet`: Heatmap of Moonlight Gene Z-scores for methylation-driven TSGs/OCGs
@@ -952,7 +952,7 @@ plotMoonlightMet(DEG_Methylation_Annotations = DEG_Methylation_Annotations,
 ```
 
 ```{r, fig.width=3, fig.height=4, echo = FALSE, fig.align="center",hide=TRUE, message=FALSE,warning=FALSE}
-knitr::include_graphics("moonlight_heatmap_met.png")
+knitr::include_graphics("moonlight_heatmap_met.gif")
 ```
 
 ## `plotMetExp`: Visualize results from EpiMix of expression and methylation in genes

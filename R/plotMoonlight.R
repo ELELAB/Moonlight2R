@@ -153,11 +153,11 @@ filepath to the filename of the pdf")
                         clustering_distance_columns = "euclidean",
                         clustering_method_columns = "complete",
                         cluster_rows = FALSE) %>%
-    add_tile(Moonlight_Oncogenic_Mediator,
+    annotation_tile(Moonlight_Oncogenic_Mediator,
              palette = c("goldenrod2", "dodgerblue3")) %>%
-    add_tile(logFC, palette = c("chartreuse4", "firebrick3")) %>%
-    add_tile(CScape_Driver, palette = colorRamp2(c(0, max_driver), c("white", "dodgerblue3"))) %>%
-    add_bar(Total_Mutations)
+    annotation_tile(logFC, palette = c("chartreuse4", "firebrick3")) %>%
+    annotation_tile(CScape_Driver, palette = colorRamp2(c(0, max_driver), c("white", "dodgerblue3"))) %>%
+    annotation_bar(Total_Mutations)
 
   save_pdf(bp_heatmap, height = 15, width = 35, units = "cm",
            filename = paste(additionalFilename, "moonlight_heatmap.pdf", sep = ""))
