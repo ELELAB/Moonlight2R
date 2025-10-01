@@ -20,6 +20,8 @@ Authors@R:
            role="aut"),
     person("Catharina", "Olsen",
            role="aut"),
+    person("Alessia", "Campo",
+           role=c("aut")),
     person("Matteo", "Tiberti",
            role=c("cre", "aut"),
 	   email="tiberti@cancer.dk"),
