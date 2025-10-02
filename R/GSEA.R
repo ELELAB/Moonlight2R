@@ -49,6 +49,11 @@ GSEA <- function(DEGsmatrix,
 
   genelistDEGs_sort <- sort(genelistDEGs, decreasing = TRUE)
 
+  # temporary workaround for issue 144 - will change once the problem is fixed upstream
+  # gseDO will crash without it
+  # see https://github.com/YuLab-SMU/DOSE/issues/86#issuecomment-3361787836
+  base_url <- 'https://yulab-smu.top/DOSE'
+
   y <- gseDO(genelistDEGs_sort,
              nPerm = 100,
              minGSSize = 120,
