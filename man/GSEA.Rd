@@ -20,6 +20,8 @@ return GSEA result
 This function carries out the GSEA enrichment analysis.
 }
 \examples{
+library(HDO.db)
+library(DOSE)
 data("DEGsmatrix")
 DEGsmatrix_example <- DEGsmatrix[1:2,]
 dataFEA <- GSEA(DEGsmatrix = DEGsmatrix_example)
