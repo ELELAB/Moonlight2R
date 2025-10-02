@@ -5,6 +5,7 @@
 #' @param top is the number of top BP to plot
 #' @param plot if TRUE return a GSEA's plot
 #' @import org.Hs.eg.db
+#' @import HDO.db
 #' @importFrom grDevices dev.list
 #' @importFrom grDevices graphics.off
 #' @importFrom clusterProfiler bitr
