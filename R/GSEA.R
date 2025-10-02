@@ -49,6 +49,8 @@ GSEA <- function(DEGsmatrix,
 
   genelistDEGs_sort <- sort(genelistDEGs, decreasing = TRUE)
 
+  base_url <- 'https://yulab-smu.top/DOSE'
+
   y <- gseDO(genelistDEGs_sort,
              nPerm = 100,
              minGSSize = 120,
