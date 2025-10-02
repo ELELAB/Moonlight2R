@@ -1,3 +1,9 @@
+# Moonlight2R 1.7.3
+
+## Summary
+
+* fixed error in GSEA() module due to issues in DOSE package devel version
+
 # Moonlight2R 1.7.2
 
 ## Summary
