@@ -14,8 +14,6 @@
 #' @return return GSEA result
 #' @export
 #' @examples
-#' library(HDO.db)
-#' library(DOSE)
 #' data("DEGsmatrix")
 #' DEGsmatrix_example <- DEGsmatrix[1:2,]
 #' dataFEA <- GSEA(DEGsmatrix = DEGsmatrix_example)

@@ -25,11 +25,11 @@ is outputted from the GMA function.}
 the effect of oncogenic mediators on biological processes. This
 effect is quantified through Moonlight Gene Z-scores.}
 
-\item{genes}{A character string containing the genes to be
+\item{genes}{A character string containing the genes to be 
 visualized.}
 
 \item{additionalFilename}{A character string that can be used
-to add a prefix or filepath to the filename of the pdf
+to add a prefix or filepath to the filename of the pdf 
 visualizing the heatmap. Default is an empty string.}
 }
 \value{
@@ -46,9 +46,9 @@ data("DEG_Methylation_Annotations")
 data("Oncogenic_mediators_methylation_summary")
 data("dataURA_plot")
 genes <- c("ACAN", "ACE2", "ADAM19", "AFAP1L1")
-plotMoonlightMet(DEG_Methylation_Annotations = DEG_Methylation_Annotations,
-                 Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary,
-                 dataURA = dataURA_plot,
+plotMoonlightMet(DEG_Methylation_Annotations = DEG_Methylation_Annotations, 
+                 Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary, 
+                 dataURA = dataURA_plot, 
                  genes = genes,
                  additionalFilename = "./GMAresults/")
 }

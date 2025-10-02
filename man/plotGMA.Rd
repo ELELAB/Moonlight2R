@@ -5,9 +5,9 @@
 \title{plotGMA
 This function plots results of the Gene Methylation Analysis.
 It visualizes the number of hypo/hyper/dual methylated CpG
-sites in oncogenic mediators or in a user-supplied gene list.
-The results are visualized either in a single heatmap or split
-into different ones which is specified in the function's three
+sites in oncogenic mediators or in a user-supplied gene list. 
+The results are visualized either in a single heatmap or split 
+into different ones which is specified in the function's three 
 modes: split, complete and genelist.}
 \usage{
 plotGMA(
@@ -30,7 +30,7 @@ complete or genelist. If type is set to split, the entire
 dataset is split into groups of 40 genes and individual
 heatmaps of groups each containing 40 genes will be created and
 subsequently merged into one pdf where each page in the pdf
-is an individual heatmap. The genes will be sorted alphabetically.
+is an individual heatmap. The genes will be sorted alphabetically. 
 If type is set to complete, a single heatmap is created where
 the number of differentially methylated CpG sites are shown for
 all oncogenic mediators. If type is set to genelist, a single
@@ -41,7 +41,7 @@ genelist parameter. Default is split.}
 of genes to be visualized in a single heatmap. Default is NULL.}
 
 \item{additionalFilename}{A character string that can be used
-to add a prefix or filepath to the filename of the pdf
+to add a prefix or filepath to the filename of the pdf 
 visualizing the heatmap. Default is an empty string.}
 }
 \value{
@@ -52,17 +52,17 @@ are saved.
 plotGMA
 This function plots results of the Gene Methylation Analysis.
 It visualizes the number of hypo/hyper/dual methylated CpG
-sites in oncogenic mediators or in a user-supplied gene list.
-The results are visualized either in a single heatmap or split
-into different ones which is specified in the function's three
+sites in oncogenic mediators or in a user-supplied gene list. 
+The results are visualized either in a single heatmap or split 
+into different ones which is specified in the function's three 
 modes: split, complete and genelist.
 }
 \examples{
 data("DEG_Methylation_Annotations")
 data("Oncogenic_mediators_methylation_summary")
 genes <- c("ACAN", "ACE2", "ADAM19", "AFAP1L1")
-plotGMA(DEG_Methylation_Annotations = DEG_Methylation_Annotations,
-        Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary,
-        type = "genelist", genelist = genes,
+plotGMA(DEG_Methylation_Annotations = DEG_Methylation_Annotations, 
+        Oncogenic_mediators_methylation_summary = Oncogenic_mediators_methylation_summary, 
+        type = "genelist", genelist = genes, 
         additionalFilename = "./GMAresults/")
 }

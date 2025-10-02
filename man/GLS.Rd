@@ -23,7 +23,7 @@ AND, OR, NOT can be applied and tags such as [AU],
 A tibble containing results of literature search
 where PubMed was queried for information of input genes.
 Each row in the tibble contains a PubMed ID matching the
-query, doi, title, abstract, year of publication, mesh_terms,
+query, doi, title, abstract, year of publication, keywords,
 and total number of PubMed publications, resulting in a
 total of eight columns.
 }

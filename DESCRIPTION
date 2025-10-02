@@ -30,9 +30,9 @@ Authors@R:
     	   ))
 Depends: R (>= 4.5), doParallel, foreach
 Imports: parmigene, randomForest, gplots,
-        circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
+        circlize, RColorBrewer, HiveR, clusterProfiler,HDO.db, DOSE, Biobase,
         grDevices, graphics, GEOquery, stats, purrr,
-        RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, HDO.db, fuzzyjoin,
+        RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
         tibble, tidyHeatmap, tidyr, AnnotationHub, easyPubMed, org.Hs.eg.db,
         EpiMix, BiocGenerics, ggplot2, ExperimentHub, rlang, withr, data.table
