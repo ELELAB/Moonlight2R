@@ -5,7 +5,6 @@
 #' @param top is the number of top BP to plot
 #' @param plot if TRUE return a GSEA's plot
 #' @import org.Hs.eg.db
-#' @import HDO.db
 #' @importFrom grDevices dev.list
 #' @importFrom grDevices graphics.off
 #' @importFrom clusterProfiler bitr
@@ -14,8 +13,6 @@
 #' @return return GSEA result
 #' @export
 #' @examples
-#' library(HDO.db)
-#' library(DOSE)
 #' data("DEGsmatrix")
 #' DEGsmatrix_example <- DEGsmatrix[1:2,]
 #' dataFEA <- GSEA(DEGsmatrix = DEGsmatrix_example)
@@ -51,6 +48,17 @@ GSEA <- function(DEGsmatrix,
   names(genelistDEGs) <- dataDEGsFiltLevel_sub$GeneID
 
   genelistDEGs_sort <- sort(genelistDEGs, decreasing = TRUE)
+  
+  tryCatch(utils::data(list="DGN_EXTID2PATHID", package="DOSE"))
+  tryCatch(utils::data(list="DGN_PATHID2EXTID", package="DOSE"))
+  tryCatch(utils::data(list="DGN_PATHID2NAME", package="DOSE"))
+        EXTID2PATHID <- DGN_EXTID2PATHID <- get("DGN_EXTID2PATHID")
+        PATHID2EXTID <- DGN_PATHID2EXTID <- get("DGN_PATHID2EXTID")
+        PATHID2NAME <- DGN_PATHID2NAME <- get("DGN_PATHID2NAME")
+
+        rm(DGN_EXTID2PATHID, envir = .GlobalEnv)
+        rm(DGN_PATHID2EXTID, envir = .GlobalEnv)
+        rm(DGN_PATHID2NAME, envir = .GlobalEnv)
 
   y <- gseDO(genelistDEGs_sort,
              nPerm = 100,
@@ -59,6 +67,10 @@ GSEA <- function(DEGsmatrix,
              pAdjustMethod = "BH",
              verbose = FALSE)
 
+  if (inherits(result, "try-error")) {
+      result <- gseDO(geneList)
+  }
+  
   res <- as.matrix(summary(y))
 
   if (plot == TRUE) {
