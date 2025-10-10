@@ -22,9 +22,10 @@
 #' total of eight columns.
 #' @export
 #' @examples
-#' genes_query <- "BRCA1"
+#' genes_query <- "ABCG2"
 #' dataGLS <- GLS(genes = genes_query,
-#'                query_string = "AND cancer AND driver")
+#'               query_string = "AND cancer AND driver AND
+#'               '2020/01/01'[Date - Publication] : '2025/01/01'[Date - Publication]")
 GLS <- function(genes,
                 query_string = "AND cancer AND driver") {
 
