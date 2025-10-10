@@ -23,7 +23,7 @@ AND, OR, NOT can be applied and tags such as [AU],
 A tibble containing results of literature search
 where PubMed was queried for information of input genes.
 Each row in the tibble contains a PubMed ID matching the
-query, doi, title, abstract, year of publication, keywords,
+query, doi, title, abstract, year of publication, mesh_terms,
 and total number of PubMed publications, resulting in a
 total of eight columns.
 }
@@ -32,7 +32,8 @@ GLS
 This function carries out gene literature search.
 }
 \examples{
-genes_query <- "BRCA1"
+genes_query <- "ABCG2"
 dataGLS <- GLS(genes = genes_query,
-               query_string = "AND cancer AND driver")
+              query_string = "AND cancer AND driver AND
+              '2020/01/01'[Date - Publication] : '2025/01/01'[Date - Publication]")
 }
