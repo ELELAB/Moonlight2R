@@ -25,10 +25,10 @@ where the CpG probes are in the rows and samples are in the
 columns}
 
 \item{dataEXP}{A data matrix containing the gene expression
-data where the genes are in the rows and the samples are in 
+data where the genes are in the rows and the samples are in
 the columns}
 
-\item{dataPRA}{A table containing the output of the PRA 
+\item{dataPRA}{A table containing the output of the PRA
 function}
 
 \item{dataDEGs}{A table containing the output of a DEA
@@ -36,7 +36,7 @@ where gene names are rownames}
 
 \item{sample_info}{A table containing information on the
 samples. This table needs to contain two columns called
-primary and sample.type. The primary column contains 
+primary and sample.type. The primary column contains
 sample names which should be the same as the column names
 in dataMET. The sample.type column indicates for each
 sample if it is a Cancer or Normal sample.}
@@ -49,45 +49,45 @@ is HM450.}
 \item{prevalence_filter}{A float or NULL representing if
 a prevalence filter should be applied or not. Default is NULL,
 meaning a prevalence filter will not be applied. If a float
-is specified, a prevalence filter will be applied where 
+is specified, a prevalence filter will be applied where
 methylation states of probes will be altered depending on the
-threshold of prevalence supplied as prevalence_filter. For 
-example, if prevalence_filter = 20, it means that if the prevalence 
-of the hyper- or hypomethylated CpG probe exceeds 20, the methylation 
-state will be unchanged but if the prevalence is lower than 20 the 
+threshold of prevalence supplied as prevalence_filter. For
+example, if prevalence_filter = 20, it means that if the prevalence
+of the hyper- or hypomethylated CpG probe exceeds 20, the methylation
+state will be unchanged but if the prevalence is lower than 20 the
 methylation state will be changed to NA, meaning no methylation state
-was detected. In case of dual methylated probes, the methylation 
-state will stay dual if both the prevalence of hyper- and 
-hypomethylations exceed 20, but if only one of the prevalences exceed 
-20 the dual state will be changed to the state exceeding 20. If none 
+was detected. In case of dual methylated probes, the methylation
+state will stay dual if both the prevalence of hyper- and
+hypomethylations exceed 20, but if only one of the prevalences exceed
+20 the dual state will be changed to the state exceeding 20. If none
 of the prevalences exceed 20, the dual state will be changed to NA.}
 
 \item{output_dir}{Path to where the results will be stored.
-If this directory does not exist, it will be created by the 
+If this directory does not exist, it will be created by the
 function. Default is ./GMAresults.}
 
 \item{cores}{Number of cores to be used. Default is 1.}
 
 \item{roadmap.epigenome.ids}{A character string representing
-the epigenome ID that will be used to select enhancers. 
-Since enhancers are tissue-specific, the tissue type needs 
+the epigenome ID that will be used to select enhancers.
+Since enhancers are tissue-specific, the tissue type needs
 to be specified in EpiMix. The enhancers are found from the
 RoadmapEpigenome project and the IDs can be found from
 Figure 2 in the publication with doi: 10.1038/nature14248.
 Default is NULL.}
 
 \item{roadmap.epigenome.groups}{A character string representing
-the epigenome group that will be used to select enhancers. 
-Details are provided above with the roadmap.epigenome.ids 
+the epigenome group that will be used to select enhancers.
+Details are provided above with the roadmap.epigenome.ids
 parameter. Default is NULL.}
 }
 \value{
 List of two elements, containing predicted oncogenes
-and tumor suppressors. Additionally, various output files are 
-saved in the specified output directory: 
+and tumor suppressors. Additionally, various output files are
+saved in the specified output directory:
 DEG_Methylation_Annotations.rda, Oncogenic_mediators_methylation_summary.rda,
-EpiMix_Results_Enhancer.rds, EpiMix_Results_Regular.rds, 
-FunctionalPairs_Enhancer.csv, FunctionalPairs_Regular.csv, 
+EpiMix_Results_Enhancer.rds, EpiMix_Results_Regular.rds,
+FunctionalPairs_Enhancer.csv, FunctionalPairs_Regular.csv,
 FunctionalProbes_Regular.rds
 }
 \description{
@@ -104,11 +104,12 @@ data("NCG")
 data("EncodePromoters")
 data("MetEvidenceDriver")
 pattern <- "^(.{4}-.{2}-.{4}-.{2}).*"
-colnames(dataFilt) <- sub(pattern, "\\\\1", colnames(dataFilt))
-dataGMA <- GMA(dataMET = dataMethyl, dataEXP = dataFilt, 
-dataPRA = dataPRA, dataDEGs = DEGsmatrix, 
+dataFilt_subset <- dataFilt[,1:10]
+colnames(dataFilt_subset) <- sub(pattern, "\\\\1", colnames(dataFilt_subset))
+dataGMA <- GMA(dataMET = dataMethyl, dataEXP = dataFilt_subset,
+dataPRA = dataPRA, dataDEGs = DEGsmatrix,
 sample_info = LUAD_sample_anno, met_platform = "HM450",
 prevalence_filter = NULL,
-output_dir = "./GMAresults", cores = 1, roadmap.epigenome.ids = "E096", 
+output_dir = "./GMAresults", cores = 1, roadmap.epigenome.ids = "E096",
 roadmap.epigenome.groups = NULL)
 }
