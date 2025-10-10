@@ -1,4 +1,10 @@
 
+# Moonlight2R 1.6.3
+
+## Summary
+
+* Updated GLS() and GMA() examples to reduce the check timings
+
 # Moonlight2R 1.6.2
 
 ## Summary
