@@ -10,21 +10,33 @@
 
 * Updated version for BioC release
 
+# Moonlight2R 1.7.4
+
 ## Summary
 
 * Updated GLS() and GMA() examples to reduce the check timings
 
-# Moonlight2R 1.6.2
+# Moonlight2R 1.7.3
+
+## Summary
+
+* fixed error in GSEA() module due to issues in DOSE package devel version
+
+# Moonlight2R 1.7.2
 
 ## Summary
 
 * fixed error in plotDMA and other plotting functions due to updates in tidyHeatmap package
 
-# Moonlight2R 1.6.1
+# Moonlight2R 1.7.1
 
 ## Summary
 
 * fixed error in GLS function due to updates in easyPubMed package
+
+# Moonlight2R 1.7.0
+
+* version bump due to release of Bioconductor 3.21
 
 # Moonlight2R 1.5.5
 
