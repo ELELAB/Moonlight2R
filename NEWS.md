@@ -1,3 +1,15 @@
+# Moonlight2R 1.9.1
+
+## Summary
+
+* Removed hotfix in GSEA() module
+
+# Moonlight2R 1.9.0
+
+## Summary
+
+* Updated version for BioC release
+
 # Moonlight2R 1.7.4
 
 ## Summary
