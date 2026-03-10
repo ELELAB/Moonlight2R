@@ -4,12 +4,14 @@
 \alias{FEA}
 \title{FEA}
 \usage{
-FEA(BPname = NULL, DEGsmatrix)
+FEA(BPname = NULL, DEGsmatrix, method = "ora")
 }
 \arguments{
 \item{BPname}{BPname biological process such as "proliferation of cells", "ALL" (default) if FEA should be carried out for all 101 biological processes}
 
-\item{DEGsmatrix}{DEGsmatrix output from DEA such as dataDEGs}
+\item{DEGsmatrix}{output from DEA such as dataDEGs or from DAA such as differential abundace matrix}
+
+\item{method}{method to perform Functional Enirchment analysis. Must be either "ora" (Over-Representation Analysis) or "fgsea" (Fast Gene Set Enrichment Analysis)}
 }
 \value{
 matrix from FEA

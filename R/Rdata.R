@@ -15,6 +15,22 @@
 #'
 "DEGsmatrix"
 
+#' Differentially abundant proteins
+#'
+#'@description  A matrix containing differentially abundant proteins between colon adenocarinoma cancer and normal
+#' samples found using CPTAC data portal. 
+#'@details The matrix contains the differentially abundant protein with gene names in rows and log2 fold change
+#' PValues and  Direction of abundance change values in columns.
+#'
+#'@docType data
+#'@usage data(DAPsmatrix)
+#'@name DAPsmatrix
+#'@aliases DAPsmatrix
+#'@return A 4873x4 matrix
+#'
+#'@format A 4873x4 matrix
+#'
+"DAPsmatrix"
 
 #' Cancer-related biological processes
 #'
