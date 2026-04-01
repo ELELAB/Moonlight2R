@@ -4,12 +4,12 @@
 \alias{FEA}
 \title{FEA}
 \usage{
-FEA(BPname = NULL, DEGsmatrix, method = "ora")
+FEA(BPname = NULL, DiffMatrix, method = "ora")
 }
 \arguments{
 \item{BPname}{BPname biological process such as "proliferation of cells", "ALL" (default) if FEA should be carried out for all 101 biological processes}
 
-\item{DEGsmatrix}{output from DEA such as dataDEGs or from DAA such as differential abundace matrix}
+\item{DiffMatrix}{output from DEA such as dataDEGs or from DAA such as differential abundace matrix}
 
 \item{method}{method to perform Functional Enirchment analysis. Must be either "ora" (Over-Representation Analysis) or "fgsea" (Fast Gene Set Enrichment Analysis)}
 }
@@ -17,12 +17,15 @@ FEA(BPname = NULL, DEGsmatrix, method = "ora")
 matrix from FEA
 }
 \description{
-This function carries out the functional enrichment analysis (FEA)
+This function carries out the functional enrichment analysis (FEA).
+The analysis can be performed using as input a data matrix from Differential Expression Analysis of genes or Differential Abundance Analysis of proteins.
+The analysis can be performed using the ORA (Over Representation Analysis)-based method which implements Fisher's Exact Test or the pre-ranked FCS(Functional Class Scoring)-based method
+which implements fgsea (Fast Gene Set Enrichment Analysis).
 }
 \examples{
 data(DEGsmatrix)
 data(DiseaseList)
 data(EAGenes)
 DEGsmatrix <- DEGsmatrix[seq.int(2), ]
-dataFEA <- FEA(DEGsmatrix = DEGsmatrix, BPname = "apoptosis")
+dataFEA <- FEA(DiffMatrix = DEGsmatrix, BPname = "apoptosis")
 }

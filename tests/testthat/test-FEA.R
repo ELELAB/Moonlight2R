@@ -4,17 +4,19 @@
 data("DEGsmatrix")
 data("DiseaseList")
 data("EAGenes")
-DEGsmatrix <- DEGsmatrix[1:10, ]
-dataFEA_test <- FEA(DEGsmatrix = DEGsmatrix)
-
-# Load example data of FEA serving as reference point
+DEGsmatrix_ora <- DEGsmatrix[1:10, ]
+dataFEA_test_ora <- FEA(DiffMatrix = DEGsmatrix_ora, method="ora")
+set.seed(123)
+dataFEA_test_fgsea <- FEA(DiffMatrix = DEGsmatrix, method="fgsea")
+# Load example data of FEA serving as reference points
 data(dataFEA)
+data(dataFEA_fgsea)
 
-# Test that output of FEA is as expected
+# Test that output of FEA using ORA-based method is as expected 
 
 # Test number of columns
 test_that("Number of columns in FEA output are equal to 7", {
-  expect_equal(dim(dataFEA_test), c(101, 7))
+  expect_equal(dim(dataFEA_test_ora), c(101, 7))
 })
 
 dataFEA_colnames <- c("Diseases.or.Functions.Annotation", "Moonlight.Z.score",
@@ -22,21 +24,55 @@ dataFEA_colnames <- c("Diseases.or.Functions.Annotation", "Moonlight.Z.score",
 
 # Test correct column names
 test_that("Column names in FEA output are correct", {
-  expect_equal(colnames(dataFEA_test), dataFEA_colnames)
+  expect_equal(colnames(dataFEA_test_ora), dataFEA_colnames)
 })
 
 # Test expected class of values in output
 test_that("Moonlight scores, p-values and FDR values are numeric", {
-  expect_type(dataFEA_test$Diseases.or.Functions.Annotation, "character")
-  expect_type(dataFEA_test$Moonlight.Z.score, "double")
-  expect_type(dataFEA_test$p.Value, "double")
-  expect_type(dataFEA_test$FDR, "double")
-  expect_type(dataFEA_test$commonNg, "integer")
-  expect_type(dataFEA_test$FunctionNg, "integer")
-  expect_type(dataFEA_test$Molecules, "character")
+  expect_type(dataFEA_test_ora$Diseases.or.Functions.Annotation, "character")
+  expect_type(dataFEA_test_ora$Moonlight.Z.score, "double")
+  expect_type(dataFEA_test_ora$p.Value, "double")
+  expect_type(dataFEA_test_ora$FDR, "double")
+  expect_type(dataFEA_test_ora$commonNg, "integer")
+  expect_type(dataFEA_test_ora$FunctionNg, "integer")
+  expect_type(dataFEA_test_ora$Molecules, "character")
 })
 
 # Test that output of FEA is as expected compared to reference 
 test_that("FEA output is identical to reference point", {
-  expect_equal(dataFEA_test, dataFEA)
+  expect_equal(dataFEA_test_ora, dataFEA)
+})
+
+
+# Test that output of FEA using fgsea method is as expected
+
+# Test number of columns
+test_that("Number of columns in FEA output are equal to 8", {
+  expect_equal(dim(dataFEA_test_fgsea), c(101, 8))
+})
+
+dataFEA_colnames <- c("Diseases.or.Functions.Annotation","Moonlight.Z.score", "p.value",
+                      "padj", "ES", "NES", "size", "leadingEdge")
+
+# Test correct column names
+test_that("Column names in FEA output are correct", {
+  expect_equal(colnames(dataFEA_test_fgsea), dataFEA_colnames)
+})
+
+# Test expected class of values in output
+test_that("Moonlight scores, p-values and FDR values are numeric", {
+  expect_type(dataFEA_test_fgsea$Diseases.or.Functions.Annotation, "character")
+  expect_type(dataFEA_test_fgsea$p.value, "double")
+  expect_type(dataFEA_test_fgsea$padj, "double")
+  expect_type(dataFEA_test_fgsea$ES, "double")
+  expect_type(dataFEA_test_fgsea$NES, "double")
+  expect_type(dataFEA_test_fgsea$size, "integer")
+  expect_type(dataFEA_test_fgsea$leadingEdge, "list")
+  expect_true(all(sapply(dataFEA_test_fgsea$leadingEdge, is.character)))
+
+})
+
+# Test that output of FEA is as expected compared to reference 
+test_that("FEA output is identical to reference point", {
+  expect_equal(dataFEA_test_fgsea, dataFEA_fgsea)
 })

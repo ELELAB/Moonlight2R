@@ -1,6 +1,7 @@
 cscape_somatic_output
 dataDMA
 dataFEA
+dataFEA_fgsea
 dataFilt
 dataGLS
 dataGRN_no_noise
