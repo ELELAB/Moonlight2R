@@ -477,7 +477,7 @@ knitr::include_graphics("Moonlight2_pipeline_upd.png")
 
 The proposed pipeline consists of following eight steps:
 
-1. The input to Moonlight is a set of differentially expressed genes between two biological conditions
+1. The input to Moonlight is a set of Differentially Expressed Genes (DEGs) between two biological conditions
 such as cancer and healthy samples or two cancer subtyoes. Besides differentially expressed genes,
 gene expression data is also needed. Mutation data and/or methylation data are also needed.
 2. **FEA** Functional Enrichment Analysis, using Fisher's test as default method or the Fast Gene Set Enrichment Analysis (fgsea), to identify gene sets (with biological
@@ -619,7 +619,7 @@ dataFilt_GEO <- getDataGEO(TCGAtumor = "ESCA")
 ## `FEA`: Functional Enrichment Analysis
 The user can perform a functional enrichment analysis using the function `FEA`.
 To perform the analysis, the user can choose among two different methods: 
-the default method is "ora" and it is based on Fisher's test. It is used to tests whether a gene set is overrepresented in a subset of DEGs or DAPs.
+the default method is "ora" and it is based on Fisher's test. It is used to tests whether a gene set is overrepresented in a subset of Differentially Expressed Genes (DEGs) or Differentially Abundant Proteins (DAPs).
 The second method is "fgsea" and it is based on Fast Gene Set Enrichment Analysis. It is used to tests whether a gene set is enriched across a fully ranked list of DEGs or DAPs.
 For each DEG or DAP in the gene set a z-score is calculated. This score indicates how the genes act in the gene set.
 ```{r, eval = TRUE, echo = TRUE, results='hide'}

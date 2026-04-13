@@ -256,6 +256,6 @@ FEA <- function(BPname = NULL,
         Zscore <- 0
       }
 
-      return (Zscore)
+      return(Zscore)
 
 }

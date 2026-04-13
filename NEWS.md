@@ -4,6 +4,12 @@
 
 * Added new dataset for proteomics data and implemented fgsea method in the FEA function
 
+# Moonlight2R 1.9.1
+
+## Summary
+
+* Removed hotfix in GSEA() module
+
 # Moonlight2R 1.9.0
 
 ## Summary
