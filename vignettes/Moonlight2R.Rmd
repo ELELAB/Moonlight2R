@@ -477,11 +477,11 @@ knitr::include_graphics("Moonlight2_pipeline_upd.png")
 
 The proposed pipeline consists of following eight steps:
 
-1. The input to Moonlight is a set of differentially expressed genes between two biological conditions
+1. The input to Moonlight is a set of Differentially Expressed Genes (DEGs) between two biological conditions
 such as cancer and healthy samples or two cancer subtyoes. Besides differentially expressed genes,
 gene expression data is also needed. Mutation data and/or methylation data are also needed.
-2. **FEA** Functional Enrichment Analysis, using Fisher's test, to identify gene sets (with biological
-functions linked to cancer) significantly enriched by regulated genes (RG).
+2. **FEA** Functional Enrichment Analysis, using Fisher's test as default method or the Fast Gene Set Enrichment Analysis (fgsea), to identify gene sets (with biological
+functions linked to cancer) significantly enriched by regulated genes (RG). The analysis can be performed for both transcriptomic and proteomic dataset.
 3. **GRN** Gene Regulatory Network inferred between each single DEG (sDEG) and all genes by means of
 mutual information, obtaining for each DEG a list of RG.
 4. **URA** Upstream Regulator Analysis for DEGs in each enriched gene set, we applied z-score being
@@ -618,13 +618,15 @@ dataFilt_GEO <- getDataGEO(TCGAtumor = "ESCA")
 
 ## `FEA`: Functional Enrichment Analysis
 The user can perform a functional enrichment analysis using the function `FEA`.
-For each DEG in the gene set a z-score is calculated. This score indicates how the genes act in the gene set.
-
+To perform the analysis, the user can choose among two different methods: 
+the default method is "ora" and it is based on Fisher's test. It is used to tests whether a gene set is overrepresented in a subset of Differentially Expressed Genes (DEGs) or Differentially Abundant Proteins (DAPs).
+The second method is "fgsea" and it is based on Fast Gene Set Enrichment Analysis. It is used to tests whether a gene set is enriched across a fully ranked list of DEGs or DAPs.
+For each DEG or DAP in the gene set a z-score is calculated. This score indicates how the genes act in the gene set.
 ```{r, eval = TRUE, echo = TRUE, results='hide'}
 data(DEGsmatrix)
 data(DiseaseList)
 data(EAGenes)
-dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
+dataFEA <- FEA(DiffMatrix = DEGsmatrix, method="ora")
 ```
 
 The output can be visualized with a FEA plot.
@@ -670,7 +672,7 @@ data(DEGsmatrix)
 data(DiseaseList)
 data(EAGenes)
 
-dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
+dataFEA <- FEA(DiffMatrix = DEGsmatrix)
 
 BPselected <- dataFEA$Diseases.or.Functions.Annotation[1:5]
 dataURA <- URA(dataGRN = dataGRN,
@@ -1010,7 +1012,7 @@ data(EAGenes)
 data(tabGrowBlock)
 data(knownDriverGenes)
 
-dataFEA <- FEA(DEGsmatrix = DEGsmatrix)
+dataFEA <- FEA(DiffMatrix = DEGsmatrix)
 
 dataGRN <- GRN(TFs = sample(rownames(DEGsmatrix), 100),
                DEGsmatrix = DEGsmatrix,

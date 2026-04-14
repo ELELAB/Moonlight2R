@@ -1,6 +1,7 @@
 cscape_somatic_output
 dataDMA
 dataFEA
+dataFEA_fgsea
 dataFilt
 dataGLS
 dataGRN_no_noise
@@ -12,6 +13,7 @@ dataURA
 dataGMA
 DEG_Mutations_Annotations
 DEGsmatrix
+DAPsmatrix
 DiseaseList
 EAGenes
 EncodePromoters

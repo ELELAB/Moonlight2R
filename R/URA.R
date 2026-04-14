@@ -70,7 +70,7 @@ BP(s) among possible BPs stored in the DiseaseList object.")
     DEGsregulon <- intersect(rownames(DEGsmatrix), currentTF_regulon)
 
     if (length(DEGsregulon) > 2) {
-      tabFEA <- FEA(BPname = BPname, DEGsmatrix = DEGsmatrix[DEGsregulon, ])
+      tabFEA <- FEA(BPname = BPname, DiffMatrix = DEGsmatrix[DEGsregulon, ])
       return(tabFEA$Moonlight.Z.score)
     } else {
       return(rep(0, length(BPname)))

@@ -3,7 +3,7 @@
 \docType{data}
 \name{dataFEA}
 \alias{dataFEA}
-\title{Functional enrichment analysis}
+\title{Functional enrichment analysis with ORA method}
 \format{
 A dataframe of dimension 101x7
 }
@@ -14,7 +14,7 @@ data(dataFEA)
 A dataframe of dimension 101x7
 }
 \description{
-The output of the FEA function which does enrichment analysis
+The output of the FEA function which does enrichment analysis using ORA-based method
 }
 \details{
 The input to the FEA is the differentially expressed genes.

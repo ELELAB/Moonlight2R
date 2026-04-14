@@ -15,6 +15,22 @@
 #'
 "DEGsmatrix"
 
+#' Differentially abundant proteins
+#'
+#'@description  A matrix containing differentially abundant proteins between colon adenocarinoma cancer and normal
+#' samples found using CPTAC data portal. 
+#'@details The matrix contains the differentially abundant protein with gene names in rows and log2 fold change
+#' PValues and  Direction of abundance change values in columns.
+#'
+#'@docType data
+#'@usage data(DAPsmatrix)
+#'@name DAPsmatrix
+#'@aliases DAPsmatrix
+#'@return A 4873x4 matrix
+#'
+#'@format A 4873x4 matrix
+#'
+"DAPsmatrix"
 
 #' Cancer-related biological processes
 #'
@@ -86,9 +102,9 @@
 #'
 "dataFilt"
 
-#' Functional enrichment analysis
+#' Functional enrichment analysis with ORA method
 #'
-#'@description  The output of the FEA function which does enrichment analysis
+#'@description  The output of the FEA function which does enrichment analysis using ORA-based method
 #'@details The input to the FEA is the differentially expressed genes.
 #'
 #'@docType data
@@ -100,6 +116,21 @@
 #'@format A dataframe of dimension 101x7
 #'
 "dataFEA"
+
+#' Functional enrichment analysis with fgsea method
+#'
+#'@description  The output of the FEA function which does enrichment analysis using fgsea method
+#'@details The input to the FEA is the differentially expressed genes.
+#'
+#'@docType data
+#'@usage data(dataFEA_fgsea)
+#'@name dataFEA_fgsea
+#'@aliases dataFEA_fgsea
+#'@return A dataframe of dimension 101x8
+#'
+#'@format A dataframe of dimension 101x8
+#'
+"dataFEA_fgsea"
 
 #' Gene regulatory network
 #'
