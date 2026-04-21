@@ -1,3 +1,9 @@
+# Moonlight2R 1.9.3
+
+## Summary
+
+* Fixed tests for FEA with "fgsea" as method
+
 # Moonlight2R 1.9.2
 
 ## Summary
