@@ -69,7 +69,9 @@ FEA <- function(BPname = NULL,
     pvals <- pmax(DiffMatrix$PVal, .Machine$double.xmin)
     rankings <- sign(DiffMatrix$logFC)*(-log10(pvals))
     names(rankings)  <- rownames(DiffMatrix)
-    rankings <- sort(rankings, decreasing = TRUE)
+    # sorting strategy to avoid different sorting in case of tie ranks
+    rankings <- rankings[order(-rankings, names(rankings))]
+    
     
     pathwayNamesList <- list()
     for (k in seq_along(lf2)) {
