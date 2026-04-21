@@ -621,6 +621,7 @@ The user can perform a functional enrichment analysis using the function `FEA`.
 To perform the analysis, the user can choose among two different methods: 
 the default method is "ora" and it is based on Fisher's test. It is used to tests whether a gene set is overrepresented in a subset of Differentially Expressed Genes (DEGs) or Differentially Abundant Proteins (DAPs).
 The second method is "fgsea" and it is based on Fast Gene Set Enrichment Analysis. It is used to tests whether a gene set is enriched across a fully ranked list of DEGs or DAPs.
+When method = "fgsea", the function internally sets a random seed. This ensures that the stochastic permutation process used to calculate NES scores and p-values is reproducible across different runs.
 For each DEG or DAP in the gene set a z-score is calculated. This score indicates how the genes act in the gene set.
 ```{r, eval = TRUE, echo = TRUE, results='hide'}
 data(DEGsmatrix)

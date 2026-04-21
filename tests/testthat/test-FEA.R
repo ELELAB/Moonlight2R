@@ -6,7 +6,6 @@ data("DiseaseList")
 data("EAGenes")
 DEGsmatrix_ora <- DEGsmatrix[1:10, ]
 dataFEA_test_ora <- FEA(DiffMatrix = DEGsmatrix_ora, method="ora")
-set.seed(123)
 dataFEA_test_fgsea <- FEA(DiffMatrix = DEGsmatrix, method="fgsea")
 # Load example data of FEA serving as reference points
 data(dataFEA)
@@ -75,19 +74,6 @@ test_that("Moonlight scores, p-values and FDR values are numeric", {
 # Test that output of FEA is as expected compared to reference 
 test_that("FEA output is identical to reference point", {
   
-  test_res <- dataFEA_test_fgsea[order(dataFEA_test_fgsea$Diseases.or.Functions.Annotation), ]
-  ref_res <- dataFEA_fgsea[order(dataFEA_fgsea$Diseases.or.Functions.Annotation), ]
-  
-  expect_equal(test_res$Diseases.or.Functions.Annotation, ref_res$Diseases.or.Functions.Annotation)
-  expect_equal(test_res$size, ref_res$size)
-  
-  # allow strict tolerance for ES 
-  expect_equal(test_res$ES, ref_res$ES, tolerance = 1e-5)
-  # allow more loose tolerance for NES
-  expect_equal(test_res$NES, ref_res$NES, tolerance = 1e-1)
-
-  # allow more loose tolerance for permutation p-values 
-  expect_equal(test_res$p.value, ref_res$p.value, tolerance = 1e-1)
-  expect_equal(test_res$padj, ref_res$padj, tolerance = 1e-1)
+  expect_equal(dataFEA_test_fgsea, dataFEA_fgsea, tolerance = 1e-5)
 
 })

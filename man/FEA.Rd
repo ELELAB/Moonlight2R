@@ -4,7 +4,7 @@
 \alias{FEA}
 \title{FEA}
 \usage{
-FEA(BPname = NULL, DiffMatrix, method = "ora")
+FEA(BPname = NULL, DiffMatrix, method = "ora", seed = 123)
 }
 \arguments{
 \item{BPname}{BPname biological process such as "proliferation of cells", "ALL" (default) if FEA should be carried out for all 101 biological processes}
@@ -12,6 +12,8 @@ FEA(BPname = NULL, DiffMatrix, method = "ora")
 \item{DiffMatrix}{output from DEA such as dataDEGs or from DAA such as differential abundace matrix}
 
 \item{method}{method to perform Functional Enirchment analysis. Must be either "ora" (Over-Representation Analysis) or "fgsea" (Fast Gene Set Enrichment Analysis)}
+
+\item{seed}{internal seed before the 'fgsea' function is called to ensure reproducibility of the permutation-based p-values. Default is 123}
 }
 \value{
 matrix from FEA
