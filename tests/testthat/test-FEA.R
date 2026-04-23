@@ -5,8 +5,8 @@ data("DEGsmatrix")
 data("DiseaseList")
 data("EAGenes")
 DEGsmatrix_ora <- DEGsmatrix[1:10, ]
-dataFEA_test_ora <- FEA(DiffMatrix = DEGsmatrix_ora, method="ora")
-dataFEA_test_fgsea <- FEA(DiffMatrix = DEGsmatrix, method="fgsea")
+dataFEA_test_ora <- FEA(DiffMatrix = DEGsmatrix_ora, method = "ora")
+dataFEA_test_fgsea <- FEA(DiffMatrix = DEGsmatrix, method = "fgsea", seed = 123)
 # Load example data of FEA serving as reference points
 data(dataFEA)
 data(dataFEA_fgsea)

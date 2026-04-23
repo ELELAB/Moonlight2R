@@ -2,7 +2,7 @@
 
 ## Summary
 
-* Fixed tests for FEA with "fgsea" as method
+* Fixed tests for FEA with "fgsea" as method and added new parameter ('seed') to the FEA() function for setting random seed and control stochastic perumation-based fgsea scores and p-values.
 
 # Moonlight2R 1.9.2
 
