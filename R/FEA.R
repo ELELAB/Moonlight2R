@@ -7,6 +7,7 @@
 #' @param BPname BPname biological process such as "proliferation of cells", "ALL" (default) if FEA should be carried out for all 101 biological processes
 #' @param DiffMatrix output from DEA such as dataDEGs or from DAA such as differential abundace matrix
 #' @param method method to perform Functional Enirchment analysis. Must be either "ora" (Over-Representation Analysis) or "fgsea" (Fast Gene Set Enrichment Analysis)
+#' @param seed internal seed before the 'fgsea' function is called to ensure reproducibility of the permutation-based p-values. Default is NULL
 #' @importFrom stats p.adjust
 #' @importFrom fgsea fgsea
 #' @return matrix from FEA
@@ -19,7 +20,8 @@
 #' dataFEA <- FEA(DiffMatrix = DEGsmatrix, BPname = "apoptosis")
 FEA <- function(BPname = NULL,
                 DiffMatrix,
-                method = "ora") {
+                method = "ora",
+                seed = NULL) {
 
   # List of variable names
   variables_to_check <- c("DiseaseList", "EAGenes")
@@ -69,7 +71,9 @@ FEA <- function(BPname = NULL,
     pvals <- pmax(DiffMatrix$PVal, .Machine$double.xmin)
     rankings <- sign(DiffMatrix$logFC)*(-log10(pvals))
     names(rankings)  <- rownames(DiffMatrix)
-    rankings <- sort(rankings, decreasing = TRUE)
+    # sorting strategy to avoid different sorting in case of tie ranks
+    rankings <- rankings[order(-rankings, names(rankings))]
+    
     
     pathwayNamesList <- list()
     for (k in seq_along(lf2)) {
@@ -82,7 +86,11 @@ FEA <- function(BPname = NULL,
 
     pathway_sizes <- sapply(DiseaseList, function(pathway) length(unique(pathway$ID)))
     max_pathway_size <- max(pathway_sizes)
-
+    
+    if (!is(seed, "NULL")){
+      set.seed(seed)
+    }
+    
     fgseaRes <- fgsea(pathways = pathwayNamesList, stats = rankings, scoreType = 'std', minSize = 1, maxSize = max_pathway_size, nproc = 1)
     
     bp_score_collection <- list()

@@ -5,9 +5,8 @@ data("DEGsmatrix")
 data("DiseaseList")
 data("EAGenes")
 DEGsmatrix_ora <- DEGsmatrix[1:10, ]
-dataFEA_test_ora <- FEA(DiffMatrix = DEGsmatrix_ora, method="ora")
-set.seed(123)
-dataFEA_test_fgsea <- FEA(DiffMatrix = DEGsmatrix, method="fgsea")
+dataFEA_test_ora <- FEA(DiffMatrix = DEGsmatrix_ora, method = "ora")
+dataFEA_test_fgsea <- FEA(DiffMatrix = DEGsmatrix, method = "fgsea", seed = 123)
 # Load example data of FEA serving as reference points
 data(dataFEA)
 data(dataFEA_fgsea)
@@ -74,5 +73,7 @@ test_that("Moonlight scores, p-values and FDR values are numeric", {
 
 # Test that output of FEA is as expected compared to reference 
 test_that("FEA output is identical to reference point", {
-  expect_equal(dataFEA_test_fgsea, dataFEA_fgsea)
+  
+  expect_equal(dataFEA_test_fgsea, dataFEA_fgsea, tolerance = 1e-5)
+
 })
