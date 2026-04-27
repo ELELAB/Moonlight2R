@@ -1,3 +1,9 @@
+# Moonlight2R 1.9.4
+
+## Summary
+
+* Made p-value tests for FEA(method='fgsea') more qualitative to address low reproducibility of gfsea()
+
 # Moonlight2R 1.9.3
 
 ## Summary

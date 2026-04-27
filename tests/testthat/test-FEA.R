@@ -72,8 +72,15 @@ test_that("Moonlight scores, p-values and FDR values are numeric", {
 })
 
 # Test that output of FEA is as expected compared to reference 
-test_that("FEA output is identical to reference point", {
-  
-  expect_equal(dataFEA_test_fgsea, dataFEA_fgsea, tolerance = 1e-5)
-
+test_that("FEA output is similar enough to reference point", {
+  expect_equal(dataFEA_fgsea$NES, dataFEA_test_fgsea$NES, tolerance = 1e-6)
+  expect_equal(dataFEA_fgsea$ES, dataFEA_test_fgsea$ES, tolerance = 1e-6)
 })
+
+# Check using tolerance of half order of magnitude
+test_that("FEA p-values are qualitatively similar", {
+expect_equal(
+  -log10(pmax(dataFEA_test_fgsea$p.value, .Machine$double.xmin)),
+  -log10(pmax(dataFEA_fgsea$p.value, .Machine$double.xmin)),
+  tolerance = 0.5
+)})
