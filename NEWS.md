@@ -1,3 +1,9 @@
+# Moonlight2R 1.11.1
+
+## Summary
+
+* Fix FEA Moonlight Z-score to consider experimental logFC in the score calculation
+
 # Moonlight2R 1.9.4
 
 ## Summary
