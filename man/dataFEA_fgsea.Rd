@@ -5,13 +5,13 @@
 \alias{dataFEA_fgsea}
 \title{Functional enrichment analysis with fgsea method}
 \format{
-A dataframe of dimension 101x8
+A dataframe of dimension 101x9
 }
 \usage{
 data(dataFEA_fgsea)
 }
 \value{
-A dataframe of dimension 101x8
+A dataframe of dimension 101x9
 }
 \description{
 The output of the FEA function which does enrichment analysis using fgsea method

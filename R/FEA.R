@@ -97,26 +97,38 @@ FEA <- function(BPname = NULL,
       
       setTxtProgressBar(pb, k)
 
-      res <- as.data.frame(matrix(0, nrow = 1, ncol = 2,
-                                  dimnames = list(1, c("pathway",
-                                                     "Moonlight.Z.score"))))
-     
+      res <- as.data.frame(matrix(0, nrow = 1, ncol = 5,
+                                  dimnames = list(1, c("Diseases.or.Functions.Annotation", 
+                                                        "Moonlight.Z.score", 
+                                                        "commonNg", 
+                                                        "FunctionNg", 
+                                                        "Molecules"))))
+    
+      GeneList <- data.frame(PROBE_ID = rownames(DiffMatrix),
+                            logFC = DiffMatrix$logFC,
+                            stringsAsFactors = FALSE)
       
-      
-      pathway_data <- fgseaRes[fgseaRes$pathway == lf2[k],]
-      
-      leadingEdge_genes <- unlist(pathway_data$leadingEdge)
-      
+      rownames(GeneList) <- GeneList$PROBE_ID
+
       selected_diseases <- as.data.frame(DiseaseList[[which(names(DiseaseList) == lf2[k])]])
-      
-      selected_diseases <- selected_diseases[selected_diseases$ID %in% leadingEdge_genes, ]
-      
-      res$pathway <- lf2[k]
+
+      selected_diseases$ID <- selected_diseases$Genes.in.dataset
+
+      res$commonNg <- length(intersect(GeneList$PROBE_ID, selected_diseases$ID))
+
+      res$FunctionNg <- nrow(selected_diseases)
+
+      res$Diseases.or.Functions.Annotation <- lf2[k]
+    
+      selected_diseases <- selected_diseases[selected_diseases$ID %in% rownames(DiffMatrix), ]
       
       selected_diseases$logFC <- DiffMatrix$logFC[match(selected_diseases$ID, rownames(DiffMatrix))]
       
       selected_diseases <- selected_diseases[!is.na(selected_diseases$logFC), ]
       
+      rownames(selected_diseases) <- selected_diseases$ID
+
+      res$Molecules <- paste0(GeneList$PROBE_ID, collapse = ",")
 
       Zscore <- .compute_moonlight_zscore(selected_diseases)
       
@@ -130,11 +142,12 @@ FEA <- function(BPname = NULL,
 
     bp_score_collection_merged <- bind_rows(bp_score_collection)
 
-    TableDiseasesNew <- fgseaRes %>% left_join(bp_score_collection_merged, by = "pathway")
-    TableDiseasesNew <- TableDiseasesNew %>% select(-log2err)
+    TableDiseasesNew <- fgseaRes %>% left_join(bp_score_collection_merged, by = c("pathway" = "Diseases.or.Functions.Annotation"))
+  
+    TableDiseasesNew <- TableDiseasesNew %>% select(-log2err, -size)
     TableDiseasesNew <- TableDiseasesNew %>% 
       rename("Diseases.or.Functions.Annotation" = pathway, "p.value" = pval) %>% 
-      select("Diseases.or.Functions.Annotation", "Moonlight.Z.score","p.value", "padj", "ES", "NES", "size", "leadingEdge")
+      select("Diseases.or.Functions.Annotation", "Moonlight.Z.score","p.value", "padj", "ES", "NES", "commonNg", "FunctionNg", "Molecules")
 
     
   }
