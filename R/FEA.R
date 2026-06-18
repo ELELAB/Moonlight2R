@@ -25,7 +25,7 @@ FEA <- function(BPname = NULL,
 
   # List of variable names
   variables_to_check <- c("DiseaseList", "EAGenes")
-  
+
   # Check and load variables if they do not exist
   for (variable_name in variables_to_check) {
     if (! variable_name %in% names(.GlobalEnv)) {
@@ -64,8 +64,8 @@ FEA <- function(BPname = NULL,
   TableDiseasesNew <- NULL
 
   pb <- txtProgressBar(min = 0, max = length(DiseaseList), style = 3)
- 
-   
+
+
   if (method == "fgsea") {
 
     pvals <- pmax(DiffMatrix$PVal, .Machine$double.xmin)
@@ -73,7 +73,7 @@ FEA <- function(BPname = NULL,
     names(rankings)  <- rownames(DiffMatrix)
     # sorting strategy to avoid different sorting in case of tie ranks
     rankings <- rankings[order(-rankings, names(rankings))]
-    
+
     pathwayNamesList <- list()
     for (k in seq_along(lf2)) {
 
@@ -85,29 +85,29 @@ FEA <- function(BPname = NULL,
 
     pathway_sizes <- sapply(DiseaseList, function(pathway) length(unique(pathway$ID)))
     max_pathway_size <- max(pathway_sizes)
-    
+
     if (!is(seed, "NULL")){
       set.seed(seed)
     }
-    
+
     fgseaRes <- fgsea(pathways = pathwayNamesList, stats = rankings, scoreType = 'std', minSize = 1, maxSize = max_pathway_size, nproc = 1)
-    
+
     bp_score_collection <- list()
     for (k in seq_along(lf2)) {
-      
+
       setTxtProgressBar(pb, k)
 
       res <- as.data.frame(matrix(0, nrow = 1, ncol = 5,
-                                  dimnames = list(1, c("Diseases.or.Functions.Annotation", 
-                                                        "Moonlight.Z.score", 
-                                                        "commonNg", 
-                                                        "FunctionNg", 
+                                  dimnames = list(1, c("Diseases.or.Functions.Annotation",
+                                                        "Moonlight.Z.score",
+                                                        "commonNg",
+                                                        "FunctionNg",
                                                         "Molecules"))))
-    
+
       GeneList <- data.frame(PROBE_ID = rownames(DiffMatrix),
                             logFC = DiffMatrix$logFC,
                             stringsAsFactors = FALSE)
-      
+
       rownames(GeneList) <- GeneList$PROBE_ID
 
       selected_diseases <- as.data.frame(DiseaseList[[which(names(DiseaseList) == lf2[k])]])
@@ -119,23 +119,25 @@ FEA <- function(BPname = NULL,
       res$FunctionNg <- nrow(selected_diseases)
 
       res$Diseases.or.Functions.Annotation <- lf2[k]
-    
-      selected_diseases <- selected_diseases[selected_diseases$ID %in% rownames(DiffMatrix), ]
-      
-      selected_diseases$logFC <- DiffMatrix$logFC[match(selected_diseases$ID, rownames(DiffMatrix))]
-      
+
+      GeneList <- GeneList[GeneList$PROBE_ID %in% selected_diseases$ID, ]
+
+      selected_diseases <- selected_diseases[selected_diseases$ID %in% GeneList[, "PROBE_ID"], ]
+
+      selected_diseases$logFC <- GeneList$logFC[match(selected_diseases$ID, GeneList$PROBE_ID)]
+
       selected_diseases <- selected_diseases[!is.na(selected_diseases$logFC), ]
-      
+
       rownames(selected_diseases) <- selected_diseases$ID
 
       res$Molecules <- paste0(GeneList$PROBE_ID, collapse = ",")
 
       Zscore <- .compute_moonlight_zscore(selected_diseases)
-      
+
       res$Moonlight.Z.score <- Zscore
-      
+
       bp_score_collection[[k]] <- res
-    
+
     }
 
     close(pb)
@@ -143,13 +145,13 @@ FEA <- function(BPname = NULL,
     bp_score_collection_merged <- bind_rows(bp_score_collection)
 
     TableDiseasesNew <- fgseaRes %>% left_join(bp_score_collection_merged, by = c("pathway" = "Diseases.or.Functions.Annotation"))
-  
+
     TableDiseasesNew <- TableDiseasesNew %>% select(-log2err, -size)
-    TableDiseasesNew <- TableDiseasesNew %>% 
-      rename("Diseases.or.Functions.Annotation" = pathway, "p.value" = pval) %>% 
+    TableDiseasesNew <- TableDiseasesNew %>%
+      rename("Diseases.or.Functions.Annotation" = pathway, "p.value" = pval) %>%
       select("Diseases.or.Functions.Annotation", "Moonlight.Z.score","p.value", "padj", "ES", "NES", "commonNg", "FunctionNg", "Molecules")
 
-    
+    TableDiseasesNew <- as.data.frame(TableDiseasesNew)
   }
   else if (method == "ora") {
 
@@ -198,15 +200,15 @@ FEA <- function(BPname = NULL,
       }
 
       GeneList <- GeneList[GeneList$PROBE_ID %in% selected_diseases$ID, ]
-      
+
       selected_diseases <- selected_diseases[selected_diseases$ID %in% GeneList[, "PROBE_ID"], ]
 
       selected_diseases$logFC <- GeneList$logFC[match(selected_diseases$ID, GeneList$PROBE_ID)]
-      
+
       selected_diseases <- selected_diseases[!is.na(selected_diseases$logFC), ]
 
       rownames(selected_diseases) <- selected_diseases$ID
-      
+
       res$Molecules <- paste0(GeneList$PROBE_ID, collapse = ",")
 
       Zscore <- .compute_moonlight_zscore(selected_diseases)
@@ -226,22 +228,22 @@ FEA <- function(BPname = NULL,
                                                           "commonNg",
                                                           "FunctionNg",
                                                           "Molecules"))
-    
+
   }
 
   return(TableDiseasesNew)
 }
 
 #' compute_moonlight_zscore
-#' 
-#' This internal function compute the Moonlight Z-score for each enriched pathway 
+#'
+#' This internal function compute the Moonlight Z-score for each enriched pathway
 #' extracted from the Functional Enrichment Analysis
 #' @keywords internal
-#' @param selected_diseases A dataframe containing pathway's genes expression direction and changes 
+#' @param selected_diseases A dataframe containing pathway's genes expression direction and changes
 #' @return Moonlight Z-score A numeric score that measures how well the direction of change agrees between observed expression changes and literature findings
 #' @noRd
 .compute_moonlight_zscore <- function(selected_diseases) {
-  
+
   if(!all(c("Findings", "logFC") %in% colnames(selected_diseases))){
     stop("The input DiseaseList does not contain 'Findings' and 'logFC' columns for Moonlight z-score calculations")
   }
@@ -271,7 +273,7 @@ FEA <- function(BPname = NULL,
       } else {
         Zscore <- 0
       }
-      
+
       return(Zscore)
 
 }
