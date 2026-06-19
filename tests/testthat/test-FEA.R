@@ -61,7 +61,7 @@ test_that("Column names in FEA output are correct", {
 # Test expected class of values in output
 test_that("Moonlight scores, p-values and FDR values are numeric", {
   expect_type(dataFEA_test_fgsea$Diseases.or.Functions.Annotation, "character")
-  expect_type(dataFEA_test_ora$Moonlight.Z.score, "double")
+  expect_type(dataFEA_test_fgsea$Moonlight.Z.score, "double")
   expect_type(dataFEA_test_fgsea$p.value, "double")
   expect_type(dataFEA_test_fgsea$padj, "double")
   expect_type(dataFEA_test_fgsea$ES, "double")
