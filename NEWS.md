@@ -1,3 +1,9 @@
+# Moonlight2R 1.11.1
+
+## Summary
+
+* Fix FEA Moonlight Z-score to consider experimental logFC in the score calculation and removal of fixed 'Exp.Log.Ratio' column from DiseaseList collection
+
 # Moonlight2R 1.9.4
 
 ## Summary

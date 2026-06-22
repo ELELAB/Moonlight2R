@@ -9,17 +9,17 @@ data(dataMAVISp)
 
 
 reference_TFresults <- data.frame(
-    Target = c("CHST1", "GEN1", "TAP1", "TAP1"),
-    Moonlight_gene_z_score = c(1.06066017177982, 1.30096115353815, 0.8262079533974, 0.8262079533974),
-    Moonlight_Oncogenic_Mediator = c("TSG", "OCG", "OCG", "OCG"),
-    logFC_target = c(1.94917640749552, 1.36435629696216, 1.36486453774995, 1.36486453774995),
-    TF = c(NA, NA, "IRF1", "IRF2"),
-    InteractionType = c(NA, NA, "Activation", "Activation"),
-    PMID = c(NA, NA, "18694960", "15778351"),
+    Target = c("PDE2A", "GCAT", "ARMC9", "FAM155A"),
+    Moonlight_gene_z_score = c(1.37642904406401, 0.810977174901446, 0.367466020609254, 1.19863281130568),
+    Moonlight_Oncogenic_Mediator = c("TSG", "TSG", "TSG", "OCG"),
+    logFC_target = c(-3.36278468754307, 1.0407914607103, 1.03363210942098, 1.97338960700756),
+    TF = as.character(c(NA, NA, NA, NA)),
+    InteractionType = as.character(c(NA, NA, NA, NA)),
+    PMID = as.character(c(NA, NA, NA, NA)),
     tf_mutation = as.character(c(NA, NA, NA, NA)),
     stab_class = as.character(c(NA, NA, NA, NA)),
     in_MAVISp = c(FALSE,FALSE,FALSE,FALSE),
-    mutation_available = c(FALSE,FALSE,FALSE,FALSE),
+    mutation_available = c(FALSE, FALSE, FALSE, FALSE),
     stringsAsFactors = FALSE
 )
 
