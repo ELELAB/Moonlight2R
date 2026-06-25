@@ -30,7 +30,7 @@ Authors@R:
     	   ))
 Depends: R (>= 4.5), doParallel, foreach
 Imports: parmigene, randomForest, gplots,
-        circlize, RColorBrewer, HiveR, clusterProfiler, DOSE, Biobase,
+        circlize, RColorBrewer, HiveR, clusterProfiler, DOSE,
         grDevices, graphics, GEOquery, stats, purrr,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
