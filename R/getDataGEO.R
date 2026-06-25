@@ -5,7 +5,7 @@
 #' @param platform platform
 #' @param TCGAtumor tumor name
 #' @importFrom GEOquery getGEO
-#' @importMethodsFrom Biobase fvarLabels fvarLabels<-
+#' @importMethodsFrom  SummarizedExperiment rowData rowData<-
 #' @export
 #' @return return GEO gset
 #' @examples
@@ -52,7 +52,7 @@ getDataGEO <- function(GEOobject = "GSE39004",
 
   gset <- gset[[idx]]
 
-  fvarLabels(gset) <- make.names(fvarLabels(gset))
+  colnames(rowData(gset)) <- make.names(colnames(rowData(gset)))
 
   return(gset)
 

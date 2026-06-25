@@ -1,7 +1,7 @@
 Package: Moonlight2R
 Type: Package
 Title: Identify oncogenes and tumor suppressor genes from omics data
-Version: 1.11.1
+Version: 1.11.2
 Date:
 Authors@R:
   c(person("Mona", "Nourbakhsh",
@@ -35,7 +35,7 @@ Imports: parmigene, randomForest, gplots,
         RISmed, grid, utils, ComplexHeatmap, GenomicRanges, dplyr, fuzzyjoin,
         rtracklayer, magrittr, qpdf, readr, seqminer, stringr,
         tibble, tidyHeatmap, tidyr, AnnotationHub, easyPubMed, org.Hs.eg.db,
-        EpiMix, BiocGenerics, ggplot2, ExperimentHub, rlang, withr, data.table, fgsea
+        EpiMix, BiocGenerics, ggplot2, ExperimentHub, rlang, withr, data.table, fgsea, SummarizedExperiment
 Description: The understanding of cancer mechanism requires
         the identification of genes playing a role in the development
         of the pathology and the characterization of their role
