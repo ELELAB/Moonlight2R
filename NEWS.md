@@ -1,3 +1,9 @@
+# Moonlight2R 1.11.2
+
+## Summary
+
+* Adapted getDataGEO() for the new GEOquery return type "SummarizedExperiment"
+
 # Moonlight2R 1.11.1
 
 ## Summary
