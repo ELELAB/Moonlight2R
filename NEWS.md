@@ -1,3 +1,9 @@
+# Moonlight2R 1.10.1
+
+## Summary
+
+* Fixes on Moonlight Z-score calculations
+
 # Moonlight2R 1.9.4
 
 ## Summary
