@@ -2,7 +2,7 @@
 
 ## Summary
 
-* Fixes on Moonlight Z-score calculations
+* Fixes on Moonlight Z-score calculations and removal of fixed 'Exp.Log.Ratio' column from DiseaseList collection
 
 # Moonlight2R 1.9.4
 
