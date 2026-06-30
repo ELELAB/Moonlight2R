@@ -1,7 +1,7 @@
 Package: Moonlight2R
 Type: Package
 Title: Identify oncogenes and tumor suppressor genes from omics data
-Version: 1.10.0
+Version: 1.10.1
 Date:
 Authors@R:
   c(person("Mona", "Nourbakhsh",
@@ -90,7 +90,7 @@ SystemRequirements: CScapeSomatic
 VignetteBuilder: knitr
 URL: https://github.com/ELELAB/Moonlight2R
 BugReports: https://github.com/ELELAB/Moonlight2R/issues
-RoxygenNote: 7.3.3
 LazyData: false
 Encoding: UTF-8
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0

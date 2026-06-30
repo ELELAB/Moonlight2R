@@ -46,12 +46,13 @@ test_that("FEA output is identical to reference point", {
 # Test that output of FEA using fgsea method is as expected
 
 # Test number of columns
-test_that("Number of columns in FEA output are equal to 8", {
-  expect_equal(dim(dataFEA_test_fgsea), c(101, 8))
+test_that("Number of columns in FEA output are equal to 9", {
+  expect_equal(dim(dataFEA_test_fgsea), c(101, 9))
 })
 
 dataFEA_colnames <- c("Diseases.or.Functions.Annotation","Moonlight.Z.score", "p.value",
-                      "padj", "ES", "NES", "size", "leadingEdge")
+                      "padj", "ES", "NES", "commonNg", "FunctionNg", "Molecules")
+
 
 # Test correct column names
 test_that("Column names in FEA output are correct", {
@@ -61,18 +62,21 @@ test_that("Column names in FEA output are correct", {
 # Test expected class of values in output
 test_that("Moonlight scores, p-values and FDR values are numeric", {
   expect_type(dataFEA_test_fgsea$Diseases.or.Functions.Annotation, "character")
+  expect_type(dataFEA_test_fgsea$Moonlight.Z.score, "double")
   expect_type(dataFEA_test_fgsea$p.value, "double")
   expect_type(dataFEA_test_fgsea$padj, "double")
   expect_type(dataFEA_test_fgsea$ES, "double")
   expect_type(dataFEA_test_fgsea$NES, "double")
-  expect_type(dataFEA_test_fgsea$size, "integer")
-  expect_type(dataFEA_test_fgsea$leadingEdge, "list")
-  expect_true(all(sapply(dataFEA_test_fgsea$leadingEdge, is.character)))
+  expect_type(dataFEA_test_fgsea$commonNg, "integer")
+  expect_type(dataFEA_test_fgsea$FunctionNg, "integer")
+  expect_type(dataFEA_test_fgsea$Molecules, "character")
+  expect_true(all(sapply(dataFEA_test_fgsea$Molecules, is.character)))
 
 })
 
 # Test that output of FEA is as expected compared to reference 
 test_that("FEA output is similar enough to reference point", {
+  expect_equal(dataFEA_fgsea$Moonlight.Z.score, dataFEA_test_fgsea$Moonlight.Z.score)
   expect_equal(dataFEA_fgsea$NES, dataFEA_test_fgsea$NES, tolerance = 1e-6)
   expect_equal(dataFEA_fgsea$ES, dataFEA_test_fgsea$ES, tolerance = 1e-6)
 })

@@ -126,9 +126,9 @@
 #'@usage data(dataFEA_fgsea)
 #'@name dataFEA_fgsea
 #'@aliases dataFEA_fgsea
-#'@return A dataframe of dimension 101x8
+#'@return A dataframe of dimension 101x9
 #'
-#'@format A dataframe of dimension 101x8
+#'@format A dataframe of dimension 101x9
 #'
 "dataFEA_fgsea"
 

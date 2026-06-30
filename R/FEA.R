@@ -98,14 +98,42 @@ FEA <- function(BPname = NULL,
       
       setTxtProgressBar(pb, k)
 
-      res <- as.data.frame(matrix(0, nrow = 1, ncol = 2,
-                                  dimnames = list(1, c("pathway",
-                                                     "Moonlight.Z.score"))))
+      res <- as.data.frame(matrix(0, nrow = 1, ncol = 5,
+                                  dimnames = list(1, c("Diseases.or.Functions.Annotation",
+                                                        "Moonlight.Z.score",
+                                                        "commonNg",
+                                                        "FunctionNg",
+                                                        "Molecules"))))
       
+      GeneList <- data.frame(PROBE_ID = rownames(DiffMatrix),
+                            logFC = DiffMatrix$logFC,
+                            stringsAsFactors = FALSE)
+      
+      
+      rownames(GeneList) <- GeneList$PROBE_ID
+
       selected_diseases <- as.data.frame(DiseaseList[[which(names(DiseaseList) == lf2[k])]])
       
-      res$pathway <- lf2[k]
+      selected_diseases$ID <- selected_diseases$Genes.in.dataset
+
+      res$commonNg <- length(intersect(GeneList$PROBE_ID, selected_diseases$ID))
+
+      res$FunctionNg <- nrow(selected_diseases)
       
+      res$Diseases.or.Functions.Annotation <- lf2[k]
+
+      GeneList <- GeneList[GeneList$PROBE_ID %in% selected_diseases$ID, ]
+      
+      selected_diseases <- selected_diseases[selected_diseases$ID %in% GeneList[, "PROBE_ID"], ]
+
+      selected_diseases$logFC <- GeneList$logFC[match(selected_diseases$ID, GeneList$PROBE_ID)]
+
+      selected_diseases <- selected_diseases[!is.na(selected_diseases$logFC), ]
+
+      rownames(selected_diseases) <- selected_diseases$ID
+
+      res$Molecules <- paste0(GeneList$PROBE_ID, collapse = ",")
+            
       Zscore <- .compute_moonlight_zscore(selected_diseases)
       
       res$Moonlight.Z.score <- Zscore
@@ -118,13 +146,13 @@ FEA <- function(BPname = NULL,
 
     bp_score_collection_merged <- bind_rows(bp_score_collection)
 
-    TableDiseasesNew <- fgseaRes %>% left_join(bp_score_collection_merged, by = "pathway")
-    TableDiseasesNew <- TableDiseasesNew %>% select(-log2err)
+    TableDiseasesNew <- fgseaRes %>% left_join(bp_score_collection_merged, by = c("pathway" = "Diseases.or.Functions.Annotation"))
+    TableDiseasesNew <- TableDiseasesNew %>% select(-log2err, -size)
     TableDiseasesNew <- TableDiseasesNew %>% 
       rename("Diseases.or.Functions.Annotation" = pathway, "p.value" = pval) %>% 
-      select("Diseases.or.Functions.Annotation", "Moonlight.Z.score","p.value", "padj", "ES", "NES", "size", "leadingEdge")
+      select("Diseases.or.Functions.Annotation", "Moonlight.Z.score","p.value", "padj", "ES", "NES", "commonNg", "FunctionNg", "Molecules" )
 
-  
+    TableDiseasesNew <- as.data.frame(TableDiseasesNew)
   }
   else if (method == "ora") {
 
@@ -175,35 +203,15 @@ FEA <- function(BPname = NULL,
       GeneList <- GeneList[GeneList$PROBE_ID %in% selected_diseases$ID, ]
 
       selected_diseases <- selected_diseases[selected_diseases$ID %in% GeneList[, "PROBE_ID"], ]
-      selected_diseases[, "Exp.Log.Ratio"] <- gsub(",", ".", selected_diseases[, "Exp.Log.Ratio"])
-      selected_diseases[, "Exp.Log.Ratio"] <- as.numeric(selected_diseases[, "Exp.Log.Ratio"])
 
+      selected_diseases$logFC <- GeneList$logFC[match(selected_diseases$ID, GeneList$PROBE_ID)]
+      
+      selected_diseases <- selected_diseases[!is.na(selected_diseases$logFC), ]
+      
       rownames(selected_diseases) <- selected_diseases$ID
 
       res$Molecules <- paste0(GeneList$PROBE_ID, collapse = ",")
-
-      for (idx in seq.int(nrow(selected_diseases))) {
-
-        currTR <- selected_diseases$ID[idx]
-
-        if (length(grep("Increases", selected_diseases[currTR, "Findings"])) == 1) {
-
-          if (sign(GeneList[currTR, "logFC"]) > 0) {
-            selected_diseases[currTR, "Prediction..based.on.expression.direction."] <- "Increased"
-          } else if (sign(GeneList[currTR, "logFC"]) < 0) {
-            selected_diseases[currTR, "Prediction..based.on.expression.direction."] <- "Decreased"
-          }
-        }
-
-        if (length(grep("Decreases", selected_diseases[currTR, "Findings"])) == 1) {
-          if (sign(GeneList[currTR, "logFC"]) < 0) {
-            selected_diseases[currTR, "Prediction..based.on.expression.direction."] <- "Increased"
-          } else if (sign(GeneList[currTR, "logFC"]) > 0) {
-            selected_diseases[currTR, "Prediction..based.on.expression.direction."] <- "Decreased"
-          }
-        }
-      }
-
+      
       Zscore <- .compute_moonlight_zscore(selected_diseases)
 
       res$Moonlight.Z.score <- Zscore
@@ -237,22 +245,26 @@ FEA <- function(BPname = NULL,
 #' @noRd
 .compute_moonlight_zscore <- function(selected_diseases) {
   
+  if(!all(c("Findings", "logFC") %in% colnames(selected_diseases))){
+    stop("The input DiseaseList does not contain 'Findings' and 'logFC' columns for Moonlight z-score calculations")
+  }
+
   Correlation <- matrix(0, nrow(selected_diseases), 1)
 
   selected_diseases <- cbind(selected_diseases, Correlation)
 
-  if (length(grep("Decreases", selected_diseases$Findings)) != 0) {
+  if (any(grepl("Increases|Decreases", selected_diseases$Findings, ignore.case = TRUE))){
 
         selected_diseases[grep("Decreases", selected_diseases$Findings), "Findings"] <- -1
         selected_diseases[grep("Increases", selected_diseases$Findings), "Findings"] <- 1
         selected_diseases[grep("Affects", selected_diseases$Findings), "Findings"] <- 0
         selected_diseases[, "Findings"] <- as.numeric(selected_diseases[, "Findings"])
 
-        selected_diseases[, "Exp.Log.Ratio"] <- gsub(",", ".", selected_diseases[, "Exp.Log.Ratio"])
-        selected_diseases[, "Exp.Log.Ratio"] <- as.numeric(selected_diseases[, "Exp.Log.Ratio"])
+        selected_diseases[, "logFC"] <- gsub(",", ".", selected_diseases[, "logFC"])
+        selected_diseases[, "logFC"] <- as.numeric(selected_diseases[, "logFC"])
         
-        PredictionIncreased <- which(sign(selected_diseases$Exp.Log.Ratio) == selected_diseases$Findings)
-        PredictionDecreased <- which(sign(selected_diseases$Exp.Log.Ratio) != selected_diseases$Findings)
+        PredictionIncreased <- which(sign(selected_diseases$logFC) == selected_diseases$Findings)
+        PredictionDecreased <- which(sign(selected_diseases$logFC) != selected_diseases$Findings)
         PredictionAffected <- which(sign(selected_diseases$Findings) == 0)
 
         selected_diseases[PredictionIncreased, "Correlation"] <- 1
