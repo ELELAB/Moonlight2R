@@ -45,9 +45,16 @@ plotFEA <- function(dataFEA,
                                "#BEBADA")) {
 
   # Check user input
+  sig_colnames = c("FDR", "padj") 
+  sig_col = sig_colnames[sig_colnames %in% colnames(dataFEA)][1]
+  if (is.na(sig_col)) {
+    stop("dataFEA must contain an adjusted p-value column named one of: ",
+         paste(sig_colnames, collapse = ", "))
+  }
 
-  if (all(c("Moonlight.Z.score", "FDR", "commonNg", "Diseases.or.Functions.Annotation") %in% colnames(dataFEA)) == FALSE) {
-    stop("Moonlight.Z.score, FDR, commonNg, and Diseases.or.Functions.Annotation
+
+  if (all(c("Moonlight.Z.score", "commonNg", "Diseases.or.Functions.Annotation") %in% colnames(dataFEA)) == FALSE) {
+    stop("Moonlight.Z.score, commonNg, and Diseases.or.Functions.Annotation
 must be column names in dataFEA")
   }
 
@@ -66,14 +73,14 @@ a prefix or filepath to the filename of the pdf")
 
   tmp <- dataFEA[seq.int(topBP), ]
   tmp <- as.data.frame(tmp)
-  tmp$FDR <- as.numeric(tmp$FDR)
+  tmp[[sig_col]] <- as.numeric(tmp[[sig_col]])
   tmp$Moonlight.Z.score <- as.numeric(tmp$Moonlight.Z.score)
   tmp$commonNg <- as.numeric(tmp$commonNg)
-  tmp$FDR <- -log2(tmp$FDR) / 10
-  tmp <- tmp[order(tmp[, 4], decreasing = TRUE), ]
+  tmp[sig_col] <- -log2(tmp[sig_col]) / 10
+  tmp <- tmp[order(tmp[[sig_col]], decreasing = TRUE), ]
 
   toPlot <- matrix(0, nrow = 3, ncol = nrow(tmp))
-  toPlot[1, ] <- tmp$FDR
+  toPlot[1, ] <- tmp[[sig_col]]
   toPlot <- toPlot[, order(toPlot[1, ], decreasing = TRUE)]
   toPlot[2, as.numeric(tmp$Moonlight.Z.score) > 0] <- as.numeric(tmp$Moonlight.Z.score[as.numeric(tmp$Moonlight.Z.score) > 0])
   toPlot[3, as.numeric(tmp$Moonlight.Z.score) < 0] <- as.numeric(tmp$Moonlight.Z.score[as.numeric(tmp$Moonlight.Z.score) < 0])
@@ -83,7 +90,7 @@ a prefix or filepath to the filename of the pdf")
   xAxis <- barplot(toPlot,
                    beside = TRUE,
                    col = mycols,
-                   ylab = "-log2FDR/10 and Moonlight z-score",
+                   ylab = paste0("-log2", sig_col, "/10 and Moonlight z-score"),
                    names = NULL,
                    main = paste0("FEA - Enriched BioFunctions", titleMain, sep = " "),
                    ylim = c(minY, maxY))
@@ -92,7 +99,7 @@ a prefix or filepath to the filename of the pdf")
          bty = "n",
          xleg,
          yleg,
-         legend = c("-log2FDR/10",
+         legend = c(paste0("-log2 ", sig_col, "/10"),
                     "Moonlight Z-score Increased",
                     "Moonlight Z-score Decreased"),
          fill = mycols, cex = 0.5)
