@@ -46,14 +46,18 @@ plotFEA <- function(dataFEA,
 
   # Check user input
   sig_colnames = c("FDR", "padj") 
-  sig_col = sig_colnames[sig_colnames %in% colnames(dataFEA)][1]
+  sig_columns = sig_colnames[sig_colnames %in% colnames(dataFEA)]
+  
+  if (length(sig_columns) > 1) {
+        stop("dataFEA contains more than one correct p-value column: ", paste(sig_columns,  collapse = ", "),
+    ". It must contain only one")
+  }
+
+  sig_col = sig_columns[1]
+  
   if (is.na(sig_col)) {
     stop("dataFEA must contain an adjusted p-value column named one of: ",
          paste(sig_colnames, collapse = ", "))
-  }
-  if (length(sig_col) > 1) {
-    stop("dataFEA contains both than one correct p-value columns: ", paste(sig_col,  collapse = ", "),
-    ". It must contain only one")
   }
 
   if (all(c("Moonlight.Z.score", "commonNg", "Diseases.or.Functions.Annotation") %in% colnames(dataFEA)) == FALSE) {
