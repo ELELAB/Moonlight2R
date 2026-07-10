@@ -1,3 +1,9 @@
+# Moonlight2R 1.11.3
+
+## Summary
+
+* Adapted plotFEA() function to parse dataFEA_fgsea object
+ 
 # Moonlight2R 1.11.2
 
 ## Summary

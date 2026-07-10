@@ -51,7 +51,10 @@ plotFEA <- function(dataFEA,
     stop("dataFEA must contain an adjusted p-value column named one of: ",
          paste(sig_colnames, collapse = ", "))
   }
-
+  if (length(sig_col) > 1) {
+    stop("dataFEA contains both than one correct p-value columns: ", paste(sig_col,  collapse = ", "),
+    ". It must contain only one")
+  }
 
   if (all(c("Moonlight.Z.score", "commonNg", "Diseases.or.Functions.Annotation") %in% colnames(dataFEA)) == FALSE) {
     stop("Moonlight.Z.score, commonNg, and Diseases.or.Functions.Annotation
