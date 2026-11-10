@@ -197,10 +197,14 @@ GMA <- function(dataMET,
 
   # Retrieve annotations of probes and select only chromosome, start and
   # end positions
-  probe_annotation <- EpiMix_getInfiniumAnnotation(plat = met_platform,
-						   genome = "hg38") %>%
+  # Create a temporary object storing the probe IDs
+  probe_annotation_tmp <- EpiMix_getInfiniumAnnotation(plat = met_platform,
+						   genome = "hg38")
+  # Create the final probe annotation object by dropping row names and adding a Probe column with original Probe IDs
+  probe_annotation <- probe_annotation_tmp %>% 
     BiocGenerics::as.data.frame() %>%
-    as_tibble(rownames = "Probe") %>%
+    as_tibble() %>%
+    dplyr::mutate(Probe = names(probe_annotation_tmp)) %>%
     dplyr::select(Probe,
                   seqnames,
                   start,
