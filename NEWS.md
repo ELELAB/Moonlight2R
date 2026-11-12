@@ -1,3 +1,9 @@
+# Moonlight2R 1.11.4
+
+## Summary
+
+* Fix GMA() to take probe IDs from the names of the probe annotation GRanges object, since as.data.frame() in recent GenomicRanges no longer stores them as row names.
+
 # Moonlight2R 1.11.3
 
 ## Summary
